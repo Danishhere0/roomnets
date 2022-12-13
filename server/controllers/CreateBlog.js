@@ -8,7 +8,7 @@ exports.CreateBlog = async (req, res) => {
     if (!title || !body || !country) {
       return res.status(404).json({
         status: false,
-        message: " All field s not supplied",
+        message: " All fields are not supplied",
       });
     }
   
@@ -41,7 +41,7 @@ exports.CreateBlog = async (req, res) => {
         console.log(err);
         return res.status(501).send({
           status: false,
-          message: "error saving the data",
+          message: "Error saving the data",
         });
       } else {
         return res.status(201).send({

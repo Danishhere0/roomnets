@@ -1,4 +1,4 @@
-//get All REecent Post
+//get All Recent Post
 const Blog = require("../models/blog");
 
 exports.BlogPostAllRecent = async (req, res) => {

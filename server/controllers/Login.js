@@ -5,18 +5,18 @@ exports.Login = async function (req, res) {
     if (!Password || !Email) {
       return res
         .status(404)
-        .send({ message: "Please provide a valid password and email" });
+        .send({ message: "Please provide a valid password and email." });
     }
   
     if (!functions.validateEmail(Email)) {
-      return res.status(404).json({ message: "Please use a valid email address" });
+      return res.status(404).json({ message: "Please use a valid email address." });
     }
   
     UserSchema.findOne({ Email }, async function (err, user) {
       if (err) throw err;
       if (!user) {
         res.status(404).json({
-          message: " A user with this account does not exist",
+          message: " A user with this account does not exist.",
         });
       } else if (user) {
         const match = await user.verifyPassword(Password);

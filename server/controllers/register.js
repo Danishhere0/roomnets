@@ -1,4 +1,5 @@
 const UserSchema = require("../models/userModel");
+const functions = require("../functions");
 
 exports.Register = async (req, res) => {
     const {
@@ -15,10 +16,10 @@ exports.Register = async (req, res) => {
     const Email = email;
     const Password = password;
     const Password2 = password2;
-    if (!validateEmail(Email)) {
+    if (!functions.validateEmail(Email)) {
       return res
         .status(501)
-        .json({ message: "pls use a valid email address to register" });
+        .json({ message: "Please use a valid email address to register" });
     }
     if (Password2 != Password) {
       return res.status(501).json({ message: "both password dont match" });
@@ -33,7 +34,7 @@ exports.Register = async (req, res) => {
       !country
     ) {
       return res.status(501).json({
-        message: "You didnt fill all values required,kindly try again",
+        message: "You didn't fill all values required, kindly try again",
       });
     }
     await UserSchema.findOne({ Email: Email }).then(async (user) => {

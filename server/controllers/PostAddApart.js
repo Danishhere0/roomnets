@@ -24,7 +24,7 @@ exports.PostAddApart = async (req, res) => {
     if (!lat || !lng) {
       return res.status(501).send({
         status: false,
-        message: "lng/lat not provided",
+        message: "Longitude/Latitude not provided",
       });
     }
   

@@ -24,7 +24,7 @@ exports.PostAddRooms = async (req, res) => {
     if (!lat || !lng) {
       return res.status(501).send({
         status: false,
-        message: "lng/lat not provided",
+        message: "Longitude/Latitude is not provided",
       });
     }
   
@@ -43,7 +43,7 @@ exports.PostAddRooms = async (req, res) => {
         console.log(err);
         return res.status(501).send({
           status: false,
-          message: "lng/lat not provided",
+          message: "Longitude/Latitude is not provided",
         });
       } else {
         return res.status(201).send({
