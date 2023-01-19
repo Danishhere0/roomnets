@@ -3,7 +3,7 @@ import { getData } from "../../../utils/getData";
 import TestimonialSection from "../aboutUs1/Testimonial";
 import BlogSection from "../Blog";
 import BrandSection from "../aboutUs1/Brand";
-import PrivacySection from "./PrivacySection";
+import TermsNCondSection from "./TermsNCondSection";
 import Parser from 'html-react-parser'; 
 import {Helmet} from "react-helmet"
 
@@ -15,7 +15,7 @@ const BodyContent = () => {
   return (
     <>
       <Helmet>{ Parser (homepageData.googleAdsScript)}</Helmet>
-      <PrivacySection />
+      <TermsNCondSection />
       <TestimonialSection  />
       <div className="bg-light">
         <BlogSection/>

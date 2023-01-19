@@ -3,7 +3,7 @@ import { getData } from "../../../utils/getData";
 import TestimonialSection from "../aboutUs1/Testimonial";
 import BlogSection from "../Blog";
 import BrandSection from "../aboutUs1/Brand";
-import PrivacySection from "./PrivacySection";
+import PrivacySection from "./HowitWorksSection";
 import Parser from 'html-react-parser'; 
 import {Helmet} from "react-helmet"
 

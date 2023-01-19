@@ -5,7 +5,7 @@ import axios from "axios";
 import { NumericFormat } from "react-number-format";
 import Parser from 'html-react-parser'; 
 
-const PrivacySection = () => {
+const HowitWorksSection = () => {
 const [shortPrivacyIntro, setShortPrivacyIntro] = useState([]);
 const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
 const [AboutHeaderImg, setAboutHeaderImg] = useState([]);
@@ -15,11 +15,11 @@ useEffect(() => {
     try {
       const res2  = await axios.get(`${process.env.API_URL}/getSiteContent`, {
         params: {
-          pageslug: 'setShortPrivacyIntro',
-          content_location: 'privacy_page'
+          pageslug: 'ShortHowitWorksIntro',
+          content_location: 'howitworks_page'
         },
       });
-      setShortPrivacyIntro(res2.data.userData[0].content);
+      setShortAccessibilityIntro(res2.data.userData[0].content);
       //console.log('About page:' + res2.data.userData[0].content);
     } catch (err) {
       console.error('About page Error is: '+ err);
@@ -63,10 +63,10 @@ useEffect(() => {
   };
   fetchAboutIntro4();
 }, []);
-const mapPrivacy = () => {
+const mapHowitworks = () => {
   return (
-    homepageData.privacy.length > 0 &&
-    homepageData.privacy.map((xxx, index) => (
+    homepageData.howitworks.length > 0 &&
+    homepageData.howitworks.map((xxx, index) => (
       <div className="card border-0">
         <div
           className="st-top d-inline-block position-relative card-header px-0 border-0 rounded-0 bg-transparent"
@@ -93,14 +93,14 @@ const mapPrivacy = () => {
         <Row>
           <div className='col'>
             <div className='title-2'>
-              <h2>Privacy Policy</h2>
-              <p className='font-roboto'>{`${ shortPrivacyIntro || ""}`}</p>
+              <h2>How It Works</h2>
+              <p className='font-roboto'>{`${ setShortHowitWorksIntro || ""}`}</p>
             </div>
             <div className='user-about'>
               <Row>
                 <div className='col-xl-9 col-lg-8'>
                   <div className='about-content'>
-                     {mapPrivacy()}
+                     {mapHowitworks()}
 
                     {/*<p className='font-roboto'>{`${ PrivacyDescription || ""}`}</p>*/}
                   </div>
@@ -125,4 +125,4 @@ const mapPrivacy = () => {
   );
 };
 
-export default PrivacySection;
+export default HowitWorksSection;
