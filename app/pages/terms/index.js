@@ -11,8 +11,29 @@ export const getStaticProps = async ({ locale }) => ({ props: { ...(await server
 import Breadcrumb from "../../layout/Breadcrumb/Breadcrumb";
 import FooterThree from "../../layout/footers/FooterThree";
 import BodyContent from "../../components/pages/terms_conditions/index";
+import axios from "axios";
 
 const TermsNConditions = () => {
+  const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
+
+
+  const fetchHomepageModels = async () => {
+    return await axios
+      .get(`/api/v1/fetchHomepageModels`)
+      .then((response) => response)
+      .catch((err) => err);
+  };
+
+  React.useEffect(
+    () =>
+      fetchHomepageModels()
+        .then((res) => {
+          setHomePageData({ ...res.data.userData });
+        })
+        .catch((err) => console.log(err)),
+
+    []
+  );
   return (
     <>
       <NavbarThree />
