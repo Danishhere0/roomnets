@@ -34,39 +34,7 @@ const Faq = () => {
 
     []
   );
-
-
-
-  const data = [
-    {
-      title: "Different types of housing tenure can be used for the same physical type.",
-      details: "In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.",
-    },
-    {
-      title: "Section 1.10.32 of \"de Finibus Bonorum et Malorum\", written by",
-      details: " In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.",
-    },
-    {
-      title: "Different types of housing tenure can be used for the same physical type.",
-      details:
-        " In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property. In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.",
-    },
-    {
-      title: " Different types of housing tenure can be used for the same physical type.",
-      details:
-        "In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property. In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.",
-    },
-    {
-      title: "Section 1.10.32 of \"de Finibus Bonorum et Malorum\", written",
-      details:
-        " In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.",
-    },
-    {
-      title: "Different types of housing tenure can be used for the same physical type.",
-      details:
-        " In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.In markets where land and building prices are rising, real estate is often purchased as an investment, whether or not the owner intends to use the property.",
-    },
-  ];
+   
   return (
     <>
       <NavbarThree />
@@ -93,11 +61,11 @@ const Faq = () => {
             <div className='col-lg-6'>
               <div className='faq-questions'>
                 <div className='title-3 text-start'>
-                  <h2>Frequently ask question</h2>
+                  <h2>Frequently Asked Questions</h2>
                 </div>
 
                 <div id='accordion' className='accordion'>
-                  {data.map((data, i) => (
+                  {homepageData.faq.map((data, i) => (
                     <div className='card' key={i}>
                       <div className='card-header'>
                         <a className='card-link ' onClick={() => handleClick(i)}>
@@ -106,7 +74,7 @@ const Faq = () => {
                         </a>
                       </div>
                       <div className={`collapse ${active === i ? "show" : ""}`}>
-                        <div className='card-body'>{data.details}</div>
+                        <div className='card-body'>{data.body}</div>
                       </div>
                     </div>
                   ))}
