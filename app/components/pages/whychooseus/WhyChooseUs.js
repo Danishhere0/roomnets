@@ -6,20 +6,20 @@ import { NumericFormat } from "react-number-format";
 import Parser from 'html-react-parser'; 
 
 const HowitWorksSection = () => {
-  const [shortHowitWorksIntro, setShortHowitWorksIntro] = useState([]);
-  const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
-  const [AboutHeaderImg, setAboutHeaderImg] = useState([]);
+const [shortWhyChooseUsIntro, setShortWhyChooseUsIntro] = useState([]);
+const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
+const [AboutHeaderImg, setAboutHeaderImg] = useState([]);
 
 useEffect(() => {
   const fetchAboutIntro2 = async () => {
     try {
       const res2  = await axios.get(`${process.env.API_URL}/getSiteContent`, {
         params: {
-          pageslug: 'ShortHowitWorksIntro',
-          content_location: 'howitworks_page'
+          pageslug: 'ShortWhyChooseUsIntro',
+          content_location: 'whychoose_page'
         },
       });
-      setShortHowitWorksIntro(res2.data.userData[0].content);
+      setShortWhyChooseUsIntro(res2.data.userData[0].content);
       //console.log('About page:' + res2.data.userData[0].content);
     } catch (err) {
       console.error('About page Error is: '+ err);
@@ -65,8 +65,8 @@ useEffect(() => {
 }, []);
 const mapHowitworks = () => {
   return (
-    homepageData.howitworks.length > 0 &&
-    homepageData.howitworks.map((xxx, index) => (
+    homepageData.whychooseus.length > 0 &&
+    homepageData.whychooseus.map((xxx, index) => (
       <div className="card border-0">
         <div
           className="st-top d-inline-block position-relative card-header px-0 border-0 rounded-0 bg-transparent"
@@ -93,14 +93,14 @@ const mapHowitworks = () => {
         <Row>
           <div className='col'>
             <div className='title-2'>
-              <h2>How It Works</h2>
-              <p className='font-roboto'>{`${ shortHowitWorksIntro || ""}`}</p>
+              <h2>Why Choose Us</h2>
+              <p className='font-roboto'>{`${ shortWhyChooseUsIntro || ""}`}</p>
             </div>
             <div className='user-about'>
               <Row>
                 <div className='col-xl-9 col-lg-8'>
                   <div className='about-content'>
-                     {mapHowitworks()}
+                     {mapWhyChooseUs()}
 
                     {/*<p className='font-roboto'>{`${ PrivacyDescription || ""}`}</p>*/}
                   </div>

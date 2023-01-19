@@ -6,7 +6,7 @@ import { NumericFormat } from "react-number-format";
 import Parser from 'html-react-parser'; 
 
 const HowitWorksSection = () => {
-const [shortPrivacyIntro, setShortPrivacyIntro] = useState([]);
+const [shortTermNCondIntro, setTermNCondIntro] = useState([]);
 const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
 const [AboutHeaderImg, setAboutHeaderImg] = useState([]);
 
@@ -15,11 +15,11 @@ useEffect(() => {
     try {
       const res2  = await axios.get(`${process.env.API_URL}/getSiteContent`, {
         params: {
-          pageslug: 'ShortHowitWorksIntro',
-          content_location: 'howitworks_page'
+          pageslug: 'TermNCondIntro',
+          content_location: 'terms_page'
         },
       });
-      setShortAccessibilityIntro(res2.data.userData[0].content);
+      setTermNCondIntro(res2.data.userData[0].content);
       //console.log('About page:' + res2.data.userData[0].content);
     } catch (err) {
       console.error('About page Error is: '+ err);
@@ -63,7 +63,7 @@ useEffect(() => {
   };
   fetchAboutIntro4();
 }, []);
-const mapHowitworks = () => {
+const mapTerms = () => {
   return (
     homepageData.howitworks.length > 0 &&
     homepageData.howitworks.map((xxx, index) => (
@@ -93,14 +93,14 @@ const mapHowitworks = () => {
         <Row>
           <div className='col'>
             <div className='title-2'>
-              <h2>How It Works</h2>
-              <p className='font-roboto'>{`${ setShortHowitWorksIntro || ""}`}</p>
+              <h2>Terms and Conditions</h2>
+              <p className='font-roboto'>{`${ shortTermNCondIntro || ""}`}</p>
             </div>
             <div className='user-about'>
               <Row>
                 <div className='col-xl-9 col-lg-8'>
                   <div className='about-content'>
-                     {mapHowitworks()}
+                     {mapTerms()}
 
                     {/*<p className='font-roboto'>{`${ PrivacyDescription || ""}`}</p>*/}
                   </div>
