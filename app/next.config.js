@@ -1,0 +1,19 @@
+/**
+ * @type {import('next').NextConfig}
+ */
+
+const { i18n } = require("./next-i18next.config");
+const withPWA = require("next-pwa")({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  buildExcludes: [/middleware-manifest.json$/],
+});
+
+module.exports = withPWA({
+  reactStrictMode: false,
+  i18n,
+  env: {
+    API_URL: "http://localhost:3002/api/v1",
+  },
+});

@@ -1,0 +1,28 @@
+=========================================================
+* Argon React NodeJS - v1.0.0
+=========================================================
+Admin Panel
+* Product Page: https://argon-dashboard-react-nodejs.creative-tim.com/
+* Copyright 2020 Creative Tim (https://https://www.creative-tim.com//)
+* Copyright 2020 ProjectData (https://projectdata.dev/)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react-nodejs/blob/main/README.md)
+=========================================================
+
+https://sheltos-react.vercel.app/home/modern-video
+
+
+
+
+
+https://bitbucket.org/talk2mat2/roomnets/src/master/
+https://bitbucket.org/onyxtechteam/roomnet_reactfront/src/ft-updtes/src/
+https://github.com/nollyvenon/roomnets
+
+Roomnet admin details
+Email:- admin@roomnets.com
+Password:- admin@roomnets.com
+
+
+npm install react-adsense react-google-autocomplete react-paypal-button-v2 react-redux react-responsive-carousel flutterwave-react-v3 paypal/react-paypal-js helmet  
+
+

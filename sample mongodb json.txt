@@ -1,0 +1,52 @@
+{
+  "_id": {
+    "$oid": "63af158e986a18f3862fc7b6"
+  },
+ "name":"Roomnets",
+    "videourl": "",
+    "RecentRooms":"",
+"RecentApartments":"",
+    "Banners":"",
+    "showBanner":"true",
+    "privacy": {
+      "title": [
+              "Privacy Policy"
+          ],
+      "body": [
+          "Roomnets is an apartment renting or leasing website."
+      ]
+    },
+    "faq":{
+      "title": [
+              "Who is Roomnets"
+          ],
+      "body": [
+          "Roomnets is an apartment renting or leasing website."
+      ]
+    },
+  "aboutUs":{
+      "title": [
+              "About Roomnets"
+          ],
+      "body": [
+          "Roomnets is an apartment renting or leasing website."
+      ]
+    },
+    "SitePhone":"+234807888888",
+    "SiteEmail":"info@roomnets.com",
+    "SiteOfficeAddress":"22 Walking Street, London",
+    "TwitterLink":"",
+    "FacebookLink": "",
+    "InstagramLink": "",
+    "linkedinLink": "",
+  "YoutubeLink":"",
+  "partners":"",
+  "sliders":"",
+  "Banners_US": "",
+  "Banners_GB": "",
+  "Banners_GH": "",
+  "Banners_IE": "",
+  "Banners_KE": "",  
+  "Banners_ZA": "",
+  "Banners_NG": ""  
+}
