@@ -10,10 +10,32 @@ export const getStaticProps = async ({ locale }) => ({ props: { ...(await server
 
 const Faq = () => {
   const [active, setActive] = useState(0);
+  const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
+
   const handleClick = (value) => {
     setActive(value);
     active === value && setActive();
   };
+
+  const fetchHomepageModels = async () => {
+    return await axios
+      .get(`/api/v1/fetchHomepageModels`)
+      .then((response) => response)
+      .catch((err) => err);
+  };
+
+  React.useEffect(
+    () =>
+      fetchHomepageModels()
+        .then((res) => {
+          setHomePageData({ ...res.data.userData });
+        })
+        .catch((err) => console.log(err)),
+
+    []
+  );
+
+
 
   const data = [
     {

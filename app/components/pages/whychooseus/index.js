@@ -13,7 +13,6 @@ const BodyContent = () => {
   const [clientData, setClientData] = useState();
   const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
 
-
   const fetchHomepageModels = async () => {
     return await axios
       .get(`/api/v1/fetchHomepageModels`)

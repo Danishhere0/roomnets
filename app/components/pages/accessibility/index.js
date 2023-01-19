@@ -8,9 +8,29 @@ import AccessibilitySection from "./AccessibilitySection";
 const BodyContent = () => {
   const [value, setValue] = useState();
   const [clientData, setClientData] = useState();
+  const [homepageData, setHomePageData] = React.useState({ privacy: [],googleAdsScript:"" });
+
+  const fetchHomepageModels = async () => {
+    return await axios
+      .get(`/api/v1/fetchHomepageModels`)
+      .then((response) => response)
+      .catch((err) => err);
+  };
+
+  React.useEffect(
+    () =>
+      fetchHomepageModels()
+        .then((res) => {
+          setHomePageData({ ...res.data.userData });
+        })
+        .catch((err) => console.log(err)),
+
+    []
+  );
   
   return (
     <>
+      <Helmet>{ Parser (homepageData.googleAdsScript)}</Helmet>
       <AccessibilitySection />
       <TestimonialSection  />
       <div className="bg-light">
