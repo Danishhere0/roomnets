@@ -1,5 +1,6 @@
 import "../public/assets/scss/app.scss";
 import Head from "next/head";
+import React, { createContext  } from "react";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { appWithTranslation } from "next-i18next";
@@ -8,6 +9,7 @@ import { useEffect } from "react";
 import TapToTop from "../layout/TapToTop";
 import Customizer from "../layout/Customizer";
 import { store } from "../redux-toolkit/store";
+import { store2 } from "../redux/store";
 import "react-toastify/dist/ReactToastify.css";
 import "photoswipe/dist/photoswipe.css";
 import StoreOldData from "../utils/StoreOldData";
@@ -16,6 +18,9 @@ import { ConfigDB } from "../config/themeCustomizerConfig";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const store1Context = createContext();
+  const store2Context = createContext();
+
 
   useEffect(() => {
     router.events.on("routeChangeComplete", () => {
@@ -38,13 +43,16 @@ function MyApp({ Component, pageProps }) {
         <title>.............:::: Roomnets: Your One Stop Real Estate Partner Website ::::............</title>
       </Head>
       <Provider store={store}>
-        <>
-          <Component {...pageProps} />
-          <Customizer />
-          <TapToTop />
-          <StoreOldData />
-          <ToastContainer position="bottom-left" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme={"light"} />
-        </>
+        <Provider store={store2}>
+        {/*<Provider store={store2} context={store2Context}>*/}
+          <>
+            <Component {...pageProps} />
+            <Customizer />
+            <TapToTop />
+            <StoreOldData />
+            <ToastContainer position="bottom-left" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme={"light"} />
+          </>
+        </Provider>
       </Provider>
     </>
   );

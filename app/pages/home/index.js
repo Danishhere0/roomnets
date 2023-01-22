@@ -18,9 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 
 const SliderFilterSearch = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const country = useSelector(({ CountryReducer }) => CountryReducer.country);
   useEffect(() => {
     setTimeout(() => {
       !ConfigDB.PrimaryColor && document.documentElement.style.setProperty("--theme-default", "#2c2e97");

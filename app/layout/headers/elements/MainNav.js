@@ -8,8 +8,10 @@ import { MainNavMenuItems } from "../../../data/menu";
 //import DropdownMenus from "./mainNavComponents/DropdownMenus";
 import MegaMenu from "./mainNavComponents/MegaMenu";
 import axios from "axios";
-import { LOGOUTUSER } from "../../../redux/action";
+import { useDispatch, useSelector } from "react-redux";
 import { SETCOUNTRY } from "../../../redux/action";
+import { useHistory } from "react-router";
+
 
 const MainNav = ({ center, icon }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
@@ -18,6 +20,9 @@ const MainNav = ({ center, icon }) => {
   const [isOpenNestedChild, setIsOpenNestedChild] = useState();
 
   const [countryData, setCountryData] = useState([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const country = useSelector(({ CountryReducer }) => CountryReducer.country);
 
   const handleCountry = (code) => {
     const Setcountry = async () => dispatch(SETCOUNTRY(code));
@@ -64,7 +69,7 @@ const MainNav = ({ center, icon }) => {
       });
   };
 
-  React.useEffect(() => getGeoInfo(), []);
+  useEffect(() => getGeoInfo(), []);
 
   useEffect(() => {
     const fetchAboutCountry = async () => {

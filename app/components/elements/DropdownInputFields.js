@@ -26,7 +26,8 @@ const DropdownInputFields = ({ label, filterValues, setFilterValues, lg, sm, sta
                 isOpen === value.label && setIsOpen();
               }}>
               <DropdownToggle className="font-rubik" caret>
-                {inputFilter[`${value.name}`] || value.label}
+                {/*{inputFilter[`${value.name}`] || value.label}*/}
+                {inputFilter[`${value.name}`]  ? 'Hide' : 'Show'}
                 <i className='fas fa-angle-down'></i>
               </DropdownToggle>
               <DropdownMenu>

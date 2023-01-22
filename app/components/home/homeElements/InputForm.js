@@ -14,6 +14,8 @@ import AutoCompletePlaces from "../../elements/AutoCompletePlaces";
 
 const InputForm = ({ label, lg, sm, lastSm }) => {
   const [filterValues, setFilterValues] = useState({});
+  const [SearchType, setSearchType] = React.useState("apartment");
+  const [searchText, setSearchText] = React.useState();
 
   const [value, setValue] = useState();
 

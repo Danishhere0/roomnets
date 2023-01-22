@@ -7,10 +7,13 @@ import Link from "next/link";
 import React, { Fragment } from "react";
 import { User } from "react-feather";
 import { RightNavMenuItem } from "../../../data/menu";
-import Cart from "./rightNavComponents/Cart";
+import { useDispatch, useSelector } from "react-redux";
+//import Cart from "./rightNavComponents/Cart";
 import Currency from "./rightNavComponents/Currency";
 import Language from "./rightNavComponents/Language";
-import { useHistory } from "react-router";
+import { LOGOUTUSER } from "../../../redux/action";
+import { useHistory, Redirect } from "react-router";
+import {NavLink} from 'reactstrap';
 
 const RightNav = () => {
   const dispatch = useDispatch();
@@ -31,19 +34,19 @@ const RightNav = () => {
           {RightNavMenuItem.map((value, i) => (
             <Fragment key={i}>
               {value.title === "language" && <Language value={value} />}
-              {value.title === "cart" && <Cart />}
+             {/* {value.title === "cart" && <Cart />} */}
               {value.title === "currency" && <Currency value={value} />}
               {value.title === "user" && (
                 <li className="dropdown">
-                  <Link href="/login">
+                  <NavLink to="/login">
                     <User />
-                  </Link>
+                  </NavLink>
                 </li>
               )}
                {currentUser ? (
                     <ul className="admin-info color-white-a">
                       <li>
-                        <Link to="">{currentUser.user.firstName}</Link>
+                        <NavLink to="">{currentUser.user.firstName}</NavLink>
                       </li>
                       <li>
                         <a onClick={handleLogout}>Log Out</a>
@@ -52,10 +55,10 @@ const RightNav = () => {
                   ) : (
                     <ul className="admin-info color-white-a">
                       <li>
-                        <Link to="/login">Sign In</Link>
+                        <NavLink to="/login">Sign In</NavLink>
                       </li>
                       <li>
-                        <Link to="/register">Sign Up</Link>
+                        <NavLink to="/register">Sign Up</NavLink>
                       </li>
                     </ul>
                   )}

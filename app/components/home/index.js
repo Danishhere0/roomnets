@@ -17,6 +17,8 @@ import RecentApartmentSection from "./RecentApartment";
 import TestimonialSection from "./Testimonial";
 import AdSense from "react-adsense";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 
 const BodyContent = () => {
   const [value, setValue] = useState();

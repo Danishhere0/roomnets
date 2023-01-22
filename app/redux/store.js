@@ -32,5 +32,5 @@ const authPersistConfig = {
 };
 const persistedReducer = persistReducer(authPersistConfig, rootReducer);
 
-export const store = createStore(persistedReducer);
-export const persistor = persistStore(store);
+export const store2 = createStore(persistedReducer);
+export const persistor = persistStore(store2);
