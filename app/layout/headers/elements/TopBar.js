@@ -26,7 +26,7 @@ const TopBar = ({ logo }) => {
                   <InputGroup className="header-right ">
                     <div className="input-group-prepend dropdown">
                       <Dropdown isOpen={dropDown} toggle={() => setDropDown(!dropDown)} className="input-group-text ">
-                        <DropdownToggle key={1} className="font-roboto input-group-text h-auto">
+                        <DropdownToggle name="searcher" key={1} className="font-roboto input-group-text h-auto">
                           {dropDownValue}
                           <i className="fas fa-angle-down"></i>
                         </DropdownToggle>

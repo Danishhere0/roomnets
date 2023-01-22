@@ -42,9 +42,8 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon" />
         <title>.............:::: Roomnets: Your One Stop Real Estate Partner Website ::::............</title>
       </Head>
-      <Provider store={store}>
-        <Provider store={store2}>
-        {/*<Provider store={store2} context={store2Context}>*/}
+      <Provider store={store} context={store1Context}>
+        <Provider store={store2} context={store2Context}>
           <>
             <Component {...pageProps} />
             <Customizer />

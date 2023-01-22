@@ -72,7 +72,7 @@ const Header = ({ setGridSize, setGridStyle, gridStyle, mapView, mapModal, gridB
 
           <li>
             <Dropdown isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}>
-              <DropdownToggle className=" font-rubik">
+              <DropdownToggle name="sorter" className=" font-rubik">
                 <span>{sortBy || "Sort by Newest"}</span> <i className="fas fa-angle-down ms-lg-3 ms-2"></i>
               </DropdownToggle>
               <DropdownMenu className=" text-start">
