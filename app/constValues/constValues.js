@@ -1,8 +1,9 @@
 // path: home/slider-filter-search
-export const MainTitle = "Reality Properties solve your problems";
+export const MainTitle = "Roomnets solve your problems...";
 export const LatestForSale = "Latest For Sale";
+export const LatestForRent = "Latest For Rent";
 export const SubmitProperty = "Submit property";
-export const WantToBuyOrRentHome = "Want to buy or rent Home ?";
+export const WantToBuyOrRentHome = "Want to rent a Home or Apartment?";
 export const Sale = "Sale";
 export const FeaturedProperty = "Featured Properties";
 export const Featured = "Featured";

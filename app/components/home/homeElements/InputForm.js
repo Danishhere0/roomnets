@@ -19,6 +19,65 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
 
   const [value, setValue] = useState();
 
+  const fetchHomepageModels = async () => {
+    return await axios
+      .get(`/api/v1/fetchHomepageModels`)
+      .then((response) => response)
+      .catch((err) => err);
+  };
+  const handleSearch1 = () => {
+    if (!searchText) {
+      return alert("search field is empty");
+    }
+
+    SearchType === "rooms" &&
+      history.push({
+        pathname: "/SearchResult1",
+        state: { location: searchText },
+      });
+    SearchType === "apartment" &&
+      history.push({
+        pathname: "/SearchResult2",
+        state: { location: searchText },
+      });
+  };
+  //search by auto complete drop down using longitude and latitude
+  const handleSearch2 = async (places) => {
+    //places.name mease we didnt select from  the drop down of auto
+    //completet rather we clicked enter after searching location
+    if (places.name) {
+      return handleSearch1;
+    }
+
+    const place_id = places.place_id;
+    const lng = await places.geometry.location.lng();
+    const lat = await places.geometry.location.lat();
+    const address = places.formatted_address;
+
+    SearchType === "rooms" &&
+      history.push({
+        pathname: "/SearchResult1",
+        state: { lng: lng, lat: lat, address: address },
+      });
+    SearchType === "apartment" &&
+      history.push({
+        pathname: "/SearchResult2",
+        state: { lng: lng, lat: lat, address: address },
+      });
+  };
+
+  React.useEffect(
+    () =>
+      fetchHomepageModels()
+        .then((res) => {
+          console.log(res.data.userData);
+          setHomePageData({ ...res.data.userData });
+        })
+        .catch((err) => console.log(err)),
+
+    []
+  );
+
   useEffect(() => {
     getData(`${process.env.API_URL}/searchdata`)
       .then((res) => {
@@ -56,31 +115,33 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
     });
 
   return (
-    <Row className="gx-3">
-      <form
+    <form
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSearch1();
               }}
-              className="adbanced-form-one amenities-list pt-15"
+              
             >
-          <AutoCompletePlaces
+    <Row className="gx-3">
+      
+              <AutoCompletePlaces
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                         handleplaces={(places) => handleSearch2(places)}
-                        className="form-control mt-sm-15"
-                        placeholder="Address, State/City, Location"
+                        className="form-control "
+                        placeholder="Enter Address, State/City or Location"
                       />
-          <DropdownInputFields name="cities" filterValues={filterValues} setFilterValues={setFilterValues} label={label} start={0} end={6} lg={lg} sm={sm} lastSm={lastSm} />
-          <RangeInputFields label="Price" name="price" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minPrice?.price)} max={Math.round(maxPrice?.price)} lg={lg} sm={sm} />
-          <RangeInputFields label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minSqft?.sqft)} max={Math.round(maxSqft?.sqft)} lg={lg} sm={sm} />
-          <Col lg={lg || 12}>
-            <button className="btn btn-gradient mt-3" type="submit">
-              Search
-            </button>
-          </Col>
-      </form>
+        <DropdownInputFields filterValues={filterValues} setFilterValues={setFilterValues} label={label} start={0} end={6} lg={lg} sm={sm} lastSm={lastSm} />
+        <RangeInputFields label="Price" name="price" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minPrice?.price)} max={Math.round(maxPrice?.price)} lg={lg} sm={sm} />
+        <RangeInputFields label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minSqft?.sqft)} max={Math.round(maxSqft?.sqft)} lg={lg} sm={sm} />
+        <Col lg={lg || 12}>
+        <button className="btn btn-gradient mt-3" type="submit">
+                Search
+              </button>
+        </Col>
+      
     </Row>
+    </form>
   );
 };
 

@@ -5,20 +5,20 @@
  */
 import React from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import BodyContent from "../../components/property/Apartment";
-import FooterThree from "../../layout/footers/FooterThree";
-import NavbarThree from "../../layout/headers/NavbarThree";
+import BodyContent from "../components/property/Apartment";
+import FooterThree from "../layout/footers/FooterThree";
+import NavbarThree from "../layout/headers/NavbarThree";
 
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 
-const StickyTabOrClassic = () => {
+const ApartmentDetails = () => {
   return (
     <>
       <NavbarThree />
-      <BodyContent side={"right"} />
+      <BodyContent side={"right"}  />
       <FooterThree />
     </>
   );
 };
 
-export default StickyTabOrClassic;
+export default ApartmentDetails;

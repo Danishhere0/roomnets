@@ -26,8 +26,8 @@ const HomeBannerSection = () => {
                     {/* home main slider start*/}
                     <NoSsr>
                       <Slider className="home-slider-1 arrow-light slick-shadow" {...homeSlider1}>
-                        <HomeSliderContent img="/assets/images/signature/2.png" mainTitle="Reality Properties solve your problems" />
-                        <HomeSliderContent img="/assets/images/signature/1.png" mainTitle="Properties Seller" />
+                        <HomeSliderContent img="/assets/images/signature/2.png" mainTitle="Roomnets solve your accommodation problems" />
+                        <HomeSliderContent img="/assets/images/signature/1.png" mainTitle="Your No. 1 Room and Rent Provider" />
                       </Slider>
                     </NoSsr>
                     {/* home main slider end*/}

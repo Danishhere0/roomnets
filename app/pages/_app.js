@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import TapToTop from "../layout/TapToTop";
 import Customizer from "../layout/Customizer";
 import { store } from "../redux-toolkit/store";
-import { store2 } from "../redux/store";
 import "react-toastify/dist/ReactToastify.css";
 import "photoswipe/dist/photoswipe.css";
 import StoreOldData from "../utils/StoreOldData";
@@ -18,9 +17,6 @@ import { ConfigDB } from "../config/themeCustomizerConfig";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const store1Context = createContext();
-  const store2Context = createContext();
-
 
   useEffect(() => {
     router.events.on("routeChangeComplete", () => {
@@ -42,8 +38,8 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon" />
         <title>.............:::: Roomnets: Your One Stop Real Estate Partner Website ::::............</title>
       </Head>
-      <Provider store={store} context={store1Context}>
-        <Provider store={store2} context={store2Context}>
+      <Provider store={store}>
+       {/* <Provider store={store2} context={store2Context}> */}
           <>
             <Component {...pageProps} />
             <Customizer />
@@ -51,7 +47,7 @@ function MyApp({ Component, pageProps }) {
             <StoreOldData />
             <ToastContainer position="bottom-left" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme={"light"} />
           </>
-        </Provider>
+       {/* </Provider>  */}
       </Provider>
     </>
   );

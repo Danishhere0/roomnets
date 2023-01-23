@@ -2,9 +2,9 @@ import { Bell, BookOpen, DollarSign, Home, MapPin, Settings } from "react-feathe
 
 export const AppPropertyData = {
   WhatAreYouLookingFor: [
-    { title: "Apartments", img: "/assets/svg/icons.svg#home-lock", path: "/apartments" },
-    { title: "Rooms", img: "/assets/svg/icons.svg#home-heart", path: "/rooms" },
-    { title: "Room Mates", img: "/assets/svg/icons.svg#key", path: "/room-mates" },
+    { title: "Apartments", img: "/assets/svg/icons.svg#home-lock", path: "/browse_apart" },
+    { title: "Rooms", img: "/assets/svg/icons.svg#home-heart", path: "/browse_rooms" },
+ //   { title: "Room Mates", img: "/assets/svg/icons.svg#key", path: "/room-mates" },
   ],
   PropertyServices: [
     { title: "Property Management", img: <Home />, details: "Property management is the control, maintenance of real estate and physical property." },

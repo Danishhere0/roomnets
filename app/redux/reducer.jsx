@@ -146,12 +146,14 @@ export const PostFlatReducer = (state = PostFlatsInitState, action) => {
 
 const DefaultRegion = { country: "" };
 
-export const CountryReducer = (state = DefaultRegion, action) => {
-  if (action.type === Action_types.SETCOUNTRY) {
-    console.log(action.payload);
-    return { country: action.payload };
+export const CountryReducer = (state = null, action) => {
+  switch(action.type){
+    case Action_types.SETCOUNTRY:
+        console.log(action.payload);
+        return { ...state, country: action.payload };
+    default:
+        return state
   }
-  return state;
 };
 
 const needRoomInitState = {

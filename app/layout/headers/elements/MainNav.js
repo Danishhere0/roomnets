@@ -10,8 +10,7 @@ import MegaMenu from "./mainNavComponents/MegaMenu";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { SETCOUNTRY } from "../../../redux/action";
-import { useHistory } from "react-router";
-
+import { useHistory } from "react-router-dom";
 
 const MainNav = ({ center, icon }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
@@ -22,7 +21,7 @@ const MainNav = ({ center, icon }) => {
   const [countryData, setCountryData] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
-  const country = useSelector(({ CountryReducer }) => CountryReducer.country);
+  const country = useSelector((state) => state.countryReducer);
 
   const handleCountry = (code) => {
     const Setcountry = async () => dispatch(SETCOUNTRY(code));
@@ -46,6 +45,7 @@ const MainNav = ({ center, icon }) => {
           data.country_code === "GH" ||
           data.country_code === "IE" ||
           data.country_code === "KE" ||
+          data.country_code === "DE" ||
           data.country_code === "ZA"
         ) {
           //get country code from api then set it to default if the user has not

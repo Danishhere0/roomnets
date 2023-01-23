@@ -14,8 +14,8 @@ https://sheltos-react.vercel.app/home/modern-video
 
 
 
-https://bitbucket.org/talk2mat2/roomnets/src/master/
-https://bitbucket.org/onyxtechteam/roomnet_reactfront/src/ft-updtes/src/
+Server: https://bitbucket.org/talk2mat2/roomnets/src/master/
+App: https://bitbucket.org/onyxtechteam/roomnet_reactfront/src/ft-updtes/src/
 https://github.com/nollyvenon/roomnets
 
 Roomnet admin details
@@ -25,4 +25,5 @@ Password:- admin@roomnets.com
 
 npm install react-adsense react-google-autocomplete react-paypal-button-v2 react-redux react-responsive-carousel flutterwave-react-v3 paypal/react-paypal-js helmet  
 
+npm install react-paypal-button --save --legacy-peer-deps
 

@@ -2,7 +2,7 @@ import React from "react";
 import Autocomplete from "react-google-autocomplete";
 import { useSelector } from "react-redux";
 const AutoCompletePlaces = (props) => {
-  const country = useSelector(({ CountryReducer }) => CountryReducer.country);
+  const country = useSelector((state) => state.countryReducer);
   return (
     <Autocomplete
       placeholder="Enter location"

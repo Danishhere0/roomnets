@@ -9,6 +9,7 @@ import AboutSection from "./About";
 import BannerSection from "./Banner";
 import BrandSection from "./Brand";
 import CitiesWisePropertySection from "./CitiesWiseProperty";
+import CitiesSection from "./CitiesSection";
 import FeatureSection from "./FeatureSection";
 import HomeBannerSection from "./HomeBanner";
 import OfferSection from "./Offer";
@@ -21,13 +22,14 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
 const BodyContent = () => {
-  const [value, setValue] = useState();
+  const [recentApart, setRecApart] = useState();
+  const [recentRooms, setRecRooms] = useState();
   const [FeaturedData, setFeaturedData] = useState();
   const [testimonialData, setTestimonialData] = useState([]);
 const [ClientTestimonialShortDescript, setShortAboutTestIntro] = useState([]);
 const history = useHistory();
 // const state = history.location.state;
-const country = useSelector(({ CountryReducer }) => CountryReducer.country);
+//  const country = useSelector((state) => state.countryReducer);
 const [homepageData, setHomePageData] = React.useState({
   Banners: [],
   googleAdsScript: "",
@@ -40,12 +42,17 @@ const [searchText, setSearchText] = React.useState();
   useEffect(() => {
     getData(`${process.env.API_URL}/ListRecentApartmentByLoc`)
       .then((res) => {
-        setValue(res.data);
+        setRecApart(res.data);
       })
       .catch((error) => console.log("Error", error));
     getData(`${process.env.API_URL}/FeaturedApartmentByLoc`)
       .then((res) => {
         setFeaturedData(res.data);
+      })
+      .catch((error) => console.log("Error", error));
+    getData(`${process.env.API_URL}/ListRecentRoomsByLoc`)
+      .then((res) => {
+        setRecRooms(res.data);
       })
       .catch((error) => console.log("Error", error));
   }, []);
@@ -81,11 +88,12 @@ const [searchText, setSearchText] = React.useState();
   return (
     <>
       <HomeBannerSection />
-      <RecentApartmentSection value={value?.userData} />
+      <RecentApartmentSection value={recentApart?.LatestPropertyData} />
       <FeatureSection value={FeaturedData?.userData} />
-      <PropertySection value={value?.LatestPropertyData} />
+      <PropertySection value={recentRooms?.LatestPropertyData} />
       <OfferSection value={AppPropertyData.OurNewOffer} />
-      <CitiesWisePropertySection value={value?.FindPropertiesInTheseCities} />
+      {/*<CitiesWisePropertySection value={value?.FindPropertiesInTheseCities} /> */}
+      <CitiesSection />
       <BannerSection />
       
       <TestimonialSection value={testimonialData} ClientTestimonialShortDescript={ClientTestimonialShortDescript} normal={true} />

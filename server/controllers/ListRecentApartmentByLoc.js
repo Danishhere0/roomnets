@@ -28,7 +28,7 @@ exports.ListRecentApartmentByLoc = async (req, res) => {
         return res.status(200).send({
           status: true,
           message: "Search Result Success",
-          userData: response,
+          LatestPropertyData: response,
           total: total,
           limit: limit,
         });

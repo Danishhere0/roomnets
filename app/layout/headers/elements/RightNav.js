@@ -12,13 +12,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Currency from "./rightNavComponents/Currency";
 import Language from "./rightNavComponents/Language";
 import { LOGOUTUSER } from "../../../redux/action";
-import { useHistory, Redirect } from "react-router";
 import {NavLink} from 'reactstrap';
+import { useHistory } from "react-router-dom";
 
 const RightNav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const currentUser = useSelector(({ user }) => user.currentUser);
+  const currentUser = useSelector((state) => state.currentUser);
+
   const handleLogout = () => {
     history.push({
       pathname: "/",
@@ -43,7 +44,7 @@ const RightNav = () => {
                   </NavLink>
                 </li>
               )}
-               {currentUser ? (
+           {/*    {currentUser ? (
                     <ul className="admin-info color-white-a">
                       <li>
                         <NavLink to="">{currentUser.user.firstName}</NavLink>
@@ -61,7 +62,7 @@ const RightNav = () => {
                         <NavLink to="/register">Sign Up</NavLink>
                       </li>
                     </ul>
-                  )}
+                  )}    */}
             </Fragment>
           ))}
         </ul>
