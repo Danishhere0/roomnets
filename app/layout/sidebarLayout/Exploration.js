@@ -6,16 +6,44 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup, Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const Exploration = () => {
-  const [inputs, setInputs] = useState({ name: "", email: "", tbNumbers: "", message: "" });
+  const [inputs, setInputs] = useState({ firstName: "", lastName: "", email: "", mobileNumber: "", message: "" });
   const [modal, setModal] = useState(false);
+  const {
+    firstName,
+    email,
+    message,
+    lastName,
+ //   company,
+    mobileNumber,
+    subject,
+  } = inputs;
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+      setLoading(true);
+      await axios
+        .post(`${process.env.API_URL}/contactForm`, inputs)
+        .then((response) => {
+          setLoading(false);
+          history.replace("/contactsuccess");
+        })
+        .catch((err) => {
+          setLoading(false);
+
+          if (err.response && err.response.data.message) {
+            setErrors([err.response.data.message]);
+          } else {
+            setErrors([
+              "An error occured, make sure you have a working network",
+            ]);
+          }
+          console.log(err);
+        });
     setModal(true);
   };
 
@@ -25,7 +53,10 @@ const Exploration = () => {
       <div className="category-property">
         <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Input type="text" className="form-control" placeholder="Your Name" required name="name" value={inputs.name} onChange={handleChange} />
+            <Input type="text" className="form-control" placeholder="Your First Name" required name="firstName" value={inputs.firstName} onChange={handleChange} />
+          </FormGroup>
+          <FormGroup>
+            <Input type="text" className="form-control" placeholder="Your Last Name" required name="lastName" value={inputs.lastName} onChange={handleChange} />
           </FormGroup>
           <FormGroup className="form-group">
             <Input type="email" className="form-control" placeholder="Email Address" required name="email" value={inputs.email} onChange={handleChange} />
@@ -34,9 +65,9 @@ const Exploration = () => {
             <Input
               placeholder="phone number"
               className="form-control"
-              name="mobnumber"
+              name="mobileNumber"
               required
-              value={inputs.mobnumber || ""}
+              value={inputs.mobileNumber || ""}
               onChange={(e) => {
                 e.target.value.length <= 10 && handleChange(e);
               }}
@@ -59,7 +90,7 @@ const Exploration = () => {
           <br></br>
           <p className="m-1">Email Address : {inputs.email}</p>
           <br></br>
-          <p className="m-1">Mobile Number : {inputs.mobnumber}</p>
+          <p className="m-1">Mobile Number : {inputs.mobileNumber}</p>
           <br></br>
           <p className="m-1">Mobile Number : {inputs.message}</p>
         </ModalBody>

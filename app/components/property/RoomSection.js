@@ -4,8 +4,8 @@
  */
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
-import { LatestForRent, Rent } from "../../constValues/constValues";
-import PropertyBox from "../property/propertyBoxs/PropertyBox";
+import { LatestForSale, Rent } from "../../constValues/constValues";
+import PropertyBox from "./propertyBoxs/PropertyBox";
 
 const PropertySection = ({ value, range }) => {
   return (
@@ -15,7 +15,7 @@ const PropertySection = ({ value, range }) => {
           <Col>
             <div className='title-1'>
               <span className='label label-gradient'>{Rent}</span>
-              <h2>Latest Rooms For Rent</h2>
+              <h2>{LatestForSale}</h2>
               <hr />
             </div>
             <Row className='property-2 column-space'>

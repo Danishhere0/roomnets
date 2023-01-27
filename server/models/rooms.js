@@ -15,6 +15,7 @@ const Rooms = new Schema({
     "KE",
     "ZA"]},
     no_toilets:String,
+    no_baths:String,
     media: [{ uri: String }],
     isPaidAdd: {type:Boolean,default:false},
     isTopAdd: {type:Boolean,default:false},

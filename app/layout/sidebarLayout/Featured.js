@@ -12,38 +12,32 @@ import Img from "../../utils/BackgroundImageRatio";
 import NoSsr from "../../utils/NoSsr";
 
 const Featured = () => {
+  const [FeaturedData, setFeaturedData] = useState();
+  useEffect(() => {
+    getData(`${process.env.API_URL}/FeaturedApartmentByLoc/?queryQty=3`)
+      .then((res) => {
+        setFeaturedData(res.data);
+      })
+      .catch((error) => console.log("Error", error));
+  }, []);
+
   return (
     <div className="advance-card feature-card">
       <h6>Featured</h6>
       <NoSsr>
         <Slider className="feature-slider" {...featureSlider}>
+        {value &&
+                  value.map((data, i) => (
           <div>
-            <Img src="/assets/images/property/4.jpg" className="bg-img" alt="" />
+            <Img src={`/assets/images/apartment/${data.media[0]}`} className="bg-img" alt={data.title} />
             <div className="bottom-feature">
-              <h5>Neverland</h5>
+              <h5>{data.title}</h5>
               <h6>
-                $13,000 <small>/ start from</small>
+                  {data.currency}{data.rent} <small>/ start from</small>
               </h6>
             </div>
           </div>
-          <div>
-            <Img src="/assets/images/property/16.jpg" className="bg-img" alt="" />
-            <div className="bottom-feature">
-              <h5>Neverland</h5>
-              <h6>
-                $13,000 <small>/ start from</small>
-              </h6>
-            </div>
-          </div>
-          <div>
-            <Img src="/assets/images/property/14.jpg" className="bg-img" alt="" />
-            <div className="bottom-feature">
-              <h5>Neverland</h5>
-              <h6>
-                $13,000 <small>/ start from</small>
-              </h6>
-            </div>
-          </div>
+        ))}
         </Slider>
       </NoSsr>
       <div className="labels-left">

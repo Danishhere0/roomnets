@@ -2,18 +2,21 @@ const Apartments = require("../models/apartments");
 
 //list apartments when a user search by address string
 exports.FeaturedApartmentByLoc = async (req, res) => {
+    let limit = req.query.queryQty;
+    if (!req.query.queryQty){
+      let limit = 15;
+    }
     const params = req.query.location
       ? {
           Approved_By_Admin: true,
-          "building_location.address": {
-            $regex: req.query.location,
+          "building_location.address": {            $regex: req.query.location,
             $options: "i",
           },
         }
       : {};
     // console.log(req.query.location)
     let total = await Apartments.countDocuments(params);
-    const limit = 15;
+    
   
     var pageNo = req.query.pageNo || 0;
     var skip = pageNo * limit;

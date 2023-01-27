@@ -4,22 +4,19 @@
  */
 import React from "react";
 import { Col, Row } from "reactstrap";
+import { useHistory } from "react-router";
 
 const AboutDeskBox = () => {
-  const data = [
-    "Residences can be classified by and how they are connected to neighbouring residences and land. Different types of housing tenure can be used for the same physical type.",
-    "connected residences might be owned by a single entity and leased out, or owned separately with an agreement covering the relationship between units and common.",
-    "they are connected to neighbouring residences and land. Different types of housing tenure can be used for the same physical type.",
-  ];
+  const history = useHistory();
+  const state = history.location.state;
   return (
     <div className='about page-section' id='about'>
       <h4>Property Brief</h4>
+      <h5>{state.advert_title}</h5>
       <Row>
-        {data.map((data, i) => (
-          <Col sm='4' key={i}>
-            <p>{data}</p>
+          <Col sm='12'>
+            <p>{state.advert_description}</p>
           </Col>
-        ))}
       </Row>
     </div>
   );

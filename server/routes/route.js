@@ -86,6 +86,7 @@ const { ListRecentRoomsByLoc } = require("../controllers/ListRecentRoomsByLoc");
 const { FeaturedApartmentByLoc } = require("../controllers/FeaturedApartmentByLoc");
 const { FeaturedRoomsByLoc } = require("../controllers/FeaturedRoomsByLoc");
 const { getCitiesByCountry } = require("../controllers/getCitiesByCountry");
+const { ListRooms, ListLatestRooms, ListLatestPaidRooms, ListRandomRooms, ListRandomPaidRooms } = require("../controllers/ListRooms");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -164,8 +165,8 @@ Router.get("/ListRoomsByLnglat", ListRoomsByLnglat);
 Router.get("/BlogPostAllRecent/:country", BlogPostAllRecent);
 Router.get("/getPricesRates/:country", getPricesRates);
 Router.get("/LikeAPost/:postId", LoginbyJWT, LikeAPost);
-Router.get("/getPostApartById/:postId", LoginbyJWT, getPostApartById);
-Router.get("/getPostRoomsById/:postId", LoginbyJWT, getPostRoomsById);
+Router.get("/getPostApartById/:postId", getPostApartById);
+Router.get("/getPostRoomsById/:postId", getPostRoomsById);
 Router.get("/ListApartByLnglat", ListApartByLnglat);
 Router.get("/countDocuments", countDocuments);
 Router.post("/uploadBanners", multerUpload.array("file"), uploadBanners);
@@ -209,5 +210,10 @@ Router.put("/UpdatePostApartById", LoginbyJWT, UpdatePostApartById);
 Router.put("/UpdatePostRoomsById", LoginbyJWT, UpdatePostRoomsById);
 Router.post("/Subscribers", Subscribers);
 Router.get("/BlogRecentPostByDate", BlogRecentPostByDate);
+Router.get("/ListRooms", ListRooms);
+Router.get("/ListLatestRooms", ListLatestRooms);
+Router.get("/ListLatestPaidRooms", ListLatestPaidRooms);
+Router.get("/ListRandomRooms", ListRandomRooms);
+Router.get("/ListRandomPaidRooms", ListRandomPaidRooms);
 
 module.exports = Router;

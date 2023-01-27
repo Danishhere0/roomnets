@@ -25,18 +25,18 @@ const RecentlyAdded = () => {
         <ul>
           {value
             ?.sort((product1, product2) => {
-              let date1 = new Date(product1.date);
-              let date2 = new Date(product2.date);
+              let date1 = new Date(product1.created_at);
+              let date2 = new Date(product2.created_at);
               return date2?.getTime() > date1.getTime() ? -1 : 1;
             })
             ?.map((data, i) => (
               <li key={i}>
                 <div className='media'>
-                  <img src={data.img} className='img-fluid' alt='' />
+                  <img src={`/assets/images/apartment/${data.media[0]}`} className='img-fluid' alt={data.title} />
                   <div className='media-body'>
                     <h5>{data.title}</h5>
                     <span>
-                      ${data.price} / <span>Month</span>
+                    {data.currency}{data.rent} / <span>{data.plan}</span>
                     </span>
                   </div>
                 </div>

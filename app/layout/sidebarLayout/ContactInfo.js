@@ -10,8 +10,12 @@
  */
 import React from "react";
 import { MapPin, PhoneCall } from "react-feather";
+import { useRouter } from "next/router";
 
-const ContactInfo = () => {
+const ContactInfo = (data) => {
+ // const { history,location } = useRouter();
+ // const history = useNavigate();
+ // const state = history.location.state;
   return (
     <div className='advance-card'>
       <h6>Contact Info</h6>
@@ -20,19 +24,19 @@ const ContactInfo = () => {
           <div className='media'>
             <img src='/assets/images/testimonial/3.png' className='img-50' alt='' />
             <div className='media-body ms-2'>
-              <h6>Jonathan Scott</h6>
-              <p>Contact@gmail.com</p>
+              <h6>{data.posted_by.firstName} {data.posted_by.lastName}</h6>
+              <p>{data.posted_by.email}</p>
             </div>
           </div>
         </div>
         <ul>
           <li>
             <MapPin className='me-2' />
-            A-32, Albany, Newyork.
+            {data.building_location.address}
           </li>
           <li>
             <PhoneCall className='me-2' />
-            (+066) 518 - 457 - 5181
+            {data.posted_by.mobileNumber}
           </li>
         </ul>
       </div>

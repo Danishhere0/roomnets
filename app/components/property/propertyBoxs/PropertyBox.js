@@ -23,7 +23,7 @@ const PropertyBox = ({ data, relativeSlider, video }) => {
       {!load ? (
         <div className="property-box">
           <div className="property-image">
-            {relativeSlider ? <ThumbnailSlider images={data.img} videoData={data.video} video={video} /> : <ImageSlider images={data.img} />}
+            {relativeSlider ? <ThumbnailSlider images={data.media} videoData={data.video} video={video} /> : <ImageSlider images={data.media} />}
             <div className="labels-left">
               <PropertyLabel labels={data.label} />
             </div>
@@ -31,14 +31,14 @@ const PropertyBox = ({ data, relativeSlider, video }) => {
               <>
                 <div className="seen-data">
                   <Camera />
-                  <span>{data.img.length || 5}</span>
+                  <span>{data.media.length || 5}</span>
                 </div>
                 <div className="overlay-property-box">
                   <a className="effect-round" title="Compare">
-                    <AddToCompareProducts id={data.id} />
+                    <AddToCompareProducts id={data._id} />
                   </a>
                   <a className="effect-round like" title="wishlist">
-                    <AddToWhishList id={data.id} />
+                    <AddToWhishList id={data._id} />
                   </a>
                 </div>
               </>
@@ -47,31 +47,31 @@ const PropertyBox = ({ data, relativeSlider, video }) => {
 
           <div className="property-details">
             <span className="font-roboto">{data.country || "USA"} </span>
-            <Link href={Array.isArray(data.img) ? `/property/image-slider/?id=${data.id}` : `/property/image-box/?id=${data.id}`}>
-              <h3>{data.title}</h3>
+            <Link href={{pathname:`/room_det?roomId=${data._id}`,state:data._id}}>
+              <h3>{data.advert_title}</h3>
             </Link>
             <h6>
               {symbol}
-              {(data.price * currencyValue).toFixed(2) || (48596.0 * currencyValue).toFixed(2)}*
+              {(data.rent * currencyValue).toFixed(2) || (400.0 * currencyValue).toFixed(2)}*
             </h6>
-            <p className="font-roboto">{data.details || "This home provides wonderful entertaining spaces with a chef kitchen opening. Elegant retreat in a quiet Coral Gables setting.."} </p>
+            <p className="font-roboto">{data.advert_description || "This home provides wonderful entertaining spaces with a chef kitchen opening. Elegant retreat in a quiet Coral Gables setting.."} </p>
             <ul>
               <li>
                 <img src="/assets/images/svg/icon/double-bed.svg" className="img-fluid" alt="" />
-                Bed : {data.bed || 5}
+                Bed : {data.no_rooms || 5}
               </li>
               <li>
                 <img src="/assets/images/svg/icon/bathroom.svg" className="img-fluid" alt="" />
-                Baths : {data.bath || 5}
+                Baths : {data.no_baths || 5}
               </li>
               <li>
                 <img src="/assets/images/svg/icon/square-ruler-tool.svg" className="img-fluid ruler-tool" alt="" />
-                Sq Ft : {data.sqft || 5}
+                Sq Ft : {data.room_size || 60}
               </li>
             </ul>
             <div className="property-btn d-flex">
-              <span>{data.date}</span>
-              <Link href={Array.isArray(data.img) ? `/property/image-slider/?id=${data.id}` : `/property/image-box/?id=${data.id}`}>
+              <span>{data.created_at}</span>
+              <Link href={{pathname:`/room_det?roomId=${data._id}` ,state:data._id}}>
                 <button type="button" className="btn btn-dashed btn-pill">
                   Details
                 </button>

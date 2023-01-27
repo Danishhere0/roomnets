@@ -6,18 +6,71 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import { getData } from "../../../utils/getData";
-import PropertyBox from "../../elements/propertyBoxs/PropertyBox";
+import PropertyBox from "../../property/propertyBoxs/PropertyBox";
 
 const RelatedProperty = () => {
   const [value, setValue] = useState();
+  const history = useHistory();
+  const state = history.location.state;
+  const [roomsList, setRoomList] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [pagination, setPagination] = React.useState({ total: 0, limit: "" });
+  const [pageNo, setpageNo] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    state.location && ListRoomsByLocation();
+    state.lat && ListRoomsByLnglat(state.lng, state.lat);
+  }, []);
+  const handleNextPage = () => {
+    setRoomList([]);
+    state.location && ListRoomsByLocation();
+    state.lat && ListRoomsByLnglat(state.lng, state.lat);
+  };
+
+  const handleFormsearch = (e) => {
+    e.preventDefault();
+    window.location.reload();
+  };
+
+  /*useEffect(() => {
     getData(`${process.env.API_URL}/property`)
       .then((res) => {
-        setValue(res.data?.LatestPropertyData);
+        setValue(res.data?.userData);
       })
       .catch((error) => console.log("Error", error));
-  }, []);
+  }, []);*/
+
+    //search result by lat long
+  const ListRoomsByLnglat = async (lng, lat) => {
+    // const states = "lagos";
+    setLoading(true)
+    await axios
+      .get(`/api/v1/ListRoomsByLnglat/?lng=${lng}&lat=${lat}&pageNo=${pageNo}`)
+      .then((response) => {
+        console.log(response.data);
+        setLoading(false)
+        response.data.userData &&
+          response.data.userData.length > 0 &&
+          setRoomList(response.data.userData);
+        response.data.userData &&
+          response.data.userData.length > 0 &&
+          setPagination({
+            ...pagination,
+            limit: response.data.limit,
+            total: response.data.total,
+          });
+        response.data.userData.length > 0 && setpageNo(pageNo + 1);
+      })
+      .catch((err) => {
+        setLoading(false)
+        console.log(err);
+        if (err.response.data.message) {
+        } else {
+          console.log("error occured");
+        }
+        // console.log(err);
+      });
+  };
   return (
     <section className="property-section pt-0">
       <Container>
@@ -27,8 +80,8 @@ const RelatedProperty = () => {
         <Row className=" ratio_55">
           <Col sm="12" className=" property-grid-3">
             <Row className="property-2  column-sm zoom-gallery property-label property-grid">
-              {value &&
-                value.slice(0, 3).map((data, i) => (
+              {roomsList &&
+                roomsList.slice(0, 3).map((data, i) => (
                   <Col xl="4" md="6" className="wow fadeInUp" key={i}>
                     <PropertyBox data={data} />
                   </Col>

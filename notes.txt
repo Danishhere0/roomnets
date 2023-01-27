@@ -11,7 +11,8 @@ Admin Panel
 https://sheltos-react.vercel.app/home/modern-video
 
 
-
+https://nextjs.org/docs/api-reference/next/router
+https://nextjs.org/docs/routing/dynamic-routes
 
 
 Server: https://bitbucket.org/talk2mat2/roomnets/src/master/
@@ -21,9 +22,32 @@ https://github.com/nollyvenon/roomnets
 Roomnet admin details
 Email:- admin@roomnets.com
 Password:- admin@roomnets.com
-
+==================
+Possible Updates
+==================
+Maps
+Attachments
+Floor plan
+Comments and reviews
+Add Videos
+==================
 
 npm install react-adsense react-google-autocomplete react-paypal-button-v2 react-redux react-responsive-carousel flutterwave-react-v3 paypal/react-paypal-js helmet  
 
 npm install react-paypal-button --save --legacy-peer-deps
 
+
+Home Banner section
+Recent Apartment section
+Recent Room Section
+Featured Rooms Section
+City based Ads
+Testimonial Section
+Supported Brands
+
+Most of these already work, you are to add the country based part which already works in the old codes.
+So when you select a country from the country menu item, it brings rooms and ads from that country. 
+The City based ads brings content from the popular city.
+
+<Link to={{ pathname: "/browse_rooms", state: city.name,  }}>
+<NavLink to="/register">Sign Up</NavLink>

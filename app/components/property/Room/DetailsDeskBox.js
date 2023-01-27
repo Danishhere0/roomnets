@@ -1,7 +1,11 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
+import { useHistory } from "react-router";
 
-const DetailsDeskBox = () => {
+
+const DetailsDeskBox = (roomData) => {
+  //const history = useHistory();
+ // const state = history.location.state;
   return (
     <div className='desc-box' id='details'>
       <div className='page-section'>
@@ -18,50 +22,75 @@ const DetailsDeskBox = () => {
           <Col md='6' xl='4'>
             <ul className='property-list-details'>
               <li>
-                <span>Property Type :</span> House
+                <span>Building Type :</span> {roomData.Building_type}
+              </li>
+              {roomData.building_location && (
+              <li>
+                <span>Address: </span>  {roomData.building_location.address}
+              </li>
+              )}
+              {roomData.building_location && (
+              <li>
+                <span>Street Name: </span>  {roomData.street_name}
+              </li>
+              )}
+              {roomData.rooms_avail_date && (
+              <li>
+                <span>Available Date: </span>  {roomData.rooms_avail_date}
+              </li>
+              )}
+              <li>
+                <span>Number of Occupants :</span> {roomData.no_occupants}
               </li>
               <li>
-                <span>Property ID :</span> ZOEA245
+                <span>Room Size :</span> {roomData.rooms_size}
               </li>
               <li>
-                <span>Property status :</span> For sale
+                Minimum Stay : <span>{roomData.minimum_stay}</span>
               </li>
               <li>
-                <span>Operating Since :</span> 2008
+                Maximum Stay : <span>{roomData.maximum_stay}</span>
               </li>
             </ul>
           </Col>
           <Col md='6' xl='4'>
             <ul className='property-list-details'>
               <li>
-                <span>Price :</span> $ 1,50,000
+                <span>Price :</span> {roomData.currency} {numberWithCommas(roomData.rent)}/
+                        {roomData.rent_method}
               </li>
               <li>
-                <span>Property Size :</span> 1730 sq / ft
+                <span>Broker/Agent fee :</span> {roomData.broker_agent_fee}
               </li>
               <li>
-                <span>Balcony :</span> 2
+                <span>Balcony :</span> {roomData.no_balcony}
               </li>
             </ul>
           </Col>
           <Col md='6' xl='4'>
             <ul className='property-list-details'>
-              <li>
+              {/*<li>
                 <span>City :</span> Newyork
+              </li>*/}
+              <li>
+                <span>Bedrooms :</span> {roomData.no_rooms}
               </li>
               <li>
-                <span>Bedrooms :</span> 8
+                <span>Bathrooms :</span> {roomData.bathrooms}
               </li>
               <li>
-                <span>Bathrooms :</span> 4
+                <span>Toilets :</span> {roomData.no_toilets}
+              </li>
+              <li>
+                <span>Living Rooms :</span> {roomData.living_rooms}
               </li>
             </ul>
           </Col>
         </Row>
-        <h4 className='content-title mt-4'>Attachments</h4>
+      {/*  <h4 className='content-title mt-4'>Attachments</h4>
         <a className='attach-file'>
           <i className='far fa-file-pdf'></i>Demo Property Document{" "}
-        </a>
+              </a> */}
       </div>
     </div>
   );

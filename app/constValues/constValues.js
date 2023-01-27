@@ -2,6 +2,7 @@
 export const MainTitle = "Roomnets solve your problems...";
 export const LatestForSale = "Latest For Sale";
 export const LatestForRent = "Latest For Rent";
+export const LatestRoomForRent = "Latest Rooms For Rent";
 export const SubmitProperty = "Submit property";
 export const WantToBuyOrRentHome = "Want to rent a Home or Apartment?";
 export const Sale = "Sale";

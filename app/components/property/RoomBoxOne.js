@@ -28,16 +28,22 @@ const RoomBoxOne = ({ data }) => {
               <div className="d-flex">
                 <div>
                   <h5>
-                    <Link href={`/room_det/?id=${data._id}`}>{data?.title}</Link>
+                    <Link href={`/room_det?roomId=${encodeURIComponent(data._id)}`}>{data?.title}</Link>
                   </h5>
                   <h6>
                     {symbol}
                     {(data?.rent * currencyValue).toFixed(2)} <small>/ start from</small>
                   </h6>
                 </div>
-                <Link href={`/room_det/?id=${data._id}`}>
-                  <Button className=" btn-gradient mt-3">Details</Button>
-                </Link>
+                {/*<Link href={`/room_det/?id=${data._id}`}>*/}
+                  <Button className=" btn-gradient mt-3" onClick={() => {
+                      router.push({
+                        pathname: '/room_det?roomId=[pid]',
+                        query: { pid: data._id },
+                      })
+                    }}>Details
+                  </Button>
+                {/*</Link>*/}
               </div>
               <div className="overlay-option">
                 <ul>

@@ -48,7 +48,7 @@ exports.PostAddRooms = async (req, res) => {
       } else {
         return res.status(201).send({
           status: true,
-          message: "Post was added successfully",
+          message: "New Room was added successfully",
           usadData: success,
         });
       }

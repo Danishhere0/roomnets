@@ -16,7 +16,8 @@ import RelatedProperty from "./RelatedProperty";
 import SinglePropertySection from "./SingleProperty";
 import SliderBreadcrumbSection from "./SliderBreadcrumb";
 
-const BodyContent = ({ side }) => {
+const BodyContent = ({ side, AprtId }) => {
+
   return (
     <NoSsr>
       <SliderBreadcrumbSection />
@@ -31,7 +32,7 @@ const BodyContent = ({ side }) => {
               <RecentlyAdded />
               <Mortgage />
             </Sidebar>
-            <SinglePropertySection />
+            <SinglePropertySection AprtId={AprtId}/>
           </Row>
         </Container>
       </section>

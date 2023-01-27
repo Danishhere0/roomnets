@@ -35,14 +35,14 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="Roomnets: Your One Stop Real Estate Partner Website" />
         <meta name="keywords" content="Roomnets" />
         <meta name="author" content="Roomnets" />
-        <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon" />
+        <link rel="icon" href="/logo512.png" type="image/x-icon" />
         <title>.............:::: Roomnets: Your One Stop Real Estate Partner Website ::::............</title>
       </Head>
       <Provider store={store}>
        {/* <Provider store={store2} context={store2Context}> */}
           <>
             <Component {...pageProps} />
-            <Customizer />
+           {/* <Customizer /> */}
             <TapToTop />
             <StoreOldData />
             <ToastContainer position="bottom-left" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme={"light"} />

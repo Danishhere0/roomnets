@@ -11,6 +11,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { SETCOUNTRY } from "../../../redux/action";
 import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const MainNav = ({ center, icon }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
@@ -21,6 +22,7 @@ const MainNav = ({ center, icon }) => {
   const [countryData, setCountryData] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
+//  const location = useLocation();
   const country = useSelector((state) => state.countryReducer);
 
   const handleCountry = (code) => {
@@ -70,6 +72,23 @@ const MainNav = ({ center, icon }) => {
   };
 
   useEffect(() => getGeoInfo(), []);
+
+  const regionBanners =
+  country === "KE"
+    ? "Banners_KE"
+    : country === "US"
+    ? "Banners_US"
+    : country === "NG"
+    ? "Banners_NG"
+    : country === "IE"
+    ? "Banners_IE"
+    : country === "ZA"
+    ? "Banners_ZA"
+    : country === "GB"
+    ? "Banners_GB"
+    : country === "GH"
+    ? "Banners_GH"
+    : "";
 
   useEffect(() => {
     const fetchAboutCountry = async () => {
