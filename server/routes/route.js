@@ -86,6 +86,7 @@ const { ListRecentRoomsByLoc } = require("../controllers/ListRecentRoomsByLoc");
 const { FeaturedApartmentByLoc } = require("../controllers/FeaturedApartmentByLoc");
 const { FeaturedRoomsByLoc } = require("../controllers/FeaturedRoomsByLoc");
 const { getCitiesByCountry } = require("../controllers/getCitiesByCountry");
+const { getCountries } = require("../controllers/getCountries");
 const { ListRooms, ListLatestRooms, ListLatestPaidRooms, ListRandomRooms, ListRandomPaidRooms } = require("../controllers/ListRooms");
 
 var storage = multer.diskStorage({
@@ -215,5 +216,6 @@ Router.get("/ListLatestRooms", ListLatestRooms);
 Router.get("/ListLatestPaidRooms", ListLatestPaidRooms);
 Router.get("/ListRandomRooms", ListRandomRooms);
 Router.get("/ListRandomPaidRooms", ListRandomPaidRooms);
+Router.get("/Countries", getCountries);
 
 module.exports = Router;

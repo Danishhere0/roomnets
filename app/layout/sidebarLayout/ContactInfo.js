@@ -24,19 +24,19 @@ const ContactInfo = (data) => {
           <div className='media'>
             <img src='/assets/images/testimonial/3.png' className='img-50' alt='' />
             <div className='media-body ms-2'>
-              <h6>{data.posted_by.firstName} {data.posted_by.lastName}</h6>
-              <p>{data.posted_by.email}</p>
+              <h6>{data.posted_by?.firstName} {data.posted_by?.lastName}</h6>
+              <p>{data.posted_by?.email}</p>
             </div>
           </div>
         </div>
         <ul>
           <li>
             <MapPin className='me-2' />
-            {data.building_location.address}
+            {data.building_location?.address}
           </li>
           <li>
             <PhoneCall className='me-2' />
-            {data.posted_by.mobileNumber}
+            {data.posted_by?.mobileNumber}
           </li>
         </ul>
       </div>

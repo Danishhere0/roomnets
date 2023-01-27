@@ -9,9 +9,6 @@ import { getData } from "../../../utils/getData";
 import PropertyBox from "../../property/propertyBoxs/PropertyBox";
 
 const RelatedProperty = () => {
-  const [value, setValue] = useState();
-  const history = useHistory();
-  const state = history.location.state;
   const [roomsList, setRoomList] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [pagination, setPagination] = React.useState({ total: 0, limit: "" });

@@ -1,7 +1,11 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
 import { useHistory } from "react-router";
+import { formatNumber } from "../../../data/NumberFormat";
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+} 
 
 const DetailsDeskBox = (roomData) => {
   //const history = useHistory();
@@ -56,8 +60,9 @@ const DetailsDeskBox = (roomData) => {
           <Col md='6' xl='4'>
             <ul className='property-list-details'>
               <li>
-                <span>Price :</span> {roomData.currency} {numberWithCommas(roomData.rent)}/
-                        {roomData.rent_method}
+                {/*<span>Price :</span> {roomData.currency} {roomData?.rent?.toLocaleString(undefined, {maximumFractionDigits:2}) }/ */}
+                <span>Price :</span> {roomData.currency} {formatNumber(roomData?.rent) }/
+                        {roomData?.rent_method}
               </li>
               <li>
                 <span>Broker/Agent fee :</span> {roomData.broker_agent_fee}

@@ -5,7 +5,7 @@
  * class of 'label label-success' and the text 'featured'
  * @returns A React component
  */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { featureSlider } from "../../data/slickSlider";
 import Img from "../../utils/BackgroundImageRatio";
@@ -26,8 +26,8 @@ const Featured = () => {
       <h6>Featured</h6>
       <NoSsr>
         <Slider className="feature-slider" {...featureSlider}>
-        {value &&
-                  value.map((data, i) => (
+        {FeaturedData &&
+                  FeaturedData.map((data, i) => (
           <div>
             <Img src={`/assets/images/apartment/${data.media[0]}`} className="bg-img" alt={data.title} />
             <div className="bottom-feature">

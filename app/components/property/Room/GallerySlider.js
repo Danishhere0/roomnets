@@ -2,7 +2,7 @@
  * It takes an array of images and returns a slider with the images
  * @returns The return statement is used to return a value from a function.
  */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { galleryFor, galleryNav } from "../../../data/slickSlider";
 import Img from "../../../utils/BackgroundImageRatio";
@@ -25,11 +25,11 @@ const GallerySlider = ({roomId}) => {
     "/assets/images/property/12.jpg",
   ];*/
   useEffect(() => {
-    const fetch = async (roomId) => {
+    const fetch = async (roomData) => {
       try {
         const res1  = await axios.get(`${process.env.API_URL}/getPostRoomsById`, {
           params: {
-            postId: roomId
+            postId: roomData._id
           },
         });
         setImgData(res1.data.userData[0].media);

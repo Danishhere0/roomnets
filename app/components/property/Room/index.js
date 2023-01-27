@@ -23,13 +23,10 @@ const BodyContent = ({ side, roomId }) => {
   useEffect(() => {
     const fetchAboutIntro2 = async () => {
       try {
-        const res2  = await axios.get(`${process.env.API_URL}/getPostRoomsById/${roomId}`, {
-          params: {
-            postId: roomId
-          },
-        });
-        setRoomData(res2.data.userData[0]);
-        console.log('About page:' + roomId);
+        const res2  = await axios.get(`${process.env.API_URL}/getPostRoomsById/63d14bd4352ac457384663d0`
+        );
+        setRoomData(res2.data.userData);
+        console.log('Room Data page:' + res2.data.userData);
       } catch (err) {
         console.error('About page Error is: '+ roomId);
       }
@@ -37,7 +34,18 @@ const BodyContent = ({ side, roomId }) => {
     fetchAboutIntro2();
   }, []);
 
-
+  useEffect(() => {
+    const fetchAboutBrand = async () => {
+      try {
+        const res4  = await axios.get(`${process.env.API_URL}/getBrands`);
+        setBrandData(res4.data.userData.brand_image);
+        console.log('Brand page:' + res4.data.userData);
+      } catch (err) {
+        console.error('Brand page Error is: '+ err);
+      }
+    };
+    fetchAboutBrand();
+  }, []);
   return (
     <NoSsr>
       <SliderBreadcrumbSection />

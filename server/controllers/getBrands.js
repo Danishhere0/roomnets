@@ -15,7 +15,7 @@ exports.getBrands = async (req, res) => {
     } else {
       return res.status(404).send({
         status: false,
-        message: "No Data Available Currently, Enter Data to continue. Error: " + res.message ,
+        message: "No Data Available Currently: " + res.message ,
       });
     }
     

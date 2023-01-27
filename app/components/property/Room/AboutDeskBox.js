@@ -4,18 +4,15 @@
  */
 import React from "react";
 import { Col, Row } from "reactstrap";
-import { useHistory } from "react-router";
 
-const AboutDeskBox = () => {
-  const history = useHistory();
-  const state = history.location.state;
+const AboutDeskBox = (roomData) => {
   return (
     <div className='about page-section' id='about'>
       <h4>Property Brief</h4>
-      <h5>{state.advert_title}</h5>
+      <h5>{roomData.advert_title}</h5>
       <Row>
           <Col sm='12'>
-            <p>{state.advert_description}</p>
+            <p>{roomData.advert_description}</p>
           </Col>
       </Row>
     </div>

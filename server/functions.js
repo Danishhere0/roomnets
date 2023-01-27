@@ -24,6 +24,6 @@ function validateEmail(email) {
 
       //console.log(trimContent);
       return trimContent;
-    }
+  }
 
-  module.exports = { validateEmail, trimContent };
+  module.exports = { validateEmail, trimContent, getYear, getDays };

@@ -19,8 +19,8 @@ const SinglePropertySection = ({roomData}) => {
     <Col xl='9' lg='8'>
       <div className='description-section'>
         <div className='description-details'>
-          <SearchBarDeskBox fix={fix} />
-          <FeatureDeskBox />
+          <SearchBarDeskBox fix={fix} roomData={roomData}/>
+          <FeatureDeskBox roomData={roomData}/>
           <GalleryDeskBox  roomData={roomData}/>
          {/* <VideoDeskBox  roomId={roomId}/>   */}
           <DetailsDeskBox  roomData={roomData}/>
