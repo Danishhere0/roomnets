@@ -2,25 +2,40 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import axios from "axios";
 
 const Step3 = ({ data, setActive }) => {
   const router = useRouter();
   const [isModal, setIsModal] = useState(false);
   const notify = () => toast("Your form details submitted successfully.", { type: "success", position: "top-right" });
+  const handleRegister = async () => {
+    await axios
+      .post(`${process.env.API_URL}/Register`, data)
+      .then((response) => {
+        router.push('/login')
+        console.log(response.data);
+      })
+      .catch((err) => {
+        if (err.response.data) {
+          alert(err.response.data.message);
+        }
+        console.log(err);
+    });
+  };
   return (
     <div className="wizard-step-3 ">
       <div className="title-3 text-start">
-        <h2>complete details</h2>
+        <h2>Confirm details</h2>
       </div>
       <div className="input-data">
         <div className="account-content">
           <h3>Account information</h3>
           <ul>
             <li>
-              Name : <span className="first_name">{data?.firstname}</span>
+              Name : <span className="firstName">{data?.firstName} {data?.lastName}</span>
             </li>
             <li>
-              phone number : <span className="phone_number">{data?.mobnumber}</span>
+              phone number : <span className="phone_number">{data?.mobileNumber}</span>
             </li>
             <li>
               Email : <span className="email_add">{data?.email}</span>
@@ -33,17 +48,17 @@ const Step3 = ({ data, setActive }) => {
             <li>
               Address :{" "}
               <span className="address-type">
-                {data?.state},{data?.country},{data?.pin}
+                {data?.address},{data?.country},{data?.pin_code}
               </span>
             </li>
             <li>
-              state : <span className="state-name">{data?.state}</span>
+              State : <span className="state-name">{data?.state_name}</span>
             </li>
             <li>
               country : <span className="country-name">{data?.country}</span>
             </li>
             <li>
-              pincode : <span className="pin-code">{data?.pin}</span>
+              Pin code : <span className="pin-code">{data?.pin_code}</span>
             </li>
           </ul>
         </div>
@@ -59,17 +74,18 @@ const Step3 = ({ data, setActive }) => {
       <Modal id="staticBackdrop" isOpen={isModal} centered>
         <ModalBody>
           <h4>Are you sure you want to submit the form?</h4>
-          <p>please confirm the details</p>
+          <p>Please confirm the details</p>
         </ModalBody>
         <ModalFooter>
           <Button onClick={() => setIsModal(false)}>cancel</Button>
           <Button
             onClick={() => {
               setIsModal(false);
+              handleRegister();
               notify();
-              setTimeout(() => {
+             /* setTimeout(() => {
                 router.reload();
-              }, 3000);
+              }, 3000);*/
             }}>
             submit
           </Button>

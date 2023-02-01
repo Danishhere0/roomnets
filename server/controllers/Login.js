@@ -1,5 +1,6 @@
 const UserSchema = require("../models/userModel");
 const functions = require("../functions");
+const jwt = require("jsonwebtoken");
 exports.Login = async function (req, res) {
     const { Email, Password } = req.body;
     if (!Password || !Email) {
@@ -16,6 +17,7 @@ exports.Login = async function (req, res) {
       if (err) throw err;
       if (!user) {
         res.status(404).json({
+          status: 404,
           message: " A user with this account does not exist.",
         });
       } else if (user) {
@@ -23,13 +25,13 @@ exports.Login = async function (req, res) {
         if (!match) {
           return res
             .status(401)
-            .json({ message: "The password is not correct." });
+            .json({status: 401, message: "The password is not correct." });
         } else {
           user.Password = "";
           return res.json({
-            status: true,
+            
             userData: {
-              token: jwt.sign({ user: user }, process.env.JWTKEY, {
+              status: true, token: jwt.sign({ user: user }, process.env.JWTKEY, {
                 expiresIn: "17520hr",
               }),
               user,

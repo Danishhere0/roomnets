@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { User, Lock } from "react-feather";
 import { Col, Container, Row } from "reactstrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -6,10 +6,114 @@ import Link from "next/link";
 import Breadcrumb from "../layout/Breadcrumb/Breadcrumb";
 import FooterThree from "../layout/footers/FooterThree";
 import NavbarThree from "../layout/headers/NavbarThree";
+import { useRouter } from 'next/router';
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 
 const Login = () => {
+  const [errors, setErrors] = React.useState([]);
+  const router = useRouter();
+  const [formResponse, setFormResponse] = React.useState({
+    email: "",
+    password: "",
+  });
+  const [homepageData, setHomePageData] = React.useState({
+    Banners: [],
+    partners:[],
+    googleAdsScript: "",
+  });
+  const [email, setEmail] = React.useState("");
+    const fetchHomepageModels = async () => {
+      return await axios
+        .get(`${process.env.API_URL}/fetchHomepageModels`)
+        .then((response) => response)
+        .catch((err) => err);
+    };
+  const validatePage = async () => {
+    const {
+      password,
+      email,
+    } = formResponse;
+    const newError = new Array();
+    if (!password) {
+      newError.push("You did not provide a password");
+    }
+    if (email && !validateEmail(email)) {
+      newError.push(`"${email}" is not valid email,`);
+    }
+
+    return newError;
+  };
+  React.useEffect(
+    () =>
+      fetchHomepageModels()
+        .then((res) => {
+          console.log(res.data.userData);
+          setHomePageData({ ...res.data.userData });
+        })
+        .catch((err) => console.log(err)),
+
+    []
+  );
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const { email, password } = formResponse;
+
+      await axios.post(`${process.env.API_URL}/login`, {
+            Email: email,
+            Password: password,
+      }).then((res) => {
+        console.log("Res is" +res.status)
+        if (res.status == true || res.status == '200'){
+          // Do a fast client-side transition to the already prefetched dashboard page
+          router.push('/userpanel/dashboard')
+        }else{
+          switch(res.data.status) {
+            case true:
+              return router.push('/userpanel/dashboard');
+            case 404:
+              const notify = () => toast("A user with this account does not exist.", { type: "error", position: "top-right" });
+              return notify();
+            case 401:
+              const notify1 = () => toast("The password is not correct.", { type: "error", position: "top-right" });
+              return notify1();
+            default:
+              const notify2 = () => toast("Try again", { type: "error", position: "top-right" });
+              notify2();
+          }
+        }
+      }).catch((err) => {
+        
+        if (err.response && err.response.data.message) {
+          setErrors([err.response.data.message]);
+          switch(err.response.data.status) {
+            case true:
+              return router.push('/userpanel/dashboard');
+            case 404:
+              const notify = () => toast("A user with this account does not exist.", { type: "error", position: "top-right" });
+              return notify();
+            case 401:
+              const notify1 = () => toast("The password is not correct.", { type: "error", position: "top-right" });
+              return notify1();
+            default:
+              const notify2 = () => toast("Try again", { type: "error", position: "top-right" });
+              notify2();
+          }
+        } else {
+          setErrors([
+            "An error occured, make sure you have a working network",
+          ]);
+        }
+        console.log(err);
+      });
+    };
+
+  useEffect(() => {
+    // Prefetch the dashboard page
+    router.prefetch('/dashboard')
+  }, [])
   return (
     <>
       <NavbarThree />
@@ -22,7 +126,17 @@ const Login = () => {
                 <div className="title-3 text-start">
                   <h2>Log in</h2>
                 </div>
-                <form>
+                <div className="row justify-content-center">
+                  <div className="col-lg-7 text-left">
+                    {errors.length > 0
+                      ? errors.map((xxx) => (
+                          <p className="error-card alert-danger">{xxx}</p>
+                        ))
+                      : null}
+                    <div style={{ height: "10px" }} />
+                  </div>
+                </div>
+                <form onSubmit={handleLogin}>
                   <div className="form-group">
                     <div className="input-group">
                       <div className="input-group-prepend">
@@ -30,7 +144,13 @@ const Login = () => {
                           <User />
                         </div>
                       </div>
-                      <input type="text" className="form-control" placeholder="Enter Email" required />
+                      <input type="text" className="form-control" id="email" name="email" placeholder="Enter Email" required value={formResponse.email}
+                        onChange={(e) =>
+                          setFormResponse({
+                            ...formResponse,
+                            email: e.target.value,
+                          })
+                        }/>
                     </div>
                   </div>
                   <div className="form-group">
@@ -40,7 +160,14 @@ const Login = () => {
                           <Lock />
                         </div>
                       </div>
-                      <input type="password" id="pwd-input" className="form-control" placeholder="Password" maxLength="8" required />
+                      <input type="password" id="password" name="password" className="form-control" placeholder="Password" maxLength="8" required 
+                        value={formResponse.password}
+                        onChange={(e) =>
+                          setFormResponse({
+                            ...formResponse,
+                            password: e.target.value,
+                          })
+                        }/>
                       <div className="input-group-apend">
                         <div className="input-group-text">
                           <i id="pwd-icon" className="far fa-eye-slash"></i>
@@ -53,7 +180,7 @@ const Login = () => {
                     <label className="d-block mb-0" htmlFor="chk-ani">
                       <input className="checkbox_animated" id="chk-ani" type="checkbox" /> <span>Remember me</span>
                     </label>
-                    <Link href="/pages/other-pages/forgot-password" className="font-rubik">
+                    <Link href="/forgot-password" className="font-rubik">
                       Forgot password ?
                     </Link>
                   </div>
@@ -61,11 +188,11 @@ const Login = () => {
                     <button type="submit" className="btn btn-gradient btn-pill me-sm-3 me-2">
                       Log in
                     </button>
-                    <Link href="/pages/other-pages/signup" className="btn btn-dashed btn-pill">
+                    <Link href="/signup" className="btn btn-dashed btn-pill">
                       Create Account
                     </Link>
                   </div>
-                  <div className="divider">
+                 {/* <div className="divider">
                     <h6>or</h6>
                   </div>
                   <div>
@@ -96,7 +223,7 @@ const Login = () => {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div>*/}
                 </form>
               </div>
             </Col>

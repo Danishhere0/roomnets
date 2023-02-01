@@ -9,6 +9,7 @@ import React from "react";
 import GallerySlider from "./GallerySlider";
 
 const GalleryDeskBox = ({roomData}) => {
+ 
   return (
     <div className='desc-box' id='gallery'>
       <div className='page-section ratio3_2'>

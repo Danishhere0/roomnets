@@ -20,6 +20,7 @@ import AdSense from "react-adsense";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+import useGeoLocation from '../../hooks/useGeoLocation';
 
 const BodyContent = () => {
   const [recentApart, setRecApart] = useState();
@@ -37,20 +38,23 @@ const [homepageData, setHomePageData] = React.useState({
 const [open, setOpen] = React.useState(false);
 const [SearchType, setSearchType] = React.useState("apartment");
 const [searchText, setSearchText] = React.useState();
+const applocation = useGeoLocation();
+ const lat = applocation.coordinates.lat;
+ const lng = applocation.coordinates.lng;
 
 
   useEffect(() => {
-    getData(`${process.env.API_URL}/ListRecentApartmentByLoc`)
+    getData(`${process.env.API_URL}/ListRecentApartmentByLoc/?lng=${lng}&lat=${lat}`)
       .then((res) => {
         setRecApart(res.data);
       })
       .catch((error) => console.log("Error", error));
-    getData(`${process.env.API_URL}/FeaturedApartmentByLoc`)
+    getData(`${process.env.API_URL}/ListApartByLnglat/?lng=${lng}&lat=${lat}`)
       .then((res) => {
         setFeaturedData(res.data);
       })
       .catch((error) => console.log("Error", error));
-    getData(`${process.env.API_URL}/ListRecentRoomsByLoc`)
+    getData(`${process.env.API_URL}/ListRoomsByLnglat/?lng=${lng}&lat=${lat}`)
       .then((res) => {
         setRecRooms(res.data);
       })
@@ -88,9 +92,9 @@ const [searchText, setSearchText] = React.useState();
   return (
     <>
       <HomeBannerSection />
-      <RecentApartmentSection value={recentApart?.LatestPropertyData} />
+      <RecentApartmentSection value={recentApart?.userData} />
       <FeatureSection value={FeaturedData?.userData} />
-      <PropertySection value={recentRooms?.LatestPropertyData} />
+      <PropertySection value={recentRooms?.userData} />
       <OfferSection value={AppPropertyData.OurNewOffer} />
       {/*<CitiesWisePropertySection value={value?.FindPropertiesInTheseCities} /> */}
       <CitiesSection />

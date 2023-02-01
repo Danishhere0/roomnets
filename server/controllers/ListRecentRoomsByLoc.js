@@ -1,34 +1,71 @@
 const Rooms = require("../models/rooms");
 
 exports.ListRecentRoomsByLoc = async (req, res) => {
-    const params = req.query.location
-      ? {
-          Approved_By_Admin: true,
-          "building_location.address": {
-            $regex: req.query.location,
-            $options: "i",
+  const limit = req.query.queryQty;
+    if (!req.query.queryQty){
+      const limit = 15;
+    }
+  const lng = parseInt(req.query.lng);
+  const lat = parseInt(req.query.lat);
+  //const limit = 15;
+
+  var pageNo = req.query.pageNo || 0;
+  var skip = pageNo * limit;
+  // console.log(typeof(lng))
+  const params = req.query.lng
+    ? [
+        {
+          $geoNear: {
+            near: {
+              type: "Point",
+              coordinates: [lng, lat],
+            },
+            maxDistance: 120000, //meters if search result disatcne
+            key: "location",
+            distanceField: "distance",
           },
-        }
-      : {};
-    // console.log(req.query.location)
-    let total = await Rooms.countDocuments(params);
-    const limit = 15;
+        },
+        // { $sort: { isPaidAdd: -1, distance: 1, created_at: -1 } },
+        { $sort: { isTopAdd: -1, created_at: -1 } },
+        { $limit: limit },
+        { $unset: "Password" },
+        { $skip: skip },
+        { $match: { Approved_By_Admin: true } },
+
+        // {$count:"total"},
+      ]
+    : [];
+  const paramCount = req.query.lng
+    ? [
+        {
+          $geoNear: {
+            near: {
+              type: "Point",
+              coordinates: [lng, lat],
+            },
+            maxDistance: 120000, //meters if search result disatcne
+            key: "location",
+            distanceField: "distance",
+          },
+        },
+        // { $limit: 7 },
+        { $match: { Approved_By_Admin: true } },
+        { $unset: "Password" },
+        { $count: "total" },
+      ]
+    : [];
+    let total = await Apartments.aggregate(paramCount);
+    totalCount = total[0] ? total[0]["total"] : 0;
   
-    var pageNo = req.query.pageNo || 0;
-  
-    var skip = pageNo * limit;
-  
-    await Rooms.find(params)
+    await Rooms.find(aggregate)
       .populate("posted_by", "-Password")
-      .limit(limit)
-      .skip(skip)
       // .sort({ isTopAdd: -1, created_at: 1 })
       .sort({ isPaidAdd: -1, created_at: -1 })
       .then((response) => {
         return res.status(200).send({
           status: true,
           message: "Search Result Success",
-          LatestPropertyData: response,
+          userData: response,
           total: total,
           limit: limit,
         });

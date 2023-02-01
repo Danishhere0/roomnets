@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
 import ContactInfo from "../../../layout/sidebarLayout/ContactInfo";
 import Exploration from "../../../layout/sidebarLayout/Exploration";
-import Featured from "../../../layout/sidebarLayout/Featured";
+import Featured from "../../../layout/sidebarLayout/FeaturedRooms";
 import Filter from "../../../layout/sidebarLayout/Filter";
 import Mortgage from "../../../layout/sidebarLayout/Mortgage";
 import RecentlyAdded from "../../../layout/sidebarLayout/RecentlyAdded";
@@ -16,22 +16,24 @@ import RelatedProperty from "./RelatedProperty";
 import SinglePropertySection from "./SingleProperty";
 import SliderBreadcrumbSection from "./SliderBreadcrumb";
 import axios from "axios";
+import { getData } from "../../../utils/getData";
+
 
 const BodyContent = ({ side, roomId }) => {
   const [roomData, setRoomData] = useState([]);
+  const [brandData, setBrandData] = useState([]);
 
   useEffect(() => {
-    const fetchAboutIntro2 = async () => {
+    const fetchRoom = async () => {
       try {
-        const res2  = await axios.get(`${process.env.API_URL}/getPostRoomsById/63d14bd4352ac457384663d0`
-        );
-        setRoomData(res2.data.userData);
-        console.log('Room Data page:' + res2.data.userData);
+        const res4  = await axios.get(`${process.env.API_URL}/getPostRoomsById/${roomId}`);
+        setRoomData(res4.data.userData);
+        console.log('Room Data page:' + res4.data.userData);
       } catch (err) {
-        console.error('About page Error is: '+ roomId);
+        console.error('Room Data page Error is: '+ err);
       }
     };
-    fetchAboutIntro2();
+    fetchRoom();
   }, []);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const BodyContent = ({ side, roomId }) => {
   }, []);
   return (
     <NoSsr>
-      <SliderBreadcrumbSection />
+      <SliderBreadcrumbSection roomData={roomData}/>
       <section className="single-property">
         <Container>
           <Row className=" ratio_65">
@@ -56,15 +58,15 @@ const BodyContent = ({ side, roomId }) => {
               <ContactInfo data={roomData} />
               <Exploration />
               <Filter sm={12} />
-              <Featured />
-              <RecentlyAdded />
+              <Featured roomData={roomData}/>
+              <RecentlyAdded roomData={roomData}/>
               <Mortgage />
             </Sidebar>
             <SinglePropertySection roomData={roomData}/>
           </Row>
         </Container>
       </section>
-      <RelatedProperty />
+      <RelatedProperty roomData={roomData}/>
     </NoSsr>
   );
 };

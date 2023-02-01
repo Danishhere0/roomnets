@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { Col, Row } from "reactstrap";
-import { useHistory } from "react-router";
 import { formatNumber } from "../../../data/NumberFormat";
+import { NumericFormat } from 'react-number-format';
 
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-} 
+const numberWithComma = ({x}) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 
-const DetailsDeskBox = (roomData) => {
-  //const history = useHistory();
- // const state = history.location.state;
+const DetailsDeskBox = ({roomData}) => {
+  const [like, setLike] = useState(false);
+  const { state } = roomData;
+  const { no_rooms, Approved_By_Admin, country,no_toilets, no_baths, media, isPaidAdd, isTopAdd, paid_add, location, expire_date, purchase_date, Building_type,rent, rent_method,no_occupants, email, i_am, building_location,  street_name, rooms_avail_date, ad_start_date, ad_end_date, living_rooms, furnished_rooms, broker_agent_fee, rooms_size,minimum_stay, maximum_stay, amenities_swim, amenities_internet, amenities_play_ground, amenities_parking_space, amenities_entry_disabled, amenities_balcony, amenities_others, amenities_private_toilets, existing_room_mates, new_room_mate, advert_title, advert_description, post_code, currency, plan, payment_response, posted_by, created_at, updated_at } = state || {};
+
   return (
     <div className='desc-box' id='details'>
       <div className='page-section'>
@@ -30,7 +32,7 @@ const DetailsDeskBox = (roomData) => {
               </li>
               {roomData.building_location && (
               <li>
-                <span>Address: </span>  {roomData.building_location.address}
+                <span>Address: </span>  {roomData.building_location.address || roomData.building_location}
               </li>
               )}
               {roomData.building_location && (
@@ -50,26 +52,29 @@ const DetailsDeskBox = (roomData) => {
                 <span>Room Size :</span> {roomData.rooms_size}
               </li>
               <li>
-                Minimum Stay : <span>{roomData.minimum_stay}</span>
+                <span>Minimum Stay :</span> {roomData.minimum_stay}
               </li>
               <li>
-                Maximum Stay : <span>{roomData.maximum_stay}</span>
+               <span> Maximum Stay :</span> {roomData.maximum_stay}
               </li>
             </ul>
           </Col>
           <Col md='6' xl='4'>
             <ul className='property-list-details'>
               <li>
-                {/*<span>Price :</span> {roomData.currency} {roomData?.rent?.toLocaleString(undefined, {maximumFractionDigits:2}) }/ */}
-                <span>Price :</span> {roomData.currency} {formatNumber(roomData?.rent) }/
-                        {roomData?.rent_method}
+                <span>Price :</span> {roomData.currency} { roomData?.rent?.toLocaleString(undefined, {maximumFractionDigits:2}) }/ {roomData?.rent_method}
               </li>
               <li>
-                <span>Broker/Agent fee :</span> {roomData.broker_agent_fee}
+                <span>Broker/Agent fee :</span> { roomData?.broker_agent_fee?.toLocaleString(undefined, {maximumFractionDigits:2}) }
               </li>
+              {roomData.amenities_balcony && ( 
               <li>
                 <span>Balcony :</span> {roomData.no_balcony}
-              </li>
+              </li>)}
+              {roomData.amenities_play_ground && ( 
+              <li>
+                <span>Play ground :</span> Yes
+              </li>)}
             </ul>
           </Col>
           <Col md='6' xl='4'>

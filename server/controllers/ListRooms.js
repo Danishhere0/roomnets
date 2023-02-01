@@ -32,7 +32,7 @@ exports.ListLatestTopRooms = async (req, res) => {
       return res.status(200).send({
         status: true,
         message: "Search Result Success",
-        LatestPropertyData: response,
+        userData: response,
         total: total,
         limit: limit,
       });
@@ -78,7 +78,7 @@ exports.ListLatestRooms = async (req, res) => {
         return res.status(200).send({
           status: true,
           message: "Search Result Success",
-          LatestPropertyData: response,
+          userData: response,
           total: total,
           limit: limit,
         });
@@ -125,7 +125,7 @@ exports.ListLatestRooms = async (req, res) => {
         return res.status(200).send({
           status: true,
           message: "Search Result Success",
-          LatestPropertyData: response,
+          userData: response,
           total: total,
           limit: limit,
         });
@@ -167,7 +167,7 @@ exports.ListLatestRooms = async (req, res) => {
         return res.status(200).send({
           status: true,
           message: "Search Result Success",
-          LatestPropertyData: response,
+          userData: response,
           total: total,
           limit: limit,
         });
@@ -210,7 +210,7 @@ exports.ListLatestRooms = async (req, res) => {
         return res.status(200).send({
           status: true,
           message: "Search Result Success",
-          LatestPropertyData: response,
+          userData: response,
           total: total,
           limit: limit,
         });
@@ -257,7 +257,7 @@ exports.ListLatestRooms = async (req, res) => {
         return res.status(200).send({
           status: true,
           message: "Search Result Success",
-          LatestPropertyData: response,
+          userData: response,
           total: total,
           limit: limit,
         });

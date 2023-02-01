@@ -8,25 +8,51 @@ import { mainPropertySlider } from "../../../data/slickSlider";
 import Img from "../../../utils/BackgroundImageRatio";
 import NoSsr from "../../../utils/NoSsr";
 import TopTitle from "./TopTitle";
+import axios from "axios";
 
-const SliderBreadcrumbSection = () => {
-  const breadcrumbBg = ["/assets/images/property/4.jpg", "/assets/images/property/5.jpg", "/assets/images/property/4.jpg", "/assets/images/property/2.jpg"];
-  return (
+const SliderBreadcrumbSection = ({apartData}) => {
+  //const breadcrumbBg = ["/assets/images/property/4.jpg", "/assets/images/property/5.jpg", "/assets/images/property/4.jpg", "/assets/images/property/2.jpg"];
+  const fetchHomepageModels = async () => {
+    return await axios
+      .get(`${process.env.API_URL}/fetchHomepageModels`)
+      .then((response) => response)
+      .catch((err) => err);
+  };
+  
+  const [homepageData, setHomePageData] = React.useState({
+    Banners: [],
+    partners:[],
+    googleAdsScript: "",
+  });
+
+  React.useEffect(
+    () =>
+      fetchHomepageModels()
+        .then((res) => {
+          console.log("breadcrumb:" + res.data.userData);
+          setHomePageData({ ...res.data.userData });
+        })
+        .catch((err) => console.log(err)),
+  
+    []
+  );
+  return ( 
     <section className="ratio_40 breadcrumb-section p-0 single-property-images">
       <NoSsr>
         <Slider className="main-property-slider arrow-image" {...mainPropertySlider}>
-          {breadcrumbBg.map((item, index) => (
-            <div key={index}>
+        {/*  {breadcrumbBg.map((item, index) => (
+            <div key={index}>  */}
               <div>
-                <Img src={item} className="bg-img" alt="" />
+                <img src={"/assets/images/property/"+ `${homepageData.BreadcrumbImage1 || ""}`} className="bg-img" alt="" style="max-height='200px'" />
               </div>
-            </div>
-          ))}
-        </Slider>
+           {/* </div>
+          ))}  */}
+        </Slider>                                                   
       </NoSsr>
-      <TopTitle />
+      <TopTitle apartData={apartData} />
     </section>
   );
-};
+};            
+
 
 export default SliderBreadcrumbSection;

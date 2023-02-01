@@ -14,18 +14,21 @@ const Step1 = ({ setActive, setData }) => {
     <NoSsr>
       <Formik
         initialValues={{
-          firstname: "",
-          mobnumber: "",
+          firstName: "",
+          lastName: "",
+          mobileNumber: "",
           email: "",
           password: "",
+          password2: "",
         }}
         validationSchema={Yup.object().shape({
-          firstname: Yup.string().required(),
-          mobnumber: Yup.number()
-            .test("len", "Must be exactly 9 characters", (val) => String(val) && String(val).length === 9)
+          firstName: Yup.string().required(),
+          mobileNumber: Yup.number()
+            .test("len", "Must be at least 8 characters", (val) => String(val) && String(val).length >= 8)
             .required(),
           email: Yup.string().email().required(),
           password: Yup.string().required(),
+          password2: Yup.string().required(),
         })}
         onSubmit={(values) => {
           setData(values);
@@ -38,12 +41,20 @@ const Step1 = ({ setActive, setData }) => {
                 <h2>Get started</h2>
               </div>
               <Row>
-                <Col md="12" className="form-group col-md-12">
+                <Col md="6" className="form-group">
                   <div className="input-group">
                     <div className="input-group-text">
                       <User />
                     </div>
-                    <Field type="text" component={ReactstrapInput} className="form-control" id="first-name" name="firstname" placeholder="Enter your Name" required="" />
+                    <Field type="text" component={ReactstrapInput} className="form-control" id="firstName" name="firstName" placeholder="Enter your First Name" required="" />
+                  </div>
+                </Col>
+                <Col md="6" className="form-group">
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <User />
+                    </div>
+                    <Field type="text" component={ReactstrapInput} className="form-control" id="lastName" name="lastName" placeholder="Enter your Last Name" required="" />
                   </div>
                 </Col>
                 <Col md="6" className="form-group">
@@ -51,7 +62,7 @@ const Step1 = ({ setActive, setData }) => {
                     <div className="input-group-text">
                       <Phone />
                     </div>
-                    <Field className="form-control" name="mobnumber" component={ReactstrapInput} id="tbNumbers" type="tel" maxLength="9" placeholder="Enter your phone number" />
+                    <Field className="form-control" name="mobileNumber" component={ReactstrapInput} id="mobileNumber" type="tel" maxLength="13" placeholder="Enter your phone number" />
                   </div>
                 </Col>
                 <Col md="6" className="form-group ">
@@ -59,23 +70,36 @@ const Step1 = ({ setActive, setData }) => {
                     <div className="input-group-text">
                       <Mail />
                     </div>
-                    <Field type="email" className="form-control" name="email" id="email" placeholder="e.g,demo@gmail.com" component={ReactstrapInput} />
+                    <Field type="email" className="form-control" name="email" id="email" placeholder="e.g,maryjohn@gmail.com" component={ReactstrapInput} />
                   </div>
                 </Col>
-                <Col sm="12" className="form-group ">
+                <Col sm="6" className="form-group ">
                   <div className="input-group">
                     <div className="input-group-text">
                       <Lock />
                     </div>
-                    <Field type={showPass ? "text" : "password"} id="pwd-input" name="password" className="form-control" placeholder="Password" maxLength="8" component={ReactstrapInput} />
+                    <Field type={showPass ? "text" : "password"} id="password" name="password" className="form-control" placeholder="Password" maxLength="8" component={ReactstrapInput} />
                     <div className="input-group-text">
                       <i id="pwd-icon" className="far fa-eye-slash" onClick={() => setShowPass((prev) => !prev)}></i>
                     </div>
                   </div>
+                </Col>
+                <Col sm="6" className="form-group ">
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <Lock />
+                    </div>
+                    <Field type={showPass ? "text" : "password"} id="password2" name="password2" className="form-control" placeholder="Confirm Your Password" maxLength="8" component={ReactstrapInput} />
+                    <div className="input-group-text">
+                      <i id="pwd-icon" className="far fa-eye-slash" onClick={() => setShowPass((prev) => !prev)}></i>
+                    </div>
+                  </div>
+                </Col>
+                <Col sm="12" className="form-group ">
                   <div className="text-end">
                     <p>
-                      Alerady have an account ?
-                      <Link href="/pages/other-pages/login" className="btn btn-dashed btn-pill">
+                      Already have an account ?
+                      <Link href="/login" className="btn btn-dashed btn-pill">
                         Log in
                       </Link>
                     </p>

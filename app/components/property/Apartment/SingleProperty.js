@@ -12,7 +12,7 @@ import VideoDeskBox from "./VideoDeskBox";
 import ReviewsDeskBox from "./ReviewsDeskBox";
 import PosterDetails from "./PosterDetails";
 
-const SinglePropertySection = ({AprtId}) => {
+const SinglePropertySection = ({apartData}) => {
   const fix = useStickyBar();
   useActiveLinkInStickyBar();
   return (
@@ -21,13 +21,13 @@ const SinglePropertySection = ({AprtId}) => {
         <div className='description-details'>
           <SearchBarDeskBox fix={fix} />
           <FeatureDeskBox />
-          <GalleryDeskBox  AprtId={AprtId}/>
-         {/* <VideoDeskBox  roomId={roomId}/>   */}
-          <DetailsDeskBox  AprtId={AprtId}/>
+          <GalleryDeskBox  apartData={apartData}/>
+         {/* <VideoDeskBox  apartData={apartData}/>   */}
+          <DetailsDeskBox  apartData={apartData}/>
           {/*
-          <FloorPlanDeskBox  AprtId={AprtId}/>
-          <LocationMapDeskBox  AprtId={AprtId}/>
-          <ReviewsDeskBox  AprtId={AprtId}/> 
+          <FloorPlanDeskBox  apartData={apartData}/>
+          <LocationMapDeskBox  apartData={apartData}/>
+          <ReviewsDeskBox  apartData={apartData}/> 
           */}
           <PosterDetails/>
         </div>

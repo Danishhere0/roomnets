@@ -17,9 +17,12 @@ const UserSchema = new Schema({
   isAdmin: { Type: Boolean, default: false },
   created_at: { type: Date, default: Date.now() },
   updated_at: { type: Date, default: Date.now() },
+  city_name: { type: String },
+  state_name: { type: String },
+  pin_code: { type: String },
   country:{type:String,enum:['Nigeria','Kenya','Ireland','USA','UK','South Africa','Ghana']},
   plans: { type: String, default: "Basic" ,enum:['Basic','Premium']},
-
+  registeredDate: Date,
   purchase_date:Date,
   expire_date:Date,
 });

@@ -83,7 +83,7 @@ const { ListApart } = require("../controllers/ListApart");
 const { BlogRecentPostByDate } = require("../controllers/BlogRecentPostByDate");
 const { ListRecentApartmentByLoc } = require("../controllers/ListRecentApartmentByLoc");
 const { ListRecentRoomsByLoc } = require("../controllers/ListRecentRoomsByLoc");
-const { FeaturedApartmentByLoc } = require("../controllers/FeaturedApartmentByLoc");
+const { FeaturedApartmentsByLoc } = require("../controllers/FeaturedApartmentsByLoc");
 const { FeaturedRoomsByLoc } = require("../controllers/FeaturedRoomsByLoc");
 const { getCitiesByCountry } = require("../controllers/getCitiesByCountry");
 const { getCountries } = require("../controllers/getCountries");
@@ -184,7 +184,7 @@ Router.post("/updateAboutUs", updateAboutUs);
 Router.post("/postComment", postComment);
 Router.get("/ListRecentApartmentByLoc", ListRecentApartmentByLoc);
 Router.get("/ListRecentRoomsByLoc", ListRecentRoomsByLoc);
-Router.get("/FeaturedApartmentByLoc", FeaturedApartmentByLoc);
+Router.get("/FeaturedApartmentsByLoc", FeaturedApartmentsByLoc);
 Router.get("/FeaturedRoomsByLoc", FeaturedRoomsByLoc);
 Router.get("/getCitiesByCountry", getCitiesByCountry);
 Router.post(

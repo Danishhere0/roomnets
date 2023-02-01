@@ -11,7 +11,7 @@ import React from "react";
 import { Container } from "reactstrap";
 import AboutDeskBox from "./AboutDeskBox";
 
-const SearchBarDeskBox = ({ fix }) => {
+const SearchBarDeskBox = ({ fix, roomData }) => {
   return (
     <div className="desc-box" id="navigation">
       <div className={`menu-top ${fix ? "sticky" : ""}`}>
@@ -56,7 +56,7 @@ const SearchBarDeskBox = ({ fix }) => {
           </ul>
         </Container>
       </div>
-      <AboutDeskBox />
+      <AboutDeskBox roomData={roomData} />
     </div>
   );
 };

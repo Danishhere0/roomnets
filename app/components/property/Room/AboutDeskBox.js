@@ -5,7 +5,10 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
 
-const AboutDeskBox = (roomData) => {
+const AboutDeskBox = ({roomData}) => {
+  const { state } = roomData;
+  const { advert_title, advert_description } = state || {};
+
   return (
     <div className='about page-section' id='about'>
       <h4>Property Brief</h4>

@@ -17,22 +17,48 @@ import SinglePropertySection from "./SingleProperty";
 import SliderBreadcrumbSection from "./SliderBreadcrumb";
 
 const BodyContent = ({ side, AprtId }) => {
+  const [apartData, setApartData] = useState([]);
 
+  useEffect(() => {
+    const fetchAboutIntro2 = async () => {
+      try {
+        const res2  = await axios.get(`${process.env.API_URL}/getPostApartById/${AprtId}`);
+        setApartData(res2.data.userData);
+       // console.log('Room Data page:' + res2.data.userData);
+      } catch (err) {
+        console.error('About page Error is: '+ AprtId);
+      }
+    };
+    fetchAboutIntro2();
+  }, []);
+
+  useEffect(() => {
+    const fetchAboutBrand = async () => {
+      try {
+        const res4  = await axios.get(`${process.env.API_URL}/getBrands`);
+        setBrandData(res4.data.userData.brand_image);
+        console.log('Brand page:' + res4.data.userData);
+      } catch (err) {
+        console.error('Brand page Error is: '+ err);
+      }
+    };
+    fetchAboutBrand();
+  }, []);
   return (
     <NoSsr>
-      <SliderBreadcrumbSection />
+      <SliderBreadcrumbSection apartData={apartData} />
       <section className="single-property">
         <Container>
           <Row className=" ratio_65">
             <Sidebar mortgage={true} side={side} singleProperty={true}>
-              <ContactInfo />
-              <Exploration />
+              <ContactInfo data={apartData}/>
+              <Exploration apartData={apartData}/>
               <Filter sm={12} />
-              <Featured />
-              <RecentlyAdded />
-              <Mortgage />
+              <Featured apartData={apartData}/>
+              <RecentlyAdded apartData={apartData} />
+              <Mortgage apartData={apartData} />
             </Sidebar>
-            <SinglePropertySection AprtId={AprtId}/>
+            <SinglePropertySection apartData={apartData}/>
           </Row>
         </Container>
       </section>

@@ -39,7 +39,7 @@ const Breadcrumb = ({ right }) => {
   );
   return (
     <section className="breadcrumb-section p-0 ">
-      <Img src={`${homepageData.BreadcrumbImage1 || ""}`} className="bg-img img-fluid" alt="" />
+      <Img src={"/assets/images/property/"+ `${homepageData.BreadcrumbImage1 || ""}`} className="bg-img img-fluid" alt="" />
       <Container>
         <div className={`breadcrumb-content ${right ? "breadcrumb-right" : ""}`}>
           <div>

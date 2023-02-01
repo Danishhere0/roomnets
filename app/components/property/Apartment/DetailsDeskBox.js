@@ -1,12 +1,10 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
-import { useHistory } from "react-router";
 
-
-const DetailsDeskBox = (props) => {
-  const history = useHistory();
-  const state = history.location.state;
-  return (
+const DetailsDeskBox = ({apartData}) => {
+  const { state } = apartData;
+  const { title, no_rooms, Approved_By_Admin, country,no_toilets, no_baths, media, isPaidAdd, isTopAdd, paid_add, location, expire_date, purchase_date, Building_type,rent, rent_method,no_occupants, email, i_am, building_location,  street_name, rooms_avail_date, ad_start_date, ad_end_date, living_rooms, furnished_rooms, broker_agent_fee, rooms_size,minimum_stay, maximum_stay, amenities_swim, amenities_internet, amenities_play_ground, amenities_parking_space, amenities_entry_disabled, amenities_balcony, amenities_others, amenities_private_toilets, existing_room_mates, new_room_mate, advert_title, advert_description, post_code, currency, plan, payment_response, posted_by, created_at, updated_at } = state || {};
+    return (
     <div className='desc-box' id='details'>
       <div className='page-section'>
         <h4 className='content-title'>
@@ -22,55 +20,55 @@ const DetailsDeskBox = (props) => {
           <Col md='6' xl='4'>
             <ul className='property-list-details'>
               <li>
-                <span>Building Type :</span> {state.Building_type}
+                <span>Building Type :</span> {apartData.Building_type}
               </li>
-              {state.building_location && (
+              {apartData.building_location && (
               <li>
-                <span>Address: </span>  {state.building_location.address}
-              </li>
-              )}
-              {state.building_location && (
-              <li>
-                <span>Street Name: </span>  {state.street_name}
+                <span>Address: </span>  {roomData.building_location.address || roomData.building_location}
               </li>
               )}
-              {state.rooms_avail_date && (
+              {apartData.building_location && (
               <li>
-                <span>Date Posted: </span>  {state.created_at}
+                <span>Street Name: </span>  {apartData.street_name}
               </li>
               )}
-              {state.rooms_avail_date && (
+              {apartData.rooms_avail_date && (
               <li>
-                <span>Available Date: </span>  {state.rooms_avail_date}
+                <span>Date Posted: </span>  {apartData.created_at}
+              </li>
+              )}
+              {apartData.rooms_avail_date && (
+              <li>
+                <span>Available Date: </span>  {apartData.rooms_avail_date}
               </li>
               )}
               <li>
-                <span>Number of Occupants :</span> {state.no_occupants}
+                <span>Number of Occupants :</span> {apartData.no_occupants}
               </li>
               <li>
-                <span>Room Size :</span> {state.rooms_size}
+                <span>Room Size :</span> {apartData.rooms_size}
               </li>
               <li>
-                Minimum Stay : <span>{state.minimum_stay}</span>
+                Minimum Stay : <span>{apartData.minimum_stay}</span>
               </li>
               <li>
-                Maximum Stay : <span>{state.maximum_stay}</span>
+                Maximum Stay : <span>{apartData.maximum_stay}</span>
               </li>
             </ul>
           </Col>
           <Col md='6' xl='4'>
             <ul className='property-list-details'>
               <li>
-                <span>Price :</span> {state.currency} {numberWithCommas(state.rent)}/
-                        {state.rent_method}
+                <span>Price :</span> {apartData.currency} { apartData?.rent?.toLocaleString(undefined, {maximumFractionDigits:2}) }/
+                        {apartData.rent_method}
               </li>
               <li>
-                <span>Broker/Agent fee :</span> {state.broker_agent_fee}
+                <span>Broker/Agent fee :</span> { apartData?.broker_agent_fee?.toLocaleString(undefined, {maximumFractionDigits:2}) }
               </li>
               <li>
-                <span>Balcony :</span> {state.no_balcony}
+                <span>Balcony :</span> {apartData.no_balcony}
               </li>
-              {state.amenities_others && (
+              {apartData.amenities_others && (
               <li>
                 <span>Others</span>
               </li>
@@ -83,16 +81,16 @@ const DetailsDeskBox = (props) => {
                 <span>City :</span> Newyork
               </li>*/}
               <li>
-                <span>Bedrooms :</span> {state.no_rooms}
+                <span>Bedrooms :</span> {apartData.no_rooms}
               </li>
               <li>
-                <span>Bathrooms :</span> {state.bathrooms}
+                <span>Bathrooms :</span> {apartData.bathrooms}
               </li>
               <li>
-                <span>Toilets :</span> {state.no_toilets}
+                <span>Toilets :</span> {apartData.no_toilets}
               </li>
               <li>
-                <span>Living Rooms :</span> {state.living_rooms}
+                <span>Living Rooms :</span> {apartData.living_rooms}
               </li>
             </ul>
             </Col>
@@ -103,38 +101,38 @@ const DetailsDeskBox = (props) => {
             <ul className='property-list-details'>
                       <li>
                         Gender:{" "}
-                        <span>{state.new_room_mate.gender || "Any"}</span>
+                        <span>{apartData.new_room_mate.gender || "Any"}</span>
                       </li>
                       <li>
                         Language Spoken:{" "}
                         <span>
-                          {state.new_room_mate.language_spoken || "Any"}
+                          {apartData.new_room_mate.language_spoken || "Any"}
                         </span>
                       </li>
                       <li>
                         Maximum Age:{" "}
-                        <span>{state.new_room_mate.maximum_age || "Any"}</span>
+                        <span>{apartData.new_room_mate.maximum_age || "Any"}</span>
                       </li>
                       <li>
                         Minimum Age:{" "}
-                        <span>{state.new_room_mate.minimum_age || "Any"}</span>
+                        <span>{apartData.new_room_mate.minimum_age || "Any"}</span>
                       </li>
                       <li>
                         Nationality:{" "}
-                        <span>{state.new_room_mate.nationality || "Any"}</span>
+                        <span>{apartData.new_room_mate.nationality || "Any"}</span>
                       </li>
                       <li>
                         Occupation:{" "}
-                        <span>{state.new_room_mate.occupation || "Any"}</span>
+                        <span>{apartData.new_room_mate.occupation || "Any"}</span>
                       </li>
                       <li>
                         Pets Welcomed?:{" "}
-                        <span>{state.new_room_mate.pets || "Any"}</span>
+                        <span>{apartData.new_room_mate.pets || "Any"}</span>
                       </li>
                       <li>
                         Sexual Orientation:{" "}
                         <span>
-                          {state.new_room_mate.sexual_orientation || "Any"}
+                          {apartData.new_room_mate.sexual_orientation || "Any"}
                         </span>
                       </li>
             </ul>

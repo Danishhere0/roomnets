@@ -1,25 +1,18 @@
 const Apartments = require("../models/apartments");
-const UserSchema = require("../models/userModel");
 
-const path = require("path");
-
-exports.ListApartByLnglat = async (req, res) => {
-  const limit = req.query.queryQty;
+//list apartments when a user search by address string
+exports.FeaturedApartmentsByLoc = async (req, res) => {
+    let limit = req.query.queryQty;
     if (!req.query.queryQty){
-      const limit = 15;
+      let limit = 15;
     }
-    if (!req.query.lng || !req.query.lat) {
-      return res.status(404).send({
-        status: false,
-        message: "Longititude and Latitude not provided",
-      });
-    }
+    
     const lng = parseInt(req.query.lng);
     const lat = parseInt(req.query.lat);
     //const limit = 15;
-  
     var pageNo = req.query.pageNo || 0;
     var skip = pageNo * limit;
+  
     // console.log(typeof(lng))
     const params = req.query.lng
       ? [
@@ -35,7 +28,7 @@ exports.ListApartByLnglat = async (req, res) => {
             },
           },
           // { $sort: { isPaidAdd: -1, distance: 1, created_at: -1 } },
-          { $sort: { isTopAdd: -1, created_at: 1 } },
+          { $sort: { isTopAdd: -1, created_at: -1 } },
           { $limit: 7 },
           { $unset: "Password" },
           { $skip: skip },
@@ -63,11 +56,12 @@ exports.ListApartByLnglat = async (req, res) => {
           { $count: "total" },
         ]
       : [];
-    // console.log(req.query.location)
     let total = await Apartments.aggregate(paramCount);
     totalCount = total[0] ? total[0]["total"] : 0;
   
     await Apartments.aggregate(params)
+      //  .sort({ isPaidAdd: -1, created_at: -1 })
+      //.sort({ isTopAdd: -1, created_at: -1 })      
       .then(async (response) => {
         // console.log(response)
         const populated = await UserSchema.populate(response, {
@@ -89,5 +83,6 @@ exports.ListApartByLnglat = async (req, res) => {
           status: false,
           message: "No result found.",
         });
-      });
+    });
   };
+  

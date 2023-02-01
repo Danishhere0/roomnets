@@ -1,5 +1,8 @@
 const UserSchema = require("../models/userModel");
 const functions = require("../functions");
+const Login = require("./login");
+
+var bcrypt = require('bcryptjs');
 
 exports.Register = async (req, res) => {
     const {
@@ -10,7 +13,10 @@ exports.Register = async (req, res) => {
       password2,
       // Gender,
       mobileNumber,
+      city_name,
+      state_name,
       country,
+      pin_code,
     } = req.body;
     // console.log(req.body);
     const Email = email;
@@ -44,22 +50,25 @@ exports.Register = async (req, res) => {
         });
       } else {
         try {
-          const RegisterdDate = new Date();
-  
-          const Passwordhash = bcrypt.hashSync(Password, 10);
-          const newUser = new UserSchema({
-            firstName,
-            mobileNumber,
-            lastName,
-            Email,
-            Password: Passwordhash,
-            RegisterdDate,
-            country,
-          });
-          await newUser.save();
-  
-          this.Login({ body: { Email, Password } }, res);
-          // return res.status(200).send({ message: "account registered successfully" });
+            const registeredDate = new Date();
+    
+            const Passwordhash = bcrypt.hashSync(Password, 10);
+            const newUser = new UserSchema({
+              firstName,
+              mobileNumber,
+              lastName,
+              Email,
+              Password: Passwordhash,
+              city_name,
+              state_name,
+              registeredDate,
+              pin_code,
+              country,
+            });
+            await newUser.save();
+    
+           // this.Login({ body: { Email, Password } }, res);
+            return res.status(200).send({ message: "account registered successfully", ok: "true" });
         } catch (err) {
           console.log(err);
           return res.status(501).send({

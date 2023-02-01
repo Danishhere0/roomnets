@@ -11,15 +11,21 @@ import { featureSlider } from "../../data/slickSlider";
 import Img from "../../utils/BackgroundImageRatio";
 import NoSsr from "../../utils/NoSsr";
 import { getData } from "../../utils/getData";
+import axios from "axios";
 
 const Featured = () => {
-  const [FeaturedData, setFeaturedData] = useState();
+  const [FeaturedData, setFeaturedData] = useState([]);
   useEffect(() => {
-    getData(`${process.env.API_URL}/FeaturedApartmentByLoc?queryQty=3`)
-      .then((res) => {
-        setFeaturedData(res.data.UserData);
-      })
-      .catch((error) => console.log("Error", error));
+    const fetchRoom = async () => {
+      try {
+        const res  = await axios.get(`${process.env.API_URL}/FeaturedRoomsByLoc?queryQty=3`);
+        setFeaturedData(res.data.userData);
+        console.log('Feat Room Data page:' + res.data.userData);
+      } catch (err) {
+        console.error('Room Data page Error is: '+ err);
+      }
+    };
+    fetchRoom();
   }, []);
 
   return (
@@ -29,8 +35,8 @@ const Featured = () => {
         <Slider className="feature-slider" {...featureSlider}>
         {FeaturedData &&
                   FeaturedData.map((data, i) => (
-          <div>
-            <Img src={`/assets/images/apartment/${data.media[0]}`} className="bg-img" alt={data.title} />
+          <div key={i}>
+            <Img src={`/assets/images/rooms/${data.media[0]}`} className="bg-img" alt={data.title} />
             <div className="bottom-feature">
               <h5>{data.title}</h5>
               <h6>

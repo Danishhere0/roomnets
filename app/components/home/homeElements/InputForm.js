@@ -125,7 +125,7 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
     <Row className="gx-3">
       
               <AutoCompletePlaces
-                        value={searchText}
+                        value={searchText || null }
                         onChange={(e) => setSearchText(e.target.value)}
                         handleplaces={(places) => handleSearch2(places)}
                         className="form-control "

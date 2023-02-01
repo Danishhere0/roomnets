@@ -9,21 +9,18 @@ const Step2 = ({ setActive, setData }) => {
   return (
     <Formik
       initialValues={{
-        firstname: "",
-        phone: "",
-        state: "",
+        address: "",
+        city_name: "",
+        state_name: "",
         country: "",
-        pin: "",
+        pin_code: "",
       }}
       validationSchema={Yup.object().shape({
-        firstname: Yup.string().required(),
-        phone: Yup.number()
-          .test("len", "Must be exactly 9 characters", (val) => String(val) && String(val).length === 9)
-          .required(),
-        state: Yup.string().required(),
+        address: Yup.string().required(),
+        state_name: Yup.string().required(),
         country: Yup.string().required(),
-        pin: Yup.number()
-          .test("len", "Must be exactly 5 characters", (val) => String(val) && String(val).length === 5)
+        pin_code: Yup.number()
+          .test("len", "Must be at least 5 characters", (val) => String(val) && String(val).length >= 5)
           .required(),
       })}
       onSubmit={(values) => {
@@ -42,7 +39,7 @@ const Step2 = ({ setActive, setData }) => {
                   <div className="input-group-text">
                     <MapPin />
                   </div>
-                  <Field name="firstname" component={ReactstrapFormikInput} type="text" className="form-control" id="address" placeholder="Enter your Address" />
+                  <Field name="address" component={ReactstrapFormikInput} type="text" className="form-control" id="address" placeholder="Enter your Address" />
                 </div>
               </div>
               <div className="form-group col-md-6">
@@ -50,7 +47,7 @@ const Step2 = ({ setActive, setData }) => {
                   <div className="input-group-text">
                     <Phone />
                   </div>
-                  <Field name="phone" component={ReactstrapFormikInput} type="text" className="form-control" id="city_name" placeholder="Enter your city" />
+                  <Field name="city_name" component={ReactstrapFormikInput} type="text" className="form-control" id="city_name" placeholder="Enter your city" />
                 </div>
               </div>
               <div className="form-group col-md-6">
@@ -58,7 +55,7 @@ const Step2 = ({ setActive, setData }) => {
                   <div className="input-group-text">
                     <MapPin />
                   </div>
-                  <Field type="text" name="state" component={ReactstrapFormikInput} className="form-control" id="state_name" placeholder="Enter your state" />
+                  <Field type="text" name="state_name" component={ReactstrapFormikInput} className="form-control" id="state_name" placeholder="Enter your state" />
                 </div>
               </div>
               <div className="form-group col-md-6">
@@ -74,7 +71,7 @@ const Step2 = ({ setActive, setData }) => {
                   <div className="input-group-text">
                     <MapPin />
                   </div>
-                  <Field name="pin" type="number" component={ReactstrapFormikInput} className="form-control" id="pin_code" placeholder="Enter your pin code" />
+                  <Field name="pin_code" type="number" component={ReactstrapFormikInput} className="form-control" id="pin_code" placeholder="Enter your pin code" />
                 </div>
               </div>
               <div className="next-btn d-flex col-sm-12">

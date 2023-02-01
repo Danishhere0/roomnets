@@ -14,7 +14,7 @@ const GalleryDeskBox = ({roomId}) => {
       <div className='page-section ratio3_2'>
         <h4 className='content-title'>gallery</h4>
         <div className='single-gallery'>
-          <GallerySlider AprtId={AprtId}/>
+          <GallerySlider apartData={apartData}/>
         </div>
       </div>
     </div>

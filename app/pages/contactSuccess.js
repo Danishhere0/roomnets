@@ -45,7 +45,7 @@ const contactSuccess = () => {
       <section className='faq-section log-in'>
         <Container>
           <Row>
-            <div className='col-lg-6 order-lg-1'>
+            <div className='col-lg-9 order-lg-1'>
               <div className='faq-image text-center'>
                 <img src='/assets/images/inner-pages/3.svg' className='img-fluid' alt='' />
                 <h3>Contact Us</h3>
@@ -53,7 +53,9 @@ const contactSuccess = () => {
               </div>
                 <p>Thanks for contacting us, we will get back to you soonest.</p>
             </div>
-            <div className='col-lg-6'>
+            <div className='col-lg-3'>
+              <img src={"/assets/images/contact/"+ `${homepageData.contactPageSideImage || ""}`} className="img-fluid" alt="" />
+
               <SideAdsCard/>
             </div>
           </Row>

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 const SideAdsCard = () => {
     const history = useHistory();
-   // const [homepageData, setHomePageData] = React.useState({ Banners: [],googleAdsScript:"" });
+    const [homepageData, setHomePageData] = React.useState({ Banners: [],googleAdsScript:"" });
    // const country = useSelector(({ CountryReducer }) => CountryReducer.country);
     const fetchHomepageModels = async () => {
         return await axios

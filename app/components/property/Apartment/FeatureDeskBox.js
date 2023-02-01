@@ -1,7 +1,10 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
 
-const FeatureDeskBox = () => {
+const FeatureDeskBox = ({apartData}) => {
+  const { state } = apartData;
+const { title, no_rooms, Approved_By_Admin, country,no_toilets, no_baths, media, isPaidAdd, isTopAdd, paid_add, location, expire_date, purchase_date, Building_type,rent, rent_method,no_occupants, email, i_am, building_location,  street_name, rooms_avail_date, ad_start_date, ad_end_date, living_rooms, furnished_rooms, broker_agent_fee, rooms_size,minimum_stay, maximum_stay, amenities_swim, amenities_internet, amenities_play_ground, amenities_parking_space, amenities_entry_disabled, amenities_balcony, amenities_others, amenities_private_toilets, existing_room_mates, new_room_mate, advert_title, advert_description, post_code, currency, plan, payment_response, posted_by, created_at, updated_at } = state || {};
+
   return (
     <div className='desc-box' id='feature'>
       <div className='page-section feature-dec'>
@@ -9,12 +12,12 @@ const FeatureDeskBox = () => {
         <Row className='single-feature '>
           <Col xxl='3' xl='4' sm='6'>
             <ul>
-              {state.amenities_internet && (
+              {apartData.amenities_internet && (
               <li>
                 <i className='fas fa-wifi'></i> Wi-Fi
               </li>
               )}
-              {state.elevator && (
+              {apartData.elevator && (
               <li>
                 <i className='fas fa-hands'></i> Elevator Lift
               </li>
@@ -22,7 +25,7 @@ const FeatureDeskBox = () => {
               <li>
                 <i className='fas fa-power-off'></i> Power Backup
               </li>
-              {state.amenities_swim && (
+              {apartData.amenities_swim && (
               <li>
                 <i className='fas fa-monument'></i> Swimming Pool
               </li>
@@ -31,17 +34,17 @@ const FeatureDeskBox = () => {
           </Col>
           <Col xxl='3' xl='4' sm='6'>
             <ul>
-              {state.security_guard && (
+              {apartData.security_guard && (
               <li>
                 <i className='fas fa-user-shield'></i> Security Guard
               </li>
               )}
-              {state.cctv && (
+              {apartData.cctv && (
               <li>
                 <i className='fas fa-video'></i> CCTV
               </li>
               )}
-              {state.emergency_exit && (
+              {apartData.emergency_exit && (
               <li>
                 <i className='fas fa-door-open'></i> Emergency Exit
               </li>
@@ -53,12 +56,12 @@ const FeatureDeskBox = () => {
           </Col>
           <Col xxl='3' xl='4' sm='6'>
             <ul>
-            {state.amenities_balcony && (
+            {apartData.amenities_balcony && (
               <li>
                 <i className='fas fa-shower'></i> Balcony
               </li>
               )}
-              {state.amenities_play_ground && (
+              {apartData.amenities_play_ground && (
               <li>
                 <i className='fas fa-shower'></i> Play Ground
               </li>
@@ -66,12 +69,12 @@ const FeatureDeskBox = () => {
               <li>
                 <i className='fas fa-shower'></i> Shower
               </li>
-              {state.amenities_parking_space && (
+              {apartData.amenities_parking_space && (
               <li>
                 <i className='fas fa-car'></i> Parking Space
               </li>
               )}
-              {state.air_conditioning && (
+              {apartData.air_conditioning && (
               <li>
                 <i className='fas fa-fan'></i> Air Conditioning
               </li>
