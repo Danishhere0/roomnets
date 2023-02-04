@@ -1,9 +1,9 @@
 const Rooms = require("../models/rooms");
 
 exports.ListRecentRoomsByLoc = async (req, res) => {
-  const limit = req.query.queryQty;
-    if (!req.query.queryQty){
-      const limit = 15;
+  let limit = 15;
+    if (req.query.queryQty){
+      let limit = req.query.queryQty;
     }
   const lng = parseInt(req.query.lng);
   const lat = parseInt(req.query.lat);
@@ -20,7 +20,7 @@ exports.ListRecentRoomsByLoc = async (req, res) => {
               type: "Point",
               coordinates: [lng, lat],
             },
-            maxDistance: 120000, //meters if search result disatcne
+            maxDistance: Number(120000), //meters if search result disatcne
             key: "location",
             distanceField: "distance",
           },

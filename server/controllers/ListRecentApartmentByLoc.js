@@ -2,9 +2,9 @@
 
   //list apartments when a user search by address string
   exports.ListRecentApartmentByLoc = async (req, res) => {
-    const limit = req.query.queryQty;
-    if (!req.query.queryQty){
-      const limit = 15;
+    let limit = 15;
+    if (req.query.queryQty){
+      let limit = req.query.queryQty;
     }
       const lng = parseInt(req.query.lng);
       const lat = parseInt(req.query.lat);

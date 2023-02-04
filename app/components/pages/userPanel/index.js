@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Col, Container, Row, TabContent, TabPane } from "reactstrap";
 import CardsPaymentTab from "./cards&paymentTab";
-import CreatePropertyTab from "./createPropertyTab";
+import AddApartmentTab from "./AddApartmentTab";
+import AddRoomTab from "./AddRoomTab";
 import FavoritesTab from "./favouritesTab";
 import MyListingTab from "./myListingTab";
 import MyProfileTab from "./myProfileTab";
@@ -29,8 +30,13 @@ const BodyContent = ({ active }) => {
               </TabPane>
             </TabContent>
             <TabContent activeTab={activeTab}>
-              <TabPane tabId='CreateProperty'>
-                <CreatePropertyTab />
+              <TabPane tabId='AddApartment'>
+                <AddApartmentTab />
+              </TabPane>
+            </TabContent>
+            <TabContent activeTab={activeTab}>
+              <TabPane tabId='AddRoom'>
+                <AddRoomTab />
               </TabPane>
             </TabContent>
             <TabContent activeTab={activeTab}>

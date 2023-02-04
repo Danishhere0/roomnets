@@ -8,17 +8,20 @@ exports.ListRoomsByLnglat = async (req, res) => {
     if (!req.query.lng || !req.query.lat) {
       return res.status(404).send({
         status: false,
-        message: "longititude and latidue not provided",
-      });
+        message: "longititude and latitude not provided",
+      }); 
     }
-    const lng = parseInt(req.query.lng);
-    const lat = parseInt(req.query.lat);
-    // console.log(typeof(lng))
     const limit = 15;
   
     var pageNo = req.query.pageNo || 0;
-  
     var skip = pageNo * limit;
+    
+    const lng = Number(req.query.lng);
+    const lat = Number(req.query.lat);
+
+    // console.log(typeof(lng))
+    console.log(lng);
+
     const params = req.query.lng
       ? [
           {
@@ -27,7 +30,7 @@ exports.ListRoomsByLnglat = async (req, res) => {
                 type: "Point",
                 coordinates: [lng, lat],
               },
-              maxDistance: 120000, //meters if search result disatcne
+              maxDistance: 1200, //meters if search result disatcne
               key: "location",
               distanceField: "distance",
             },
@@ -51,7 +54,7 @@ exports.ListRoomsByLnglat = async (req, res) => {
                 type: "Point",
                 coordinates: [lng, lat],
               },
-              maxDistance: 120000, //meters if search result disatcne
+              maxDistance: 1200, //meters if search result disatcne
               key: "location",
               distanceField: "distance",
             },
@@ -64,7 +67,7 @@ exports.ListRoomsByLnglat = async (req, res) => {
       : [];
     // console.log(req.query.location)
     let total = await Rooms.aggregate(paramCount);
-    console.log(total);
+    
     totalCount = total[0] ? total[0]["total"] : 0;
   
     await Rooms.aggregate(params)

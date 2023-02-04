@@ -8,6 +8,11 @@ import UsePagination from "../utils/UsePagination";
 
 const Pagination = ({ toPage, setToPage, totalPages }) => {
   const pages = UsePagination({ toPage: toPage, totalPages: totalPages });
+  const handleNextPage = () => {
+    setRoomList([]);
+    state && ListRoomsBystate();
+  
+  };
 
   if (1 !== totalPages && totalPages !== 0) {
     return (

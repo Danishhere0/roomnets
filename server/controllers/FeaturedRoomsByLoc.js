@@ -1,11 +1,12 @@
 const Rooms = require("../models/rooms");
+const UserSchema = require("../models/userModel");
 
 //list Rooms when a user search by address string
 exports.FeaturedRoomsByLoc = async (req, res) => {
+  let limit = 15;
+  if (req.query.queryQty){
     let limit = req.query.queryQty;
-    if (!req.query.queryQty){
-      let limit = 15;
-    }
+  }
     
     const lng = parseInt(req.query.lng);
     const lat = parseInt(req.query.lat);

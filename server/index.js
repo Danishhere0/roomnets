@@ -380,6 +380,13 @@ if (process.env.NODE_ENV === 'PROD') {
     res.header("Access-Control-Allow-Origin", "*");
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
+}else{
+  app.get('/*', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");    
+    res.header("Access-Control-Allow-Credentials: true ");
+    res.header("Access-Control-Allow-Methods: OPTIONS, GET, POST");
+    res.header("Access-Control-Allow-Headers: Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
+  });
 }
 
 

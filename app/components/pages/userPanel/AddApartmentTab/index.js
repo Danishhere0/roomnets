@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import NoSsr from "../../../../utils/NoSsr";
 import { ReactstrapInput, ReactstrapSelect } from "../../../../utils/ReactstrapInputsValidation";
 
-const CreatePropertyTab = () => {
+const AddApartmentTab = () => {
   // const getUploadParams = ({ meta }) => {
   //   return { url: "https://httpbin.org/post" };
   // };
@@ -79,7 +79,7 @@ const CreatePropertyTab = () => {
                             type="text"
                             className="form-control"
                             label="Property Status"
-                            inputprops={{ options: ["For Rent", "For sale"], defaultOption: "Property Status" }}
+                            inputprops={{ options: ["Rent Apartment", "Rent Room"], defaultOption: "Property Status" }}
                           />
                         </div>
                         <Col sm="4" className="form-group">
@@ -234,4 +234,4 @@ const CreatePropertyTab = () => {
   );
 };
 
-export default CreatePropertyTab;
+export default AddApartmentTab;

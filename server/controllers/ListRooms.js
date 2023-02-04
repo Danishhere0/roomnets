@@ -140,11 +140,9 @@ exports.ListLatestRooms = async (req, res) => {
   };
 
   exports.ListRandomRooms = async (req, res) => {
-    if (!req.query.queryQty){
-      const limit = 15;
-    }else{
-      let limit = req.query.queryQty;
-    }
+    const limit = 15;
+    if (req.query.queryQty) { const limit = req.query.queryQty};
+    
     const params = req.query.location
       ? {
           Approved_By_Admin: true,
@@ -194,12 +192,9 @@ exports.ListLatestRooms = async (req, res) => {
     // console.log(req.query.location)
     let total = await Rooms.countDocuments(params);
     var skip = Math.random()*total; 
-    if (req.query.queryQty !== ""){
-      let limit = 15;
-    }else{
-      let limit = req.query.queryQty;
-    }
-    let limit = req.query.queryQty;
+    const limit = 15;
+    if (req.query.queryQty) { const limit = req.query.queryQty};
+    
     await Rooms.find(params)
       .populate("posted_by", "-Password")
       .limit(limit)

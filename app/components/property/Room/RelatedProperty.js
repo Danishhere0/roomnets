@@ -5,7 +5,6 @@
  */
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-import { getData } from "../../../utils/getData";
 import PropertyBox from "../../property/propertyBoxs/PropertyBox";
 import useGeoLocation from '../../../hooks/useGeoLocation';
 import axios from "axios";
@@ -21,13 +20,15 @@ const RelatedProperty = ({roomData}) => {
  }*/
  const lat = applocation.coordinates.lat;
  const lng = applocation.coordinates.lng;
+ console.log("my loc is:"+ lat)
 
  useEffect(() => {
    const fetchAboutIntro = async () => {
      try {
-       const res1  = await axios.get(`${process.env.API_URL}/ListRoomsByLnglat/?lng=${lng}&lat=${lat}`);
-       setRoomList(res1.data.userData);
-     //  console.log('About page:' + res1.data.userData[0].content);
+       const url =`${process.env.API_URL}/ListRoomsByLnglat/?lng=${lng}&lat=${lat}`;
+       const res11  = await axios.get(url);
+       setRoomList(res11.data.userData);
+       console.log('About page:' + url);
      } catch (err) {
        console.error('About page Error is: '+ err);
      }

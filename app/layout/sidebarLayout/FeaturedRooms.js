@@ -12,13 +12,17 @@ import Img from "../../utils/BackgroundImageRatio";
 import NoSsr from "../../utils/NoSsr";
 import { getData } from "../../utils/getData";
 import axios from "axios";
+import useGeoLocation from '../../hooks/useGeoLocation';
 
 const Featured = () => {
   const [FeaturedData, setFeaturedData] = useState([]);
+  const applocation = useGeoLocation();
+ const lat = applocation.coordinates.lat;
+ const lng = applocation.coordinates.lng;
   useEffect(() => {
     const fetchRoom = async () => {
       try {
-        const res  = await axios.get(`${process.env.API_URL}/FeaturedRoomsByLoc?queryQty=3`);
+        const res  = await axios.get(`${process.env.API_URL}/FeaturedRoomsByLoc/?lng=${lng}&lat=${lat}&queryQty=3`);
         setFeaturedData(res.data.userData);
         console.log('Feat Room Data page:' + res.data.userData);
       } catch (err) {

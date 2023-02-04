@@ -6,7 +6,7 @@
 import React, { Fragment, useEffect } from "react";
 import { Col, Row } from "reactstrap";
 import useFilterProducts from "../../../utils/useFilterProducts";
-import PropertyBox from "../../elements/propertyBoxs/PropertyBox";
+import PropertyBox from "../../property/propertyBoxs/PropertyBox";
 
 const GridLayout = ({ gridStyle, value, gridSize, listSize, relativeSlider, video, setTotalPages, toPage, setToPage, setProductCount, infiniteScroll, myList }) => {
   let cardToShow = 6;

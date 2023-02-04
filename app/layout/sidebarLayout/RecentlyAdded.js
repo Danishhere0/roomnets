@@ -5,14 +5,17 @@
  */
 import React, { useEffect, useState } from "react";
 import { getData } from "../../utils/getData";
-import { useHistory } from "react-router-dom";
+import useGeoLocation from '../../hooks/useGeoLocation';
 
 const RecentlyAdded = () => {
 
   const [value, setValue] = useState();
+  const applocation = useGeoLocation();
+  const lat = applocation.coordinates.lat;
+  const lng = applocation.coordinates.lng;
   
   useEffect(() => {
-    getData(`${process.env.API_URL}/ListApart/?queryQty=3`)
+    getData(`${process.env.API_URL}/ListApartByLnglat/?lng=${lng}&lat=${lat}&queryQty=3`)
       .then((res) => {
         setValue(res.data?.userData);
       })

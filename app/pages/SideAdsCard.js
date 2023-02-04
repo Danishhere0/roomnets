@@ -1,9 +1,27 @@
 import React from "react";
 import axios from "axios";
-const SideAdsCard = () => {
-    const history = useHistory();
-    const [homepageData, setHomePageData] = React.useState({ Banners: [],googleAdsScript:"" });
-   // const country = useSelector(({ CountryReducer }) => CountryReducer.country);
+import { useSelector } from 'react-redux';
+const SideAdsCard = ({ adswidth = "250px" }) => {
+   const [homepageData, setHomePageData] = React.useState({ Banners: [],googleAdsScript:"" });
+   const country = useSelector((state) => state.country);
+  // const country = useSelector(({ CountryReducer }) => CountryReducer.country);
+
+   const regionBanners =
+    country === "KE"
+      ? "Banners_KE"
+      : country === "US"
+      ? "Banners_US"
+      : country === "NG"
+      ? "Banners_NG"
+      : country === "IE"
+      ? "Banners_IE"
+      : country === "ZA"
+      ? "Banners_ZA"
+      : country === "GB"
+      ? "Banners_GB"
+      : country === "GH"
+      ? "Banners_GH"
+      : "";
     const fetchHomepageModels = async () => {
         return await axios
           .get(`/api/v1/fetchHomepageModels`)
@@ -16,11 +34,10 @@ const SideAdsCard = () => {
         .then((res) => setHomePageData({ ...res.data.userData }))
         .catch((err) => console.log(err)),
 
-    []
-    );
+    []);
     return (
         <div
-                style={{ width: "250px" }}
+                style={{ width: adswidth }}
                 className="col-lg-3 my-30 brosw-side-banner"
               >
                 {homepageData &&

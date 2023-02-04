@@ -4,9 +4,9 @@ const UserSchema = require("../models/userModel");
 const path = require("path");
 
 exports.ListApartByLnglat = async (req, res) => {
-  const limit = req.query.queryQty;
-    if (!req.query.queryQty){
-      const limit = 15;
+  let limit = 15;
+    if (req.query.queryQty){
+      let limit = req.query.queryQty;
     }
     if (!req.query.lng || !req.query.lat) {
       return res.status(404).send({

@@ -6,20 +6,25 @@ import FooterThree from "../layout/footers/FooterThree";
 import NavbarThree from "../layout/headers/NavbarThree";
 import GoogleAdsCard from "./GoogleAdsCard";
 import SideAdsCard from "./SideAdsCard";
+import { useRouter } from 'next/router';
+
 
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 
-const Property = () => {
+const browseRooms = () => {
+  const router = useRouter();
+  const { adswidth, gawidth } = router.query;
+
   return (
     <>
       <NavbarThree />
       <Breadcrumb />
-      <GoogleAdsCard />
+      <GoogleAdsCard width = { gawidth }/>
       <BodyContent />
-      <SideAdsCard />
+      <SideAdsCard  adswidth = { adswidth }/>
       <FooterThree />
     </>
   );
 };
 
-export default Property;
+export default browseRooms;

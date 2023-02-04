@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
-const GoogleAdsCard = () => {
-    const history = useHistory();
+import {Helmet} from "react-helmet";
+import Parser from 'html-react-parser'; 
+
+const GoogleAdsCard = (gawidth = "250px") => {
     const [homepageData, setHomePageData] = React.useState({ Banners: [],googleAdsScript:"" });
     const fetchHomepageModels = async () => {
         return await axios

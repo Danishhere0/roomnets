@@ -65,14 +65,19 @@ const UserPanelSidebar = ({ activeTab, setActiveTab }) => {
                 Dashboard
               </NavLink>
             </NavItem>
-            {/* <NavItem>
+            <NavItem>
               <NavLink className={activeTab === 'Listing' ? 'active' : ''} onClick={() => setActiveTab('Listing')}>
                 My Listing
               </NavLink>
-            </NavItem> */}
+            </NavItem> 
             <NavItem>
-              <NavLink className={activeTab === "CreateProperty" ? "active" : ""} onClick={() => setActiveTab("CreateProperty")}>
-                create property
+              <NavLink className={activeTab === "AddApartment" ? "active" : ""} onClick={() => setActiveTab("AddApartment")}>
+                Add Apartment
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className={activeTab === "AddRoom" ? "active" : ""} onClick={() => setActiveTab("AddRoom")}>
+                Add Room
               </NavLink>
             </NavItem>
             <NavItem>

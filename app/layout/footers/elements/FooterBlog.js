@@ -4,6 +4,7 @@ import { Col } from "reactstrap";
 import { FooterData } from "../../../data/footerData";
 const [BlogData, setBlogData] = React.useState([]);
 const [siteContent1, setsiteContent] = React.useState([]);
+import { getData } from "../../utils/getData";
 
 const FooterBlog = ({ isActive, setIsActive, img }) => {
 

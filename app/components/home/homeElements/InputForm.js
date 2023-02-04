@@ -11,20 +11,28 @@ import { getData } from "../../../utils/getData";
 import { DropdownInputFields } from "../../elements/DropdownInputFields";
 import RangeInputFields from "../../elements/RangeInputFields";
 import AutoCompletePlaces from "../../elements/AutoCompletePlaces";
+import axios from "axios";
+import useGeoLocation from '../../../hooks/useGeoLocation';
 
 const InputForm = ({ label, lg, sm, lastSm }) => {
   const [filterValues, setFilterValues] = useState({});
   const [SearchType, setSearchType] = React.useState("apartment");
   const [searchText, setSearchText] = React.useState();
-
+  const [homePageData, setHomePageData] = React.useState();
   const [value, setValue] = useState();
 
-  const fetchHomepageModels = async () => {
-    return await axios
-      .get(`/api/v1/fetchHomepageModels`)
-      .then((response) => response)
-      .catch((err) => err);
-  };
+  useEffect(() => {
+    const fetchAboutIntro = async () => {
+      try {
+        const res1  = await axios.get(`${process.env.API_URL}/fetchHomepageModels`);
+        setHomePageData(res1.data.userData);
+      //  console.log('About page:' + res1.data.userData[0].content);
+      } catch (err) {
+        console.error('InputForm page Error is: '+ err);
+      }
+    };
+    fetchAboutIntro();
+  }, []);
   const handleSearch1 = () => {
     if (!searchText) {
       return alert("search field is empty");
@@ -49,6 +57,10 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
       return handleSearch1;
     }
 
+    //const applocation = useGeoLocation();
+    //const lat = applocation.coordinates.lat;
+    //const lng = applocation.coordinates.lng;
+
     const place_id = places.place_id;
     const lng = await places.geometry.location.lng();
     const lat = await places.geometry.location.lat();
@@ -65,18 +77,6 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
         state: { lng: lng, lat: lat, address: address },
       });
   };
-
-  React.useEffect(
-    () =>
-      fetchHomepageModels()
-        .then((res) => {
-          console.log(res.data.userData);
-          setHomePageData({ ...res.data.userData });
-        })
-        .catch((err) => console.log(err)),
-
-    []
-  );
 
   useEffect(() => {
     getData(`${process.env.API_URL}/searchdata`)

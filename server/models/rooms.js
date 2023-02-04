@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose
 const  {sendmail} =require( "../middlewares/mailer")
 
-
-
 const Rooms = new Schema({
     no_rooms: String,
     Approved_By_Admin:{type:Boolean,default:false,enum:[true,false]},
