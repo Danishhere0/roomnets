@@ -8,8 +8,8 @@ exports.FeaturedRoomsByLoc = async (req, res) => {
     let limit = req.query.queryQty;
   }
     
-    const lng = parseInt(req.query.lng);
-    const lat = parseInt(req.query.lat);
+  const lng = parseInt(req.query.lng ? req.query.lng : req.param.lng );
+  const lat = parseInt(req.query.lat ? req.query.lat : req.param.lat);
     //const limit = 15;
     var pageNo = req.query.pageNo || 0;
     var skip = pageNo * limit;
@@ -37,7 +37,7 @@ exports.FeaturedRoomsByLoc = async (req, res) => {
   
           // {$count:"total"},
         ]
-      : [];
+      : []; 
     const paramCount = req.query.lng
       ? [
           {

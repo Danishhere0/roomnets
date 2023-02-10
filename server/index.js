@@ -38,7 +38,7 @@ database.once('connected', () => {
     console.log('Database Connected');
 })
 const app = express();
-app.use(cors())
+//app.use(cors())
 app.use(express.json());
 //app.use(compression());
 
@@ -361,8 +361,9 @@ const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
 //const Port = process.env.PORT || 8080;
 app.use(adminBro.options.rootPath, router);
 app.use(adminBro.options.loginPath, router);
-app.use(cors());
-
+app.use(cors({
+  origin: '*'
+}));
 app.use('/api/v1', routes)
 // Initialize routes middleware
 app.use('/api/admin', require('./routes/admin'));

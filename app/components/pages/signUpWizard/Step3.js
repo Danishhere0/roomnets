@@ -8,11 +8,16 @@ const Step3 = ({ data, setActive }) => {
   const router = useRouter();
   const [isModal, setIsModal] = useState(false);
   const notify = () => toast("Your form details submitted successfully.", { type: "success", position: "top-right" });
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
   const handleRegister = async () => {
     await axios
-      .post(`${process.env.API_URL}/Register`, data)
+      .post(`${process.env.API_URL}/Register`, data, config)
       .then((response) => {
-        router.push('/login')
+        router.push(`${process.env.API_URL}/login`)
         console.log(response.data);
       })
       .catch((err) => {

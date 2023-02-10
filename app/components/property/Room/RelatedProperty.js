@@ -20,12 +20,12 @@ const RelatedProperty = ({roomData}) => {
  }*/
  const lat = applocation.coordinates.lat;
  const lng = applocation.coordinates.lng;
- console.log("my loc is:"+ lat)
+ console.log("my loc here is:"+ lat)
 
  useEffect(() => {
    const fetchAboutIntro = async () => {
      try {
-       const url =`${process.env.API_URL}/ListRoomsByLnglat/?lng=${lng}&lat=${lat}`;
+       const url =`${process.env.API_URL}/ListRoomsByLnglat?lng=${lng}&lat=${lat}`;
        const res11  = await axios.get(url);
        setRoomList(res11.data.userData);
        console.log('About page:' + url);

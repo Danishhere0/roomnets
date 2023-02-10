@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import NavbarThree from "../../layout/headers/NavbarThree";
 
@@ -8,6 +8,17 @@ import Breadcrumb from "../../layout/Breadcrumb/Breadcrumb";
 import BodyContent from "../../components/pages/userPanel";
 
 const UserDashboard = () => {
+
+  useEffect(() => {
+    {localStorage.getItem('userToken') !== null ?
+    `Logged in as ${localStorage.getItem('userToken').email}` :
+      router.push({
+        pathname: '/login',
+        query: { message: `You are not Logged in` },
+      }) }
+
+  });
+  
   return (
     <>
       <NavbarThree />

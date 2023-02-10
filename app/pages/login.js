@@ -9,12 +9,15 @@ import NavbarThree from "../layout/headers/NavbarThree";
 import { useRouter } from 'next/router';
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useDispatch, useHistory }  from "react-redux";
+import { LOGINSUCCESS } from "../redux/action";
 
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 
 const Login = () => {
   const [errors, setErrors] = React.useState([]);
   const router = useRouter();
+  const dispatch = useDispatch();
   const [formResponse, setFormResponse] = React.useState({
     email: "",
     password: "",
@@ -60,15 +63,29 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     const { email, password } = formResponse;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
 
-      await axios.post(`${process.env.API_URL}/login`, {
-            Email: email,
-            Password: password,
-      }).then((res) => {
+    await axios.post(`${process.env.API_URL}/login`, {
+          Email: email,
+          Password: password, config
+    }).then((res) => {
         console.log("Res is" +res.status)
         if (res.status == true || res.status == '200'){
+          dispatch(LOGINSUCCESS(res.data.userData));
+          localStorage.setItem('userToken', res.data.userData.userToken);
+          localStorage.setItem('userInfo', JSON.stringify(res.data.userData));
+         // console.log("userdata is"+res.data.userData)
+
           // Do a fast client-side transition to the already prefetched dashboard page
-          router.push('/userpanel/dashboard')
+          //router.push('/userpanel/dashboard')
+          router.push({
+            pathname: '/userpanel/dashboard',
+            query: { message: `Welcome back ${email} !` },
+          })
         }else{
           switch(res.data.status) {
             case true:
@@ -86,9 +103,9 @@ const Login = () => {
         }
       }).catch((err) => {
         
-        if (err.response && err.response.data.message) {
-          setErrors([err.response.data.message]);
-          switch(err.response.data.status) {
+        if (err.response && err.res.data.message) {
+          setErrors([err.res.data.message]);
+          switch(err.res.data.status) {
             case true:
               return router.push('/userpanel/dashboard');
             case 404:
@@ -112,7 +129,7 @@ const Login = () => {
 
   useEffect(() => {
     // Prefetch the dashboard page
-    router.prefetch('/dashboard')
+    router.prefetch('/userpanel/dashboard')
   }, [])
   return (
     <>

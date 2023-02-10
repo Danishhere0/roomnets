@@ -1,12 +1,21 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as Action_types from "../../redux/actiontypes";
 
+// initialize userToken from local storage
+/*const userToken = localStorage.getItem('userToken')
+  ? localStorage.getItem('userToken')
+  : null*/
+
 const initialState = {
-  currentUser: null
+  loading: false,
+  currentUser: {},
+  token: null,
+  success: false,
+  error: null,
 };
 
 export const userReducers = createReducer(initialState, {
-  currentUser: (state, action) => {
+  currentUser: (state = initialState, action) => {
       if (action.type === Action_types.LOGINSUCCESS) {
         state.currentUser = action.payload;
       } else {

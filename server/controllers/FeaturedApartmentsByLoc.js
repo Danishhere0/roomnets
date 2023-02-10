@@ -11,14 +11,14 @@ exports.FeaturedApartmentsByLoc = async (req, res) => {
     var pageNo = req.query.pageNo || 0;
     var skip = pageNo * limit;
 
-    const lng = parseInt(req.query.lng);
-    const lat = parseInt(req.query.lat);
+    const lng = parseInt(req.query.lng ? req.query.lng : req.param.lng );
+    const lat = parseInt(req.query.lat ? req.query.lat : req.param.lat);
   
     // console.log(typeof(lng))
     const params = req.query.lng
       ? [
           {
-            $geoNear: {
+            $geoNear: { 
               near: {
                 type: "Point",
                 coordinates: [lng, lat],

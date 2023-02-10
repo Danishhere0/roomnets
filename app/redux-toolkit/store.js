@@ -5,6 +5,7 @@ import { addToCompareReducer } from "./reducers/addToCompareReducer";
 import { currencyReducer } from "./reducers/currencyReducer";
 import { countryReducer } from "./reducers/countryReducer";
 import { userReducers } from "./reducers/userReducers";
+import { adminReducer } from "./reducers/adminReducer";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     currencyReducer,
     countryReducer,
     userReducers,
+    adminReducer,
   },
 });

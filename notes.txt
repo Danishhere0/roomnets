@@ -7,6 +7,12 @@ Admin Panel
 * Copyright 2020 ProjectData (https://projectdata.dev/)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react-nodejs/blob/main/README.md)
 =========================================================
+npm install
+npm run dev
+=====================
+Node Js: http://localhost:3002/api/v1
+Frontend: http://localhost:3000/
+Admin: http://localhost:4000
 
 https://sheltos-react.vercel.app/home/modern-video
 

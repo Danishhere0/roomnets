@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import * as Action_types from "../../redux/actiontypes";
 
 const initialState = {
-  no_femalse: "",
+  no_females: "",
   no_males: "",
   searching_for: "",
   interested_shared_room: "",

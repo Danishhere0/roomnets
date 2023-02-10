@@ -8,7 +8,7 @@ exports.ListApartByLnglat = async (req, res) => {
     if (req.query.queryQty){
       let limit = req.query.queryQty;
     }
-    if (!req.query.lng || !req.query.lat) {
+    if (!req.query.lng && !req.query.lat && !req.param.lng && !req.param.lat) {
       return res.status(404).send({
         status: false,
         message: "Longititude and Latitude not provided",

@@ -7,11 +7,15 @@ import NoSsr from "../../../../utils/NoSsr";
 import { ReactstrapInput, ReactstrapSelect } from "../../../../utils/ReactstrapInputsValidation";
 import AutoCompletePlaces from "../../../elements/AutoCompletePlaces";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const AddRoomTab = () => {
   const [ImageState, setImageState] = React.useState([]);
   const [errors, setErrors] = React.useState([]);
-  const country = useSelector((state) => state.countryReducer);
+  const country = useSelector((state) => state.countryReducer.country);
+  const postRoomReducer = useSelector((state) => state.postRoomReducer);
+  const { currentUser } = useSelector((state) => state.userReducers);
+  const token = currentUser && currentUser.token;
 
   const [formResponse, setFormResponse] = React.useState({
     no_rooms: "",
@@ -113,7 +117,7 @@ const AddRoomTab = () => {
     const { advert_description, advert_title } = formResponse;
 
     const newError = new Array();
-    if (!advert_title) {
+    /*if (!advert_title) {
       newError.push("Advert title can not be blank");
     }
 
@@ -122,12 +126,13 @@ const AddRoomTab = () => {
     }
     if (ImageState.length < 1) {
       newError.push("You must select at least one image or more");
-    }
+    }*/
 
     return newError;
   };
 
   const handleNext = async () => {
+    console.log("the token: " + currentUser)
     await validatePage().then(async (res) => {
       if (res.length > 0) {
         setErrors(res);
@@ -140,14 +145,17 @@ const AddRoomTab = () => {
           formData.append("file", ImageState[x]["Uri"]);
         }
         // dispatch(SETPOSTROOMPROCESS(formResponse));
-        setLoading(true);
+        //setLoading(true);
+        const userToken = localStorage.getItem('userToken')
+        ? localStorage.getItem('userToken')
+        : null
         await axios({
-          url: `/Api/v1/PostAddRoms`,
+          url: `${process.env.API_URL}/PostAddRooms`,
           method: "POST",
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: token,
+            Authorization: userToken,
           },
         })
           .then(function (response) {
@@ -156,7 +164,7 @@ const AddRoomTab = () => {
             if (response.data.status) {
               if(add_type==="PREMIUM")
               {
-                history.replace(`/Upgrade-room/${response.data.usadData._id}`);
+                history.replace(`/Upgrade-room/${response.data.Data._id}`);
               }
              else{
                 history.replace("/process-rooms-success");
@@ -165,7 +173,7 @@ const AddRoomTab = () => {
           })
           .catch((err) => {
             console.log(err)
-            setLoading(false);
+            //setLoading(false);
             alert("An error occured");
           });
       }
@@ -197,43 +205,9 @@ const AddRoomTab = () => {
     <NoSsr>
       <Formik
         initialValues={{
-          building_location: {
-            lat: "",
-            lng: "",
-            place_id: "",
-            address: "",
-          },
-          street_name: "",
-          rooms_avail_date: "",
-          living_rooms: "",
-          furnished_rooms: "",
-          broker_agent_fee: "",
-          rooms_size: "",
-          minimum_stay: "",
-          maximum_stay: "",
-          amenities_swim: false,
-          amenities_internet: false,
-          amenities_private_toilets: false,
-          amenities_play_ground: false,
-          amenities_parking_space: false,
-          amenities_entry_disabled: false,
-          amenities_balcony: false,
-          amenities_others: false,
+          
         }}
         validationSchema={Yup.object().shape({
-          Building_type: Yup.string().required(),
-          rent: Yup.string().required(),
-          rent_method: Yup.number().required(),
-          no_occupants: Yup.string().required(),
-          email: Yup.string().required(),
-          i_am: Yup.string().required(),
-          building_location: Yup.string().required(),
-          street_name: Yup.number().required(),
-          rooms_avail_date: Yup.string().required(),
-          amenities_private_toilets: Yup.string().required(),
-          living_rooms: Yup.string().required(),
-          post_code: Yup.string().min(5).max(8).required(),
-          country: Yup.string().required(),
         })}
         onSubmit={(values) => {
           console.log(values);
@@ -285,6 +259,7 @@ const AddRoomTab = () => {
                         <Col sm="4" className="form-group">
                           <Field
                             name="Building_type"
+                            id="Building_type"
                             component={ReactstrapSelect}
                             type="text"
                             className="form-control"
@@ -484,12 +459,12 @@ const AddRoomTab = () => {
                           />
                         </Col>
                         <Col sm="12" className="form-group">
-                          <Field type="textarea" onChange={(e) =>
+                          <Field type="text" onChange={(e) =>
                               setFormResponse({
                                 ...formResponse,
                                 advert_title: e.target.value,
                               })
-                            } name="advert_title" id="advert_title" component={ReactstrapInput} className="form-control" rows={4} label="Description" />
+                            } name="advert_title" id="advert_title" component={ReactstrapInput} className="form-control" label="Advert Title" />
                         </Col>
                         <Col sm="12" className="form-group">
                           <Field type="textarea" onChange={(e) =>
@@ -604,8 +579,8 @@ const AddRoomTab = () => {
                           <Dropzone name="file" id="file"
                             // getUploadParams={getUploadParams}
                             // onChangeStatus={handleChangeStatus}
-                            maxFiles={1}
-                            multiple={false}
+                            maxFiles={10}
+                            multiple={true}
                             canCancel={false}
                             inputContent="Drop A File"
                             styles={{
