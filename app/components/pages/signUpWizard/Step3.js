@@ -17,6 +17,7 @@ const Step3 = ({ data, setActive }) => {
   const handleRegister = async () => {
     await axios
       .post(`${process.env.API_URL}/Register`, data, config)
+      .post(`${process.env.API_URL}/Register`, data, config)
       .then((response) => {
         router.push(`${process.env.WEB_URL}/login`)
         console.log(response.data);

@@ -7,6 +7,7 @@ import * as Action_types from "../../redux/actiontypes";
   : null*/
 
 const initialState = {
+  loading: false,
   currentUser: {},
   token: null,
   success: false,
@@ -14,7 +15,7 @@ const initialState = {
 };
 
 export const userReducers = createReducer(initialState, {
-  currentUser: (state, action) => {
+  currentUser: (state = initialState, action) => {
       if (action.type === Action_types.LOGINSUCCESS) {
         state.currentUser = action.payload;
       } else {

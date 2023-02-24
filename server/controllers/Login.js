@@ -31,7 +31,7 @@ exports.Login = async function (req, res) {
           return res.json({
             status: true,
             userData: {
-              userToken: jwt.sign({ user: user }, `${process.env.JWTKEY}`, {
+              status: true, userToken: jwt.sign({ user: user }, process.env.JWTKEY, {
                 expiresIn: "17520hr",
               }),
               user,

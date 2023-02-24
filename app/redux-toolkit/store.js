@@ -6,6 +6,7 @@ import { currencyReducer } from "./reducers/currencyReducer";
 import { countryReducer } from "./reducers/countryReducer";
 import { userReducers } from "./reducers/userReducers";
 import { adminReducer } from "./reducers/adminReducer";
+import { adminReducer } from "./reducers/adminReducer";
 
 import authReducer from "./slices/auth";
 import messageReducer from "./slices/message";

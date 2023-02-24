@@ -115,12 +115,12 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
   let minSqft =
     value?.length !== 0 &&
     value?.reduce(function (res, obj) {
-      return Math.round(obj?.sqft) < Math.round(res?.sqft) ? obj : res;
+      return Math.round(obj?.rooms_size) < Math.round(res?.rooms_size) ? obj : res;
     });
   let maxSqft =
     value?.length !== 0 &&
     value?.reduce(function (res, obj) {
-      return Math.round(obj?.sqft) > Math.round(res?.sqft) ? obj : res;
+      return Math.round(obj?.rooms_size) > Math.round(res?.rooms_size) ? obj : res;
     });
 
   return (

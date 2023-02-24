@@ -5,7 +5,8 @@ import PropertyOverview from "./PropertyOverview";
 import SalesByAgent from "./SalesByAgent";
 import SalesOverview from "./SalesOverview";
 import SmallBarCard from "./SmallBarCard";
-import { useRouter } from 'next/router';
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { getCookie } from 'cookies-next';
 import { hasCookie } from 'cookies-next';
 

@@ -8,7 +8,6 @@ import { ReactstrapInput, ReactstrapSelect } from "../../../../utils/ReactstrapI
 import AutoCompletePlaces from "../../../elements/AutoCompletePlaces";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { useRouter } from 'next/router';
 
 const AddRoomTab = () => {
   const [ImageState, setImageState] = React.useState([]);
@@ -140,6 +139,7 @@ const AddRoomTab = () => {
 
     const newError = new Array();
     /*if (!advert_title) {
+    /*if (!advert_title) {
       newError.push("Advert title can not be blank");
     }
 
@@ -149,11 +149,13 @@ const AddRoomTab = () => {
     if (ImageState.length < 1) {
       newError.push("You must select at least one image or more");
     }*/
+    }*/
 
     return newError;
   };
 
   const handleNext = async () => {
+    console.log("the token: " + currentUser)
     console.log("the token: " + currentUser)
     await validatePage().then(async (res) => {
       if (res.length > 0) {
@@ -170,6 +172,7 @@ const AddRoomTab = () => {
         //setLoading(true);
         const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
         await axios({
+          url: `${process.env.API_URL}/PostAddRooms`,
           url: `${process.env.API_URL}/PostAddRooms`,
           method: "POST",
           data: formData,
@@ -292,6 +295,7 @@ const AddRoomTab = () => {
                         <Col sm="4" className="form-group">
                           <Field
                             name="Building_type"
+                            id="Building_type"
                             id="Building_type"
                             component={ReactstrapSelect}
                             type="text"
@@ -635,6 +639,8 @@ const AddRoomTab = () => {
                           <Dropzone name="file" id="file"
                             // getUploadParams={getUploadParams}
                             // onChangeStatus={handleChangeStatus}
+                            maxFiles={10}
+                            multiple={true}
                             maxFiles={10}
                             multiple={true}
                             canCancel={false}

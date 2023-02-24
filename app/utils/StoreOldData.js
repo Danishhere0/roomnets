@@ -8,6 +8,7 @@ const StoreOldData = () => {
   const { currentUser } = useSelector((state) => state.auth.currentUser);
   const { adminUser } = useSelector((state) => state.adminAuthReducer);
 
+
   useEffect(() => {
     dispatch({ type: "defineLikedProducts", payload: JSON.parse(localStorage.getItem("likedProducts")) || [] });
     dispatch({ type: "defineCompareProducts", payload: JSON.parse(localStorage.getItem("compareProducts")) || [] });
