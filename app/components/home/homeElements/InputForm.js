@@ -13,6 +13,7 @@ import RangeInputFields from "../../elements/RangeInputFields";
 import AutoCompletePlaces from "../../elements/AutoCompletePlaces";
 import axios from "axios";
 import useGeoLocation from '../../../hooks/useGeoLocation';
+import InputRange from 'react-input-range';
 
 const InputForm = ({ label, lg, sm, lastSm }) => {
   const [filterValues, setFilterValues] = useState({});
@@ -93,26 +94,10 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
       .catch((error) => console.log("Error", error));
   }, []);
 
-  let minPrice =
-    value?.length !== 0 &&
-    value?.reduce(function (res, obj) {
-      return Math.round(obj?.price) < Math.round(res?.price) ? obj : res;
-    });
-  let maxPrice =
-    value?.length !== 0 &&
-    value?.reduce(function (res, obj) {
-      return Math.round(obj?.price) > Math.round(res?.price) ? obj : res;
-    });
-  let minSqft =
-    value?.length !== 0 &&
-    value?.reduce(function (res, obj) {
-      return Math.round(obj?.sqft) < Math.round(res?.sqft) ? obj : res;
-    });
-  let maxSqft =
-    value?.length !== 0 &&
-    value?.reduce(function (res, obj) {
-      return Math.round(obj?.sqft) > Math.round(res?.sqft) ? obj : res;
-    });
+  let minRent = 200;
+  let maxRent = 10000;
+  let minSqft = 30;
+  let maxSqft = 1000;
 
   return (
     <form
@@ -132,8 +117,10 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
                         placeholder="Enter Address, State/City or Location"
                       />
         <DropdownInputFields filterValues={filterValues} setFilterValues={setFilterValues} label={label} start={0} end={6} lg={lg} sm={sm} lastSm={lastSm} />
-        <RangeInputFields label="Price" name="price" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minPrice?.price)} max={Math.round(maxPrice?.price)} lg={lg} sm={sm} />
-        <RangeInputFields label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minSqft?.sqft)} max={Math.round(maxSqft?.sqft)} lg={lg} sm={sm} />
+        <InputRange label="Rent" name="rent" filterValues={filterValues} setFilterValues={setFilterValues} maxValue={Math.round(maxRent)} minValue={Math.round(minRent)}  value={Math.round(minRent)}  lg={lg} sm={sm} />
+        <InputRange label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} maxValue={Math.round(maxSqft)} minValue={Math.round(minSqft)} value={Math.round(minSqft)}  lg={lg} sm={sm} />
+        { /*<RangeInputFields label="Rent" name="rent" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minRent)} max={Math.round(maxRent)} lg={lg} sm={sm} />
+        <RangeInputFields label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} min="30" max={Math.round(maxSqft)} lg={lg} sm={sm} /> */ }
         <Col lg={lg || 12}>
         <button className="btn btn-gradient mt-3" type="submit">
                 Search

@@ -1,8 +1,16 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as Action_types from "../../redux/actiontypes";
 
+// initialize userToken from local storage
+/*const userToken = localStorage.getItem('userToken')
+  ? localStorage.getItem('userToken')
+  : null*/
+
 const initialState = {
-  currentUser: null
+  currentUser: {},
+  token: null,
+  success: false,
+  error: null,
 };
 
 export const userReducers = createReducer(initialState, {

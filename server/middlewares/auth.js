@@ -8,7 +8,7 @@ exports.LoginbyJWT = async function (req, res, next) {
     if (err) {
       return res
         .status(401)
-        .send({ message: "auth failed, login to continue" });
+        .send({ message: "Auth failed, login to continue" });
     } else {
       req.body.id = decodedToken.user._id;
       // const todaysdate = new Date();

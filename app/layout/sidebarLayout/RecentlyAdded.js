@@ -15,7 +15,7 @@ const RecentlyAdded = () => {
   const lng = applocation.coordinates.lng;
   
   useEffect(() => {
-    getData(`${process.env.API_URL}/ListApartByLnglat/?lng=${lng}&lat=${lat}&queryQty=3`)
+    getData(`${process.env.API_URL}/ListApartByLnglat?lng=${lng}&lat=${lat}&queryQty=3`)
       .then((res) => {
         setValue(res.data?.userData);
       })

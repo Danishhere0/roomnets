@@ -5,7 +5,7 @@ const path = require("path");
 //total: totalCount,
 //list room  from lat longitidue when user supplies long lat
 exports.ListRoomsByLnglat = async (req, res) => {
-    if (!req.query.lng || !req.query.lat) {
+    if (!req.query.lng && !req.query.lat && !req.param.lng && !req.param.lat) {
       return res.status(404).send({
         status: false,
         message: "longititude and latitude not provided",

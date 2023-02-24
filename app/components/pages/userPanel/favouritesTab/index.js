@@ -5,6 +5,7 @@ import Pagination from "../../../../layout/Pagination";
 import Header from "../../../../layout/sidebarLayout/Header";
 import { getData } from "../../../../utils/getData";
 import GridLayout from "../../../listing/elements/GridLayout";
+import useGeoLocation from '../../../../hooks/useGeoLocation';
 
 const FavoritesTab = () => {
   const [value, setValue] = useState();
@@ -15,8 +16,12 @@ const FavoritesTab = () => {
   const [productCount, setProductCount] = useState();
   const { likedProducts } = useSelector((state) => state.addToWishListReducer);
 
+  const applocation = useGeoLocation();
+  const lat = applocation.coordinates.lat;
+  const lng = applocation.coordinates.lng;
+
   useEffect(() => {
-    getData(`${process.env.API_URL}/property`)
+    getData(`${process.env.API_URL}/FeaturedRoomsByLoc?lng=${lng}&lat=${lat}`)
       .then((res) => {
         setValue(
           Object.keys(res.data)

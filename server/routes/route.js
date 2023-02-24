@@ -130,7 +130,7 @@ Router.post("/updateProfile", LoginbyJWT, updateProfile);
 Router.get("/upload/:filename", MediaImage);
 Router.post("/UpdateHomepageModels", LoginbyJWT, UpdateHomepageModels);
 Router.post(
-  "/PostAddRoms",
+  "/PostAddRooms",
   LoginbyJWT,
   multerUpload.array("file"),
   LoginbyJWT,

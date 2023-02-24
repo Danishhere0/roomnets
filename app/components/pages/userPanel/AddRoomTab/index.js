@@ -7,11 +7,37 @@ import NoSsr from "../../../../utils/NoSsr";
 import { ReactstrapInput, ReactstrapSelect } from "../../../../utils/ReactstrapInputsValidation";
 import AutoCompletePlaces from "../../../elements/AutoCompletePlaces";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { useRouter } from 'next/router';
 
 const AddRoomTab = () => {
   const [ImageState, setImageState] = React.useState([]);
   const [errors, setErrors] = React.useState([]);
-  const country = useSelector((state) => state.countryReducer);
+  const country = useSelector((state) => state.countryReducer.country);
+  const postRoomReducer = useSelector((state) => state.postRoomReducer);
+  const { currentUser } = useSelector((state) => state.auth);
+  const token = currentUser && currentUser.token;
+  const router = useRouter();
+
+
+  const handleplaces = async (place) => {
+    const place_id = place.place_id;
+    const lng = await place.geometry.location.lng();
+    const lat = await place.geometry.location.lat();
+    const address = place.formatted_address;
+    // return await handleToClick(lng, lat, address);
+    console.log(address);
+    setFormResponse({
+      ...formResponse,
+      building_location: {
+        lat: lat,
+        lng: lng,
+        place_id: place_id,
+        address: address,
+      },
+    });
+   // console.log("building_location"+building_location);
+  };
 
   const [formResponse, setFormResponse] = React.useState({
     no_rooms: "",
@@ -113,7 +139,7 @@ const AddRoomTab = () => {
     const { advert_description, advert_title } = formResponse;
 
     const newError = new Array();
-    if (!advert_title) {
+    /*if (!advert_title) {
       newError.push("Advert title can not be blank");
     }
 
@@ -122,12 +148,13 @@ const AddRoomTab = () => {
     }
     if (ImageState.length < 1) {
       newError.push("You must select at least one image or more");
-    }
+    }*/
 
     return newError;
   };
 
   const handleNext = async () => {
+    console.log("the token: " + currentUser)
     await validatePage().then(async (res) => {
       if (res.length > 0) {
         setErrors(res);
@@ -140,32 +167,33 @@ const AddRoomTab = () => {
           formData.append("file", ImageState[x]["Uri"]);
         }
         // dispatch(SETPOSTROOMPROCESS(formResponse));
-        setLoading(true);
+        //setLoading(true);
+        const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
         await axios({
-          url: `/Api/v1/PostAddRoms`,
+          url: `${process.env.API_URL}/PostAddRooms`,
           method: "POST",
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: token,
+            Authorization: userToken,
           },
         })
           .then(function (response) {
-            // console.log(response.data);
-            setLoading(false);
-            if (response.data.status) {
-              if(add_type==="PREMIUM")
+             console.log("response status"+response.data.usadData);
+            //setLoading(false);
+            if (response.data.status=== true) {
+              if(response.data.usadData.add_type==="Premium")
               {
-                history.replace(`/Upgrade-room/${response.data.usadData._id}`);
+                router.push(`/userpanel/upgradeRoom/${response.data.Data._id}`);
               }
              else{
-                history.replace("/process-rooms-success");
+                router.push('/userpanel/ProcessRooomSuccess')
              }
             }
           })
           .catch((err) => {
             console.log(err)
-            setLoading(false);
+            //setLoading(false);
             alert("An error occured");
           });
       }
@@ -197,43 +225,9 @@ const AddRoomTab = () => {
     <NoSsr>
       <Formik
         initialValues={{
-          building_location: {
-            lat: "",
-            lng: "",
-            place_id: "",
-            address: "",
-          },
-          street_name: "",
-          rooms_avail_date: "",
-          living_rooms: "",
-          furnished_rooms: "",
-          broker_agent_fee: "",
-          rooms_size: "",
-          minimum_stay: "",
-          maximum_stay: "",
-          amenities_swim: false,
-          amenities_internet: false,
-          amenities_private_toilets: false,
-          amenities_play_ground: false,
-          amenities_parking_space: false,
-          amenities_entry_disabled: false,
-          amenities_balcony: false,
-          amenities_others: false,
+          
         }}
         validationSchema={Yup.object().shape({
-          Building_type: Yup.string().required(),
-          rent: Yup.string().required(),
-          rent_method: Yup.number().required(),
-          no_occupants: Yup.string().required(),
-          email: Yup.string().required(),
-          i_am: Yup.string().required(),
-          building_location: Yup.string().required(),
-          street_name: Yup.number().required(),
-          rooms_avail_date: Yup.string().required(),
-          amenities_private_toilets: Yup.string().required(),
-          living_rooms: Yup.string().required(),
-          post_code: Yup.string().min(5).max(8).required(),
-          country: Yup.string().required(),
         })}
         onSubmit={(values) => {
           console.log(values);
@@ -265,6 +259,19 @@ const AddRoomTab = () => {
                           </div>
                         </div>
                         <Col sm="4" className="form-group">
+                        <label>Ad type</label>
+                         <Field as="select" className="form-control" required name="add_type" id="add_type" onChange={(e) =>
+                              setFormResponse({
+                                ...formResponse,
+                                add_type: e.target.value,
+                              })
+                            }>
+                          <option value="">Ad Type</option>
+                          <option value="Premium">Premium</option>
+                          <option value="Free">Free</option>
+                         </Field>
+                        </Col>
+                        <Col sm="4" className="form-group">
                           <Field name="title" onChange={(e) =>
                               setFormResponse({
                                 ...formResponse,
@@ -285,6 +292,7 @@ const AddRoomTab = () => {
                         <Col sm="4" className="form-group">
                           <Field
                             name="Building_type"
+                            id="Building_type"
                             component={ReactstrapSelect}
                             type="text"
                             className="form-control"
@@ -484,12 +492,12 @@ const AddRoomTab = () => {
                           />
                         </Col>
                         <Col sm="12" className="form-group">
-                          <Field type="textarea" onChange={(e) =>
+                          <Field type="text" onChange={(e) =>
                               setFormResponse({
                                 ...formResponse,
                                 advert_title: e.target.value,
                               })
-                            } name="advert_title" id="advert_title" component={ReactstrapInput} className="form-control" rows={4} label="Description" />
+                            } name="advert_title" id="advert_title" component={ReactstrapInput} className="form-control" label="Advert Title" />
                         </Col>
                         <Col sm="12" className="form-group">
                           <Field type="textarea" onChange={(e) =>
@@ -531,18 +539,13 @@ const AddRoomTab = () => {
                         <Col sm="6" className="form-group">
                             <label>
                               Building Location <sup>* </sup>
-                              <small>(or nerarest bus stop)</small>
+                              <small>(or nearest bus stop)</small>
                             </label>
                             <AutoCompletePlaces
+                            
                             className="form-control bg-gray"
                             handleplaces={(places) => handleplaces(places)}
-                            onChange={(e) =>
-                              setFormResponse({
-                                ...formResponse,
-                                place_id: e.target.value,
-                              })
-                            }
-                          />
+                            />
                         </Col>
                         <Col sm="6" className="form-group">
                           <Field type="text" onChange={(e) =>
@@ -574,11 +577,11 @@ const AddRoomTab = () => {
                                 i_am: e.target.value,
                               })
                             }
-                            inputprops={{ options: ["Landlord", "Live Out Landlord", "Current Tenant", "Real Estate Agent", "Kenya", "Ireland", "South Africa"], defaultOption: "Country" }}
+                            inputprops={{ options: ["Landlord", "Live Out Landlord", "Current Tenant", "Real Estate Agent"], defaultOption: "Who I am" }}
                           />
                         </Col>
                         <Col sm="4" className="form-group">
-                          <Field
+                          {/*<Field
                             name="country"
                             component={ReactstrapSelect}
                             type="text"
@@ -591,7 +594,23 @@ const AddRoomTab = () => {
                               })
                             }
                             inputprops={{ options: ["UK", "USA", "Nigeria", "Ghana", "Kenya", "Ireland", "South Africa"], defaultOption: "Country of Ad" }}
-                          />
+                          //  inputprops={{ options: [{ value: 'UK', label: 'United Kingdom' }, { value: 'US', label: 'United States' }, { value: 'NG', label: 'Nigeria' }, 
+                          //  { value: 'GH', label: 'Ghana' }, { value: 'KE', label: 'Kenya' },{ value: 'IE', label: 'Ireland' }, { value: 'ZA', label: 'South Africa' }], defaultOption: "Country of Ad" }}
+                          /> */}
+                         <Field as="select" className="form-control" name="country" id="country" onChange={(e) =>
+                              setFormResponse({
+                                ...formResponse,
+                                country: e.target.value,
+                              })
+                            }>
+                          <option value="">Country of Ad</option>
+                          <option value="IE">Ireland</option>
+                          <option value="GH">Ghana</option>
+                          <option value="KE">Kenya</option>
+                          <option value="NG">Nigeria</option>
+                          <option value="US">United States of America</option>
+                          <option value="GB">United Kingdom</option>
+                         </Field>
                         </Col>
                       </Row>
                     </div>
@@ -604,8 +623,8 @@ const AddRoomTab = () => {
                           <Dropzone name="file" id="file"
                             // getUploadParams={getUploadParams}
                             // onChangeStatus={handleChangeStatus}
-                            maxFiles={1}
-                            multiple={false}
+                            maxFiles={10}
+                            multiple={true}
                             canCancel={false}
                             inputContent="Drop A File"
                             styles={{

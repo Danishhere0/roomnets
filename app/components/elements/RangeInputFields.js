@@ -6,8 +6,9 @@ import { useSelector } from "react-redux";
 import NoSsr from "../../utils/NoSsr";
 
 const RangeInputFields = ({ label, name, filterValues, setFilterValues, min, max, sm, lg }) => {
+  const { propertyStatus, propertyType, maxRooms, bed, bath, agencies, rent, area, sortBy } = useSelector((state) => state.inputsReducer);
+
   const { symbol, currencyValue } = useSelector((state) => state.currencyReducer);
-  const { price, area } = useSelector((state) => state.inputsReducer);
   const dispatch = useDispatch();
   var [MIN, setMIN] = useState(min);
   var [MAX, setMAX] = useState(max);
@@ -22,14 +23,14 @@ const RangeInputFields = ({ label, name, filterValues, setFilterValues, min, max
         <FormGroup>
           <div className="price-range">
             <Label>
-              {label} : {label === "Price" && `${symbol}`} {(label === "Area" ? area[0] : price[0] * currencyValue).toFixed(2)} - {label === "Price" && `${symbol}`}{" "}
-              {(label === "Area" ? area[1] : price[1] * currencyValue).toFixed(2)} {label === "Area" && "sq ft"}
+              {label} : {label === "Rent" && `${symbol}`} {(label === "Area" ? area : rent * currencyValue)} - {label === "Rent" && `${symbol}`}{" "}
+              {(label === "Area" ? area : rent * currencyValue)} {label === "Area" && "sq ft"}
             </Label>
-            <div id={label === "Price" ? "slider-1" : "slider-2"} className="theme-range-3">
+            <div id={label === "Rent" ? "slider-1" : "slider-2"} className="theme-range-3">
               <Range
-                values={label === "Price" ? price : area}
+                values={label === "Rent" ? rent : area}
                 step={STEP}
-                min={MIN || 1000}
+                min={MIN || 40}
                 max={MAX || 10000}
                 onChange={(values) => {
                   setFilterValues({ ...filterValues, [`${name}`]: values });
@@ -49,7 +50,7 @@ const RangeInputFields = ({ label, name, filterValues, setFilterValues, min, max
                         width: "100%",
                         borderRadius: "4px",
                         background: getTrackBackground({
-                          values: label === "Price" ? price : area,
+                          values: label === "Rent" ? rent : area,
                           colors: ["#ccc", "var(--theme-default2)", "#ccc"],
                           min: MIN,
                           max: MAX,

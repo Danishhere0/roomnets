@@ -22,13 +22,13 @@ const BodyContent = () => {
       })
       .catch((error) => console.log("Error", error));
 
-    getData(`${process.env.API_URL}/ListRooms/?lng=${lng}&lat=${lat}`)
+    getData(`${process.env.API_URL}/ListRooms?lng=${lng}&lat=${lat}`)
       .then((res) => {
         setListRooms(res.data.userData);
       })
       .catch((error) => console.log("Error", error)); 
       
-    getData(`${process.env.API_URL}/ListRandomRooms/?lng=${lng}&lat=${lat}`)
+    getData(`${process.env.API_URL}/ListRandomRooms?lng=${lng}&lat=${lat}`)
       .then((res) => {
         setListRandomRooms(res.data.userData);
       })

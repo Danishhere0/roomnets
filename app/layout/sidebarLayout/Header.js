@@ -10,7 +10,7 @@ import AdvancedSearch from "../advancedSearch/AdvancedSearch";
 import useMobileSize from "../../utils/useMobileSize";
 
 const Header = ({ setGridSize, setGridStyle, gridStyle, mapView, mapModal, gridBar, tabHeader, title, AdvancedSearchShow, productCount, toPage = 1, setMapModal }) => {
-  const { sortBy, propertyStatus } = useSelector((state) => state.inputsReducer);
+  const { propertyStatus, propertyType, maxRooms, bed, bath, agencies, rent, area, sortBy } = useSelector((state) => state.inputsReducer);
   const [isOpen, setIsOpen] = useState(false);
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [mapModalOpen, setMapModalOpen] = useState(false);

@@ -4,28 +4,27 @@
  * @returns A list of items that are being mapped over.
  */
 import Link from "next/link";
-import React, { Fragment } from "react";
-import { User } from "react-feather";
+import React, { Fragment, useEffect } from "react";
+//import { User } from "react-feather";
 import { RightNavMenuItem } from "../../../data/menu";
 import { useDispatch, useSelector } from "react-redux";
 //import Cart from "./rightNavComponents/Cart";
 import Currency from "./rightNavComponents/Currency";
 import Language from "./rightNavComponents/Language";
-import { LOGOUTUSER } from "../../../redux/action";
+import UserDropdown from "./rightNavComponents/UserDropdown";
 import {NavLink} from 'reactstrap';
 import { useHistory } from "react-router-dom";
 
 const RightNav = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const currentUser = useSelector((state) => state.currentUser);
+  const { currentUser } = useSelector((state) => state.auth.currentUser)
+  const dispatch = useDispatch()
 
   const handleLogout = () => {
     history.push({
       pathname: "/",
       state: { message: "You have been logout" },
     });
-    dispatch(LOGOUTUSER());
   };
   
   return (
@@ -39,30 +38,9 @@ const RightNav = () => {
               {value.title === "currency" && <Currency value={value} />}
               {value.title === "user" && (
                 <li className="dropdown">
-                  <NavLink to="/login">
-                    <User />
-                  </NavLink>
+                    <UserDropdown />
                 </li>
               )}
-           {/*    {currentUser ? (
-                    <ul className="admin-info color-white-a">
-                      <li>
-                        <NavLink to="">{currentUser.user.firstName}</NavLink>
-                      </li>
-                      <li>
-                        <a onClick={handleLogout}>Log Out</a>
-                      </li>
-                    </ul>
-                  ) : (
-                    <ul className="admin-info color-white-a">
-                      <li>
-                        <NavLink to="/login">Sign In</NavLink>
-                      </li>
-                      <li>
-                        <NavLink to="/register">Sign Up</NavLink>
-                      </li>
-                    </ul>
-                  )}    */}
             </Fragment>
           ))}
         </ul>

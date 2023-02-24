@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { User, Lock } from "react-feather";
 import { Col, Container, Row } from "reactstrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -9,12 +9,41 @@ import NavbarThree from "../layout/headers/NavbarThree";
 import { useRouter } from 'next/router';
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useDispatch, useHistory }  from "react-redux";
+import { setCookie } from 'cookies-next';
+import { useSelector } from 'react-redux';
+import { loginUser } from '../slices/action-creators';
 
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 
 const Login = () => {
   const [errors, setErrors] = React.useState([]);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn);
+  /*useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/userpanel/dashboard');
+    }
+  }, [isLoggedIn]);
+  /*const [state, setState] = useState({
+    email: null,
+    password: null,
+    rememberMe: false,
+  });
+
+  const handlePhoneNumChange = (e) => {
+    setState({ ...state, email: e.target.value });
+  };
+
+  const handlePinCodeChange = (e) => {
+    setState({ ...state, password: e.target.value });
+  };
+
+  const handleRememberMeCheck = (e) => {
+    setState({ ...state, rememberMe: e.target.value });
+  };*/
+
   const [formResponse, setFormResponse] = React.useState({
     email: "",
     password: "",
@@ -60,19 +89,36 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     const { email, password } = formResponse;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
 
-      await axios.post(`${process.env.API_URL}/login`, {
-            Email: email,
-            Password: password,
-      }).then((res) => {
+    await axios.post(`${process.env.API_URL}/login`, {
+          Email: email,
+          Password: password, config
+    }).then((res) => {
         console.log("Res is" +res.status)
         if (res.status == true || res.status == '200'){
+          localStorage.setItem('userToken', res.data.userData.userToken);
+          localStorage.setItem('currentUser', JSON.stringify(res.data));
+
+          setCookie('currentUser', res.data);
+          setCookie('userToken', res.data.userData.userToken);
+          dispatch(loginUser(res.data));
+         // console.log("userdata is"+res.data.userData)
+
           // Do a fast client-side transition to the already prefetched dashboard page
-          router.push('/userpanel/dashboard')
+          //router.push('/userpanel/dashboard')
+          router.push({
+            pathname: '/userpanel/dashboard',
+            //query: { message: `Welcome back ${email} !` },
+          })
         }else{
           switch(res.data.status) {
             case true:
-              return router.push('/userpanel/dashboard');
+             // return router.push('/userpanel/dashboard');
             case 404:
               const notify = () => toast("A user with this account does not exist.", { type: "error", position: "top-right" });
               return notify();
@@ -86,9 +132,9 @@ const Login = () => {
         }
       }).catch((err) => {
         
-        if (err.response && err.response.data.message) {
-          setErrors([err.response.data.message]);
-          switch(err.response.data.status) {
+        if (err.res && err.res.data.message) {
+          setErrors([err.res.data.message]);
+          switch(err.res.data.status) {
             case true:
               return router.push('/userpanel/dashboard');
             case 404:
@@ -102,6 +148,7 @@ const Login = () => {
               notify2();
           }
         } else {
+          console.log("Error is"+err.res);
           setErrors([
             "An error occured, make sure you have a working network",
           ]);
@@ -110,10 +157,10 @@ const Login = () => {
       });
     };
 
-  useEffect(() => {
+ /* useEffect(() => {
     // Prefetch the dashboard page
-    router.prefetch('/dashboard')
-  }, [])
+    router.prefetch('/userpanel/dashboard')
+  }, []);*/
   return (
     <>
       <NavbarThree />

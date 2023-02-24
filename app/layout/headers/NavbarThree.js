@@ -7,7 +7,6 @@ import { Col, Container, Row } from "reactstrap";
 import { Logo3 } from "../../components/elements/Logo";
 import MainNav from "./elements/MainNav";
 import RightNav from "./elements/RightNav";
-import MainMenuNow from "./MainMenuNow";
 
 const NavbarThree = ({ logo }) => {
   return (

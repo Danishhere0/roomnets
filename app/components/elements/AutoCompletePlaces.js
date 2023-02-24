@@ -3,10 +3,11 @@ import Autocomplete from "react-google-autocomplete";
 import { useSelector } from "react-redux";
 const AutoCompletePlaces = (props) => {
   const country = useSelector((state) => state.countryReducer);
+  //console.log("Google API key"+`${process.env.GOOGLE_API_KEY}`);
   return (
     <Autocomplete
       placeholder="Enter location"
-      apiKey={`${process.env.REACT_APP_API_KEY}`}
+      apiKey={`${process.env.GOOGLE_API_KEY}`}
       //   style={{
       //     width: "100%",
       //     color: "grey",
