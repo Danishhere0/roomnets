@@ -9,11 +9,15 @@ import { MainNavMenuItems } from "../../../data/menu";
 import MegaMenu from "./mainNavComponents/MegaMenu";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { SETCOUNTRY } from "../../../redux/action";
 import { useHistory } from "react-router-dom";
 import { useRouter } from "next/router";
+import useOutsideDropdown from "../../../utils/useOutsideDropdown";
+import { countryChanger } from '../../../slices/action-creators';
+import { getCookie } from 'cookies-next';
+
 
 const MainNav = ({ center, icon }) => {
+  const { ref, isComponentVisible, setIsComponentVisible } = useOutsideDropdown(false);
   const [openNavbar, setOpenNavbar] = useState(false);
   const [isOpen, setIsOpen] = useState();
   const [isOpenChild, setIsOpenChild] = useState();
@@ -22,11 +26,13 @@ const MainNav = ({ center, icon }) => {
   const [countryData, setCountryData] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
-//  const location = useLocation();
-  const country = useSelector((state) => state.countryReducer);
+  //const { country_code } = useSelector((state) => state.countryReducer.country_code);
+  const country_code = getCookie("selCountryCode");
+
+  console.log("Country info is"+country_code);
 
   const handleCountry = (code) => {
-    const Setcountry = async () => dispatch(SETCOUNTRY(code));
+    const Setcountry = async () => dispatch(countryChanger(code));
     Setcountry().then(() =>
       setTimeout(() => {
         window.location.reload();
@@ -53,19 +59,19 @@ const MainNav = ({ center, icon }) => {
           //get country code from api then set it to default if the user has not
           // selected a country of his choice from drop down
           //otherwise use user defined country setting
-          if (!country) {
+          if (!country_code) {
             handleCountry(data.country_code);
           }
           // console.log(data.country_code);
         } else {
-          if (!country) {
+          if (!country_code) {
             handleCountry("NG");
           }
         }
       })
       .catch((error) => {
         console.log(error);
-        if (!country) {
+        if (!country_code) {
           handleCountry("NG");
         }
       });
@@ -74,19 +80,19 @@ const MainNav = ({ center, icon }) => {
   useEffect(() => getGeoInfo(), []);
 
   const regionBanners =
-  country === "KE"
+  country_code === "KE"
     ? "Banners_KE"
-    : country === "US"
+    : country_code === "US"
     ? "Banners_US"
-    : country === "NG"
+    : country_code === "NG"
     ? "Banners_NG"
-    : country === "IE"
+    : country_code === "IE"
     ? "Banners_IE"
-    : country === "ZA"
+    : country_code === "ZA"
     ? "Banners_ZA"
-    : country === "GB"
+    : country_code === "GB"
     ? "Banners_GB"
-    : country === "GH"
+    : country_code === "GH"
     ? "Banners_GH"
     : "";
 
@@ -125,14 +131,19 @@ const MainNav = ({ center, icon }) => {
                 </Link>
             </li>
             <li className="">
-                <Link href="/post_ad/">
+                <Link href="/userpanel/">
                    Post Ad
                 </Link>
             </li>
-            <li className="">
-                <Link href="/browse_ad/">
-                   Browse
-                </Link>
+            <li ref={ref} className={`dropdown user ${isComponentVisible && "active"}`}>
+              <ul className={`nav-submenu ${isComponentVisible && "open"}`}>
+                  <li>
+                    <a href="browse_rooms" className="dropdown-item">Browse Room</a>
+                  </li>
+                  <li>
+                    <a href="browse_apartments" className="dropdown-item">Browse Apartment</a>
+                  </li>
+              </ul>
             </li>
             <li className="">
                 <Link href="/about/">
@@ -154,44 +165,35 @@ const MainNav = ({ center, icon }) => {
                    CONTACT
                 </Link>
             </li>
-            
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                // href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Location
+            <li ref={ref} className={`dropdown user ${isComponentVisible && "active"}`}>
+              <a>
+                Location &nbsp;
                 <img
                   style={{
                     width: "30px",
-                    objectFit: "contain",
                   }}
                   src={
-                    country === "NG"
-                      ? "/images/flags/ng.png"
-                      : country === "US"
-                      ? "/images/flags/us.png"
-                      : country === "IE"
-                      ? "/images/flags/ie.png"
-                      : country === "KE"
-                      ? "/images/flags/ke.png"
-                      : country === "GH"
-                      ? "/images/flags/ghana.png"
-                      : country === "ZA"
-                      ? "/images/flags/sa.png"
-                      : country === "GB"
-                      ? "/images/flags/uk.png"
+                    country_code === "NG"
+                      ? "/assets/images/flags/ng.png"
+                      : country_code === "US"
+                      ? "/assets/images/flags/us.png"
+                      : country_code === "IE"
+                      ? "/assets/images/flags/ie.png"
+                      : country_code === "KE"
+                      ? "/assets/images/flags/ke.png"
+                      : country_code === "GH"
+                      ? "/assets/images/flags/ghana.png"
+                      : country_code === "ZA"
+                      ? "/assets/images/flags/sa.png"
+                      : country_code === "GB" || country_code === "UK"
+                      ? "/assets/images/flags/uk.png"
                       : null
                   }
                 />
               </a>
-              <ul className="dropdown-menu shadow">
+              <ul className={`nav-submenu ${isComponentVisible && "open"}`}>
                 {countryData.map((data, i) => (
-                  <li key={i} onClick={() => handleCountry({...data.country_name})}>
+                  <li key={i} onClick={() => handleCountry(data.country_code)}>
                     <a className="dropdown-item">{data.country_name}</a>
                   </li>
                 ))}

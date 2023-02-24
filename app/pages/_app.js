@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
             <Component {...pageProps} />
            {/* <Customizer /> */}
             <TapToTop />
-            <StoreOldData />
+            {/* <StoreOldData />*/}
             <ToastContainer position="bottom-left" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme={"light"} />
           </>
        {/* </Provider>  */}

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { getCookie } from "cookies-next";
+import React, { useState, useEffect } from "react";
 import { CheckSquare, Mail, MapPin } from "react-feather";
 import { Row } from "reactstrap";
 import ReviewStarr from "../../../elements/ReviewStarr";
@@ -7,18 +8,18 @@ import EditProfile from "./EditProfile";
 
 const MyProfileTab = () => {
   const [modal, setModal] = useState();
-  const [profileDetail, setProfileDetail] = useState({
-    firstName: "Zack",
-    lastName: "Lee",
-    gender: "Female",
-    birthDay: "20/11/1995",
-    address: "549 Sulphur Springs Road",
-    city: "Downers",
-    state: "IL",
-    email: "zacklee@gamil.com",
-    password: "12345",
-  });
-  console.log(profileDetail);
+  const [profileDetail, setProfileDetail] = useState([]);
+  useEffect(() => {
+    const fetch1 = async () => {
+      const currentUser = JSON.parse(getCookie("currentUser"));
+      const userDetail = currentUser.userData.user;
+      //console.log("currentUser:"+currentUser.userData.userToken);
+      //console.log(profileDetail);
+      setProfileDetail(userDetail);
+    };
+
+    fetch1();
+  }, []);
   return (
     <div className="dashboard-content">
       <div className="my-profile" id="profile">
@@ -27,7 +28,7 @@ const MyProfileTab = () => {
             <div className="user-name media">
               <div className="media-body">
                 <h5>
-                  {profileDetail.firstName + " " + profileDetail.lastName} <span className="label label-success">Real estate agent</span>
+                  {profileDetail.firstName + " " + profileDetail.lastName} <span className="label label-success">{profileDetail.i_am}</span>
                 </h5>
                 <ReviewStarr rating={4} />
               </div>
@@ -38,11 +39,11 @@ const MyProfileTab = () => {
             <ul className="user-detail">
               <li>
                 <MapPin />
-                <span>Downers Grove, IL</span>
+                <span>{profileDetail.address}L</span>
               </li>
               <li>
                 <Mail />
-                <span>zackle@gmail.com</span>
+                <span>{profileDetail.Email}</span>
               </li>
               <li>
                 <CheckSquare />
@@ -64,19 +65,23 @@ const MyProfileTab = () => {
                     <ul>
                       <li>
                         <span>Gender :</span>
-                        <p>{profileDetail.gender}</p>
+                        <p>{profileDetail.sex}</p>
                       </li>
                       <li>
                         <span>Birthday :</span>
-                        <p>{profileDetail.birthDay}</p>
+                        <p>{(profileDetail?.dateOfBirh) || ""}</p>
                       </li>
                       <li>
                         <span>Phone number :</span>
-                        <a>+91 846 - 547 - 210</a>
+                        <a>{profileDetail.mobileNumber}</a>
+                      </li>
+                      <li>
+                        <span>Pin Code :</span>
+                        <a>{profileDetail.pin_code}</a>
                       </li>
                       <li>
                         <span>Address :</span>
-                        <p>{profileDetail.address + ", " + profileDetail.city + ", " + profileDetail.state}</p>
+                        <p>{profileDetail.address + ", " + profileDetail.city_name + ", " + profileDetail.state_name + ", " +profileDetail.country}</p>
                       </li>
                     </ul>
                   </div>
@@ -89,14 +94,14 @@ const MyProfileTab = () => {
                     <ul>
                       <li>
                         <span>Email :</span>
-                        <a>{profileDetail.email}</a>
+                        <a>{profileDetail.Email}</a>
                         <span className="label label-light label-flat" onClick={() => setModal("changeEmail")}>
                           Edit
                         </span>
                       </li>
                       <li>
                         <span>Password :</span>
-                        <a>{Array(profileDetail.password.length).fill("*").join("")}</a>
+                       {/* <a>{Array(profileDetail.password.length).fill("*").join("")}</a> */}
                         <span className="label label-light label-flat" onClick={() => setModal("changePass")}>
                           Edit
                         </span>
@@ -107,7 +112,7 @@ const MyProfileTab = () => {
               </div>
               <div className="col-xxl-5 offset-xxl-1 col-xl-5 offset-xl-0">
                 <div className="about-img d-xl-block d-none">
-                  <img src="/assets/images/inner-pages/2.png" className="img-fluid" alt="" />
+                  <img src="/assets/images/user/2.png" className="img-fluid" alt="" />
                 </div>
               </div>
             </Row>

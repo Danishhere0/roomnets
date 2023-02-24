@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Button, Col, Form, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 
 const EditProfile = ({ toggle, setModal, profileDetail, setProfileDetail }) => {
@@ -10,8 +11,35 @@ const EditProfile = ({ toggle, setModal, profileDetail, setProfileDetail }) => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  /*const handleSubmit = (event) => {
     event.preventDefault();
+    setProfileDetail((prev) => ({ ...prev, ...inputs }));
+    setModal(false);
+  };*/
+
+  const router = useRouter();
+  const [isModal, setIsModal] = useState(false);
+  const notify = () => toast("Your form details submitted successfully.", { type: "success", position: "top-right" });
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const handleSubmit = async () => {
+    event.preventDefault();
+    await axios
+      .post(`${process.env.API_URL}/updateProfile`, inputs, config)
+      .then((response) => {
+        //router.push(`${process.env.WEB_URL}/login`)
+        console.log(response.data);
+        notify();
+      })
+      .catch((err) => {
+        if (err.response.data) {
+          alert(err.response.data.message);
+        }
+        console.log(err);
+    });
     setProfileDetail((prev) => ({ ...prev, ...inputs }));
     setModal(false);
   };
@@ -30,23 +58,24 @@ const EditProfile = ({ toggle, setModal, profileDetail, setProfileDetail }) => {
             <Form id="modal-form" onSubmit={handleSubmit}>
               <Row className=" gx-3">
                 <Col md="6" className="form-group">
-                  <Label htmlFor="first">first name</Label>
-                  <Input name="firstName" type="text" className="form-control" id="first" placeholder="first name" value={inputs.firstName || ""} onChange={handleChange} />
+                  <Label htmlFor="first">First Name</Label>
+                  <Input name="firstName" type="text" className="form-control" id="firstName" placeholder="First Name" value={inputs.firstName || ""} onChange={handleChange} />
                 </Col>
                 <Col md="6" className="form-group col-md-6">
-                  <Label htmlFor="last">last name</Label>
-                  <Input name="lastName" type="text" className="form-control" id="last" placeholder="last name" value={inputs.lastName || ""} onChange={handleChange} />
+                  <Label htmlFor="last">Last Name</Label>
+                  <Input name="lastName" type="text" className="form-control" id="lastName" placeholder="Last Name" value={inputs.lastName || ""} onChange={handleChange} />
                 </Col>
                 <div className="form-group col-md-6">
-                  <Label htmlFor="gender">gender</Label>
-                  <select name="gender" id="gender" className="form-control" value={inputs.gender} onChange={handleChange}>
-                    <option>female</option>
-                    <option>male</option>
+                  <Label htmlFor="gender">Gender</Label>
+                  <select name="sex" id="sex" className="form-control" value={inputs.sex} onChange={handleChange}>
+                    <option>Select Option</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
                   </select>
                 </div>
                 <div className="form-group col-md-6">
                   <Label>Birthday</Label>
-                  <Input name="birthDay" type="date" className="form-control" placeholder="18 april" id="datepicker" value={new Date(inputs.birthDay) || ""} onChange={handleChange} />
+                  <Input name="dateOfBirh" type="date" className="form-control" placeholder="18 april" id="datepicker" value={new Date(inputs?.dateOfBirh) || ""} onChange={handleChange} />
                 </div>
                 <div className="form-group col-12">
                   <Label htmlFor="inputAddress">Address</Label>
@@ -54,11 +83,11 @@ const EditProfile = ({ toggle, setModal, profileDetail, setProfileDetail }) => {
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="inputCity">City</label>
-                  <input name="city" type="text" className="form-control" id="inputCity" value={inputs.city || ""} onChange={handleChange} />
+                  <input name="city_name" type="text" className="form-control" id="inputCity" value={inputs.city_name || ""} onChange={handleChange} />
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="inputState">State</label>
-                  <select name="state" id="inputState" className="form-control" value={inputs.state} onChange={handleChange}>
+                  <select name="state_name" id="inputState" className="form-control" value={inputs.state_name} onChange={handleChange}>
                     <option>IL</option>
                     <option>PL</option>
                     <option>GL</option>

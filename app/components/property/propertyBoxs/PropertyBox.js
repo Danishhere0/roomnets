@@ -14,10 +14,12 @@ import PropertyLabel from "../../elements/PropertyLabel";
 import ThumbnailSlider from "../../elements/ThumbnailSlider";
 import AddToCompareProducts from "../../elements/AddToCompareProducts";
 import AddToWhishList from "../../elements/AddToWhishList";
+import { format } from 'date-fns';
 
 const PropertyBox = ({ data, relativeSlider, video }) => {
   const [load, setLoad] = useState(true);
   const { symbol, currencyValue } = useSelector((state) => state.currencyReducer);
+  console.log("Rent is:"+data);
   return (
     <>
       {!load ? (
@@ -28,10 +30,11 @@ const PropertyBox = ({ data, relativeSlider, video }) => {
               <PropertyLabel labels={data.label} />
             </div>
             {!relativeSlider && (
+              
               <>
                 <div className="seen-data">
                   <Camera />
-                  <span>{data.media.length || 5}</span>
+                  <span>{data.media.length || 0}</span>
                 </div>
                 <div className="overlay-property-box">
                   <a className="effect-round" title="Compare">
@@ -47,22 +50,22 @@ const PropertyBox = ({ data, relativeSlider, video }) => {
 
           <div className="property-details">
             <span className="font-roboto">{data.country || "USA"} </span>
-            <Link href={{pathname:`/room_det?roomId=${data._id}`,state:data._id}}>
+            <Link href={`/room_det?roomId=${data._id}`}>
               <h3>{data.advert_title}</h3>
             </Link>
             <h6>
               {symbol}
-              {(data.rent * currencyValue).toFixed(2) || (400.0 * currencyValue).toFixed(2)}*
+              {(Number(data.rent) * currencyValue).toFixed(2) || (0.0 * currencyValue).toFixed(2)}*
             </h6>
             <p className="font-roboto">{data.advert_description || "This home provides wonderful entertaining spaces with a chef kitchen opening. Elegant retreat in a quiet Coral Gables setting.."} </p>
             <ul>
               <li>
                 <img src="/assets/images/svg/icon/double-bed.svg" className="img-fluid" alt="" />
-                Bed : {data.no_rooms || 5}
+                Bed : {data.no_rooms || 2}
               </li>
               <li>
                 <img src="/assets/images/svg/icon/bathroom.svg" className="img-fluid" alt="" />
-                Baths : {data.no_baths || 5}
+                Baths : {data.no_baths || 2}
               </li>
               <li>
                 <img src="/assets/images/svg/icon/square-ruler-tool.svg" className="img-fluid ruler-tool" alt="" />
@@ -70,8 +73,8 @@ const PropertyBox = ({ data, relativeSlider, video }) => {
               </li>
             </ul>
             <div className="property-btn d-flex">
-              <span>{data.created_at}</span>
-              <Link href={{pathname:`/room_det?roomId=${data._id}` ,state:data._id}}>
+              <span>{format(new Date(data.created_at), 'd MMM, Y')}</span>
+              <Link href={`/room_det?roomId=${data._id}`}>
                 <button type="button" className="btn btn-dashed btn-pill">
                   Details
                 </button>

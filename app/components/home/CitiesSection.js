@@ -9,32 +9,27 @@ import { City, FindPropertiesInTheseCities } from "../../constValues/constValues
 import Img from "../../utils/BackgroundImageRatio";
 import NoSsr from "../../utils/NoSsr";
 import axios from "axios";
-
+import { getCookie } from 'cookies-next';
+import { useSelector } from 'react-redux';
 
 const CitiesSection = ({ value }) => {
-  const [citiesData, setCitiesData] = useState([]);
-
-  /*useEffect(() => {
-    getData(`${process.env.API_URL}/getTestimonial`)
-      .then((res) => {
-        setCitiesData(res.data.userData);
-        //console.log('Testimonial page:' + res.data.userData);
-      })
-      .catch((error) => console.log("Error", error));
-  }, []);*/
+  const [citiesData, setCitiesData] = useState([]);  
+  const { country } = useSelector((state) => state.countryReducer?.country);
 
   useEffect(() => {
+    const user_country = JSON.parse(getCookie("currentUser")).userData.user.country;
+    const sel_country = getCookie("selCountryCode") ? getCookie("selCountryCode") : user_country;
     const fetch = async () => {
       try {
         const res1  = await axios.get(`${process.env.API_URL}/getCitiesByCountry`, {
           params: {
-            country_code: country,
+            country_code: sel_country,
             featured: "1",
             limit:"6"
           },
         });
         setCitiesData(res1.data.userData);
-        //console.log('About page:' + res1.data.userData[0].content);
+        console.log('Cities section:' + res1.data.userData[0].content);
       } catch (err) {
         console.error('About page Error is: '+ err);
       }

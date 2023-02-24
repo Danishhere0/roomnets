@@ -30,8 +30,8 @@ export const currencyChanger = (currency) => async (dispatch) => {
     dispatch(currencyChange(currency));
 };
 
-export const countryChanger = (country) => async (dispatch) => {
-    dispatch(countryChange(country));
+export const countryChanger = (country_code) => async (dispatch) => {
+    dispatch(countryChange(country_code));
 };
 
 export const defLikedProduct = (likedProducts) => async (dispatch) => {

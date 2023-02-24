@@ -15,16 +15,15 @@ const RelatedProperty = ({ apartData }) => {
   const { state } = apartData;
   const { no_rooms, Approved_By_Admin, country,no_toilets, no_baths, media, isPaidAdd, isTopAdd, paid_add, location, expire_date, purchase_date, Building_type,rent, rent_method,no_occupants, email, i_am, building_location,  street_name, rooms_avail_date, ad_start_date, ad_end_date, living_rooms, furnished_rooms, broker_agent_fee, rooms_size,minimum_stay, maximum_stay, amenities_swim, amenities_internet, amenities_play_ground, amenities_parking_space, amenities_entry_disabled, amenities_balcony, amenities_others, amenities_private_toilets, existing_room_mates, new_room_mate, advert_title, advert_description, post_code, currency, plan, payment_response, posted_by, created_at, updated_at } = state || {};
 
-  const applocation = useGeoLocation();
-  const lat = applocation.coordinates.lat;
-  const lng = applocation.coordinates.lng;
-
   useEffect(() => {
     const fetchAboutIntro = async () => {
+      const applocation = useGeoLocation();
+      const lat = applocation.coordinates.lat;
+      const lng = applocation.coordinates.lng;
       try {
         const res1  = await axios.get(`${process.env.API_URL}/ListApartByLnglat/?lng=${lng}&lat=${lat}`);
         setApartList(res1.data.userData);
-      //  console.log('About page:' + res1.data.userData[0].content);
+        console.log('Related property:' + res1.data.userData[0].content);
       } catch (err) {
         console.error('About page Error is: '+ err);
       }

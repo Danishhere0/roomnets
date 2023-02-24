@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currency: "USD",
-  name: "dollar",
-  symbol: "$",
+  currency: "NGN",
+  name: "Naira",
+  symbol: "₦",
   currencyValue: 1,
 };
 

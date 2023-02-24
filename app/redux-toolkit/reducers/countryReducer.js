@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import * as Action_types from "../../redux/actiontypes";
 
 const initialState = {
-  country: ""
+  country: "NG"
 };
 
 export const countryReducer = createReducer(initialState, {

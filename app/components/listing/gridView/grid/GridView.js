@@ -15,8 +15,10 @@ import RecentlyAdded from "../../../../layout/sidebarLayout/RecentlyAdded";
 import Sidebar from "../../../../layout/sidebarLayout/Sidebar";
 import { getData } from "../../../../utils/getData";
 import GridLayout from "../../elements/GridLayout";
+import { getCookie } from "cookies-next";
 
-const GridView = ({ side, size, gridType, listSize, mapModal, mapView, relativeSlider, gridBar, video, tabHeader, setMapModal, children, AdvancedSearchShow, infiniteScroll, myList }) => {
+
+const GridView = ({ side, size, gridType, listSize, mapModal, mapView, relativeSlider, gridBar, video, tabHeader, setMapModal, children, AdvancedSearchShow, infiniteScroll, myList, APIPage }) => {
   const [value, setValue] = useState();
   const [gridSize, setGridSize] = useState(size);
   const [gridStyle, setGridStyle] = useState(gridType);
@@ -28,18 +30,22 @@ const GridView = ({ side, size, gridType, listSize, mapModal, mapView, relativeS
   const filterTag = useSelector((state) => state.inputsReducer);
 
   useEffect(() => {
-    getData(`${process.env.API_URL}/property`)
+    const user_id = JSON.parse(getCookie("currentUser")).userData.user._id;
+    console.log("Console log testing:"+user_id);
+    getData(`${process.env.API_URL}/${APIPage}?id=${user_id}`)
       .then((res) => {
-        relativeSlider
-          ? setValue(res.data?.LatestPropertyListingInEnterprise)
+        setValue(res.data?.userData);
+       /* relativeSlider
+          ? setValue(res.data?.userData)
           : setValue(
               Object.keys(res.data)
                 .map((key) => [res.data[key]])
                 .flat(2)
                 .filter((arrData) => Array.isArray(arrData.img)),
-            );
+            );*/
+        console.log("Console log testing:"+res.data?.userData)
       })
-      .catch((error) => console.log("Error", error));
+      .catch((error) => console.log("my list Error:", error));
   }, [relativeSlider]);
 
   const StringConvert = (str) => {

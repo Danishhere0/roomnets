@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Breadcrumb from "../layout/Breadcrumb/Breadcrumb";
 import FooterThree from "../layout/footers/FooterThree";
 import NavbarThree from "../layout/headers/NavbarThree";
+import axios from "axios";
 
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 
@@ -19,7 +20,7 @@ const Faq = () => {
 
   const fetchHomepageModels = async () => {
     return await axios
-      .get(`/api/v1/fetchHomepageModels`)
+      .get(`${process.env.API_URL}/fetchHomepageModels`)
       .then((response) => response)
       .catch((err) => err);
   };
@@ -28,9 +29,11 @@ const Faq = () => {
     () =>
       fetchHomepageModels()
         .then((res) => {
+          console.log("home data"+res.data.userData);
           setHomePageData({ ...res.data.userData });
+          
         })
-        .catch((err) => console.log(err)),
+        .catch((err) => console.log("home data"+err)),
 
     []
   );
@@ -65,7 +68,8 @@ const Faq = () => {
                 </div>
 
                 <div id='accordion' className='accordion'>
-                  {homepageData.faq.map((data, i) => (
+                  {homepageData.faq.length > 0 &&
+                    homepageData.faq.map((data, i) => (
                     <div className='card' key={i}>
                       <div className='card-header'>
                         <a className='card-link ' onClick={() => handleClick(i)}>

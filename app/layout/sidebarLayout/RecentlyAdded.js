@@ -10,16 +10,22 @@ import useGeoLocation from '../../hooks/useGeoLocation';
 const RecentlyAdded = () => {
 
   const [value, setValue] = useState();
-  const applocation = useGeoLocation();
-  const lat = applocation.coordinates.lat;
-  const lng = applocation.coordinates.lng;
-  
+
   useEffect(() => {
-    getData(`${process.env.API_URL}/ListApartByLnglat?lng=${lng}&lat=${lat}&queryQty=3`)
-      .then((res) => {
-        setValue(res.data?.userData);
-      })
-      .catch((error) => console.log("Error", error));
+    const fetchAboutIntro = async () => {
+      
+      try {
+        const applocation = useGeoLocation();
+        const lat = applocation.coordinates.lat;
+        const lng = applocation.coordinates.lng;
+          const res1  = await axios.get(`${process.env.API_URL}/ListApartByLnglat/?lng=${lng}&lat=${lat}&queryQty=3`);
+        setValue(res1.data.userData);
+        console.log('Recent property:' + res1.data.userData[0].content);
+      } catch (err) {
+        console.error('About page Error is: '+ err);
+      }
+    };
+    fetchAboutIntro();
   }, []);
   return (
     <div className='advance-card'>

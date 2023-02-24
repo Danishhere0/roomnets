@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 const AddRoomTab = () => {
   const [ImageState, setImageState] = React.useState([]);
   const [errors, setErrors] = React.useState([]);
-  const country = useSelector((state) => state.countryReducer.country);
+  const { country } = useSelector((state) => state.countryReducer.country);
   const postRoomReducer = useSelector((state) => state.postRoomReducer);
   const { currentUser } = useSelector((state) => state.auth);
   const token = currentUser && currentUser.token;
@@ -295,6 +295,7 @@ const AddRoomTab = () => {
                             id="Building_type"
                             component={ReactstrapSelect}
                             type="text"
+                            required
                             className="form-control"
                             label="Building/Apartment Type" onChange={(e) =>
                               setFormResponse({
@@ -308,6 +309,7 @@ const AddRoomTab = () => {
                         <Col sm="4" className="form-group">
                           <Field
                             name="currency" id="currency"
+                            required
                             component={ReactstrapSelect}
                             type="text"
                             className="form-control"
@@ -329,6 +331,7 @@ const AddRoomTab = () => {
                             name="rent_method"
                             component={ReactstrapSelect}
                             type="text"
+                            required
                             className="form-control"
                             label="Rent Method"
                             onChange={(e) =>
@@ -348,6 +351,7 @@ const AddRoomTab = () => {
                             name="no_rooms"
                             component={ReactstrapSelect}
                             type="Number"
+                            required
                             className="form-control"
                             label="No of Rooms"
                             onChange={(e) =>
@@ -366,6 +370,7 @@ const AddRoomTab = () => {
                             type="text"
                             className="form-control"
                             label="Living Rooms"
+                            required
                             onChange={(e) =>
                               setFormResponse({
                                 ...formResponse,
@@ -381,6 +386,7 @@ const AddRoomTab = () => {
                             component={ReactstrapSelect}
                             type="text"
                             className="form-control"
+                            required
                             label="Furnished Rooms"
                             onChange={(e) =>
                               setFormResponse({
@@ -398,6 +404,7 @@ const AddRoomTab = () => {
                             type="text"
                             className="form-control"
                             label="Bathrooms Number"
+                            required
                             onChange={(e) =>
                               setFormResponse({
                                 ...formResponse,
@@ -414,6 +421,7 @@ const AddRoomTab = () => {
                             type="text"
                             className="form-control"
                             label="Toilets"
+                            required
                             onChange={(e) =>
                               setFormResponse({
                                 ...formResponse,
@@ -430,6 +438,7 @@ const AddRoomTab = () => {
                             type="text"
                             className="form-control"
                             label="Rooms Size"
+                            required
                             onChange={(e) =>
                               setFormResponse({
                                 ...formResponse,
@@ -440,13 +449,14 @@ const AddRoomTab = () => {
                           />
                         </Col>
                         <Col sm="4" className="form-group">
-                          <Field name="no_occupants" type="Number" className="form-control" component={ReactstrapInput} label="No of Occupants" placeholder="" />
+                          <Field name="no_occupants" type="Number" className="form-control" required component={ReactstrapInput} label="No of Occupants" placeholder="" />
                         </Col>
                         <Col sm="4" className="form-group">
                           <Field
                             name="minimum_stay"
                             component={ReactstrapSelect}
                             type="text"
+                            required
                             className="form-control"
                             label="Minimum Stay Period"
                             onChange={(e) =>
@@ -464,6 +474,7 @@ const AddRoomTab = () => {
                             id="maximum_stay"
                             component={ReactstrapSelect}
                             type="text"
+                            required
                             className="form-control"
                             label="Maximum Stay Period"
                             onChange={(e) =>
@@ -480,6 +491,7 @@ const AddRoomTab = () => {
                             name="broker_agent_fee"
                             component={ReactstrapSelect}
                             type="text"
+                            required
                             className="form-control"
                             label="Agency Fee"
                             onChange={(e) =>
@@ -497,7 +509,7 @@ const AddRoomTab = () => {
                                 ...formResponse,
                                 advert_title: e.target.value,
                               })
-                            } name="advert_title" id="advert_title" component={ReactstrapInput} className="form-control" label="Advert Title" />
+                            } name="advert_title" required id="advert_title" component={ReactstrapInput} className="form-control" label="Advert Title" />
                         </Col>
                         <Col sm="12" className="form-group">
                           <Field type="textarea" onChange={(e) =>
@@ -505,7 +517,7 @@ const AddRoomTab = () => {
                                 ...formResponse,
                                 advert_description: e.target.value,
                               })
-                            } name="advert_description" id="advert_description" component={ReactstrapInput} className="form-control" rows={4} label="Description" />
+                            } name="advert_description" required id="advert_description" component={ReactstrapInput} className="form-control" rows={4} label="Description" />
                         </Col>
                         <Col sm="6" className="form-group">
                           <Field type="date" onChange={(e) =>
@@ -513,7 +525,7 @@ const AddRoomTab = () => {
                                 ...formResponse,
                                 ad_start_date: e.target.value,
                               })
-                            } name="ad_start_date" id="ad_start_date" component={ReactstrapInput} className="form-control" label="Ad Start Date" />
+                            } name="ad_start_date" id="ad_start_date" required component={ReactstrapInput} className="form-control" label="Ad Start Date" />
                         </Col>
                         <Col sm="6" className="form-group">
                           <Field type="date" onChange={(e) =>
@@ -521,7 +533,7 @@ const AddRoomTab = () => {
                                 ...formResponse,
                                 ad_end_date: e.target.value,
                               })
-                            } name="ad_end_date" id="ad_end_date" component={ReactstrapInput} className="form-control" label="Ad End Date" />
+                            } name="ad_end_date" id="ad_end_date" required component={ReactstrapInput} className="form-control" label="Ad End Date" />
                         </Col>
                         <Col sm="6" className="form-group">
                           <Field type="date" onChange={(e) =>
@@ -529,7 +541,7 @@ const AddRoomTab = () => {
                                 ...formResponse,
                                 rooms_avail_date: e.target.value,
                               })
-                            } name="rooms_avail_date" id="rooms_avail_date" component={ReactstrapInput} className="form-control" label="Room Available Date" />
+                            } name="rooms_avail_date" id="rooms_avail_date" required component={ReactstrapInput} className="form-control" label="Room Available Date" />
                         </Col>
                       </Row>
                     </div>

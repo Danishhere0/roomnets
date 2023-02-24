@@ -14,12 +14,15 @@ import { getData } from "../utils/getData";
 export const getStaticProps = async ({ locale }) => ({ props: { ...(await serverSideTranslations(locale, ["common"])) } });
 import Img from "../utils/BackgroundImageRatio";
 import NoSsr from "../utils/NoSsr";
+import { useRouter } from 'next/router';
 //const history = useHistory();
 
 //const imgData = ["/assets/images/property/4.jpg", "/assets/images/property/16.jpg", "/assets/images/property/14.jpg"];
 
 
 const DetailWithGallery = () => {
+  const router = useRouter();
+  const { blog_id } = router.query;
 
   const [Imgs, setImgData] = React.useState([]);
   const [blogData, setBlogDetData] = React.useState();

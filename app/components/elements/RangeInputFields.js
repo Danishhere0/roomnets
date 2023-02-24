@@ -6,8 +6,7 @@ import { useSelector } from "react-redux";
 import NoSsr from "../../utils/NoSsr";
 
 const RangeInputFields = ({ label, name, filterValues, setFilterValues, min, max, sm, lg }) => {
-  const { propertyStatus, propertyType, maxRooms, bed, bath, agencies, rent, area, sortBy } = useSelector((state) => state.inputsReducer);
-
+  const { propertyStatus, propertyType, maxRooms, bed, bath, agencies, rent, rooms_size, sortBy } = useSelector((state) => state.inputsReducer);
   const { symbol, currencyValue } = useSelector((state) => state.currencyReducer);
   const dispatch = useDispatch();
   var [MIN, setMIN] = useState(min);
@@ -23,15 +22,15 @@ const RangeInputFields = ({ label, name, filterValues, setFilterValues, min, max
         <FormGroup>
           <div className="price-range">
             <Label>
-              {label} : {label === "Rent" && `${symbol}`} {(label === "Area" ? area : rent * currencyValue)} - {label === "Rent" && `${symbol}`}{" "}
-              {(label === "Area" ? area : rent * currencyValue)} {label === "Area" && "sq ft"}
+              {label} : {label === "Rent" && `${symbol}`} {(label === "Area" ? rooms_size[0] : rent[0] * currencyValue)} - {label === "Rent" && `${symbol}`}{" "}
+              {(label === "Area" ? rooms_size[1] : rent[1]* currencyValue)} {label === "Area" && "sq ft"}
             </Label>
             <div id={label === "Rent" ? "slider-1" : "slider-2"} className="theme-range-3">
-              <Range
-                values={label === "Rent" ? rent : area}
+            <Range
+                values={label === "Rent" ? rent : rooms_size}
                 step={STEP}
-                min={MIN || 40}
-                max={MAX || 10000}
+                min={MIN || 10}
+                max={MAX || 18000000}
                 onChange={(values) => {
                   setFilterValues({ ...filterValues, [`${name}`]: values });
                   dispatch({ type: label.toLowerCase(), payload: values });
@@ -50,7 +49,7 @@ const RangeInputFields = ({ label, name, filterValues, setFilterValues, min, max
                         width: "100%",
                         borderRadius: "4px",
                         background: getTrackBackground({
-                          values: label === "Rent" ? rent : area,
+                          values: label === "Rent" ? rent : rooms_size,
                           colors: ["#ccc", "var(--theme-default2)", "#ccc"],
                           min: MIN,
                           max: MAX,

@@ -13,15 +13,16 @@ import RangeInputFields from "../../elements/RangeInputFields";
 import AutoCompletePlaces from "../../elements/AutoCompletePlaces";
 import axios from "axios";
 import useGeoLocation from '../../../hooks/useGeoLocation';
-import InputRange from 'react-input-range';
+import { useRouter } from 'next/router';
 
 const InputForm = ({ label, lg, sm, lastSm }) => {
+  const router = useRouter();
   const [filterValues, setFilterValues] = useState({});
   const [SearchType, setSearchType] = React.useState("apartment");
   const [searchText, setSearchText] = React.useState();
   const [homePageData, setHomePageData] = React.useState();
   const [value, setValue] = useState();
-
+  
   useEffect(() => {
     const fetchAboutIntro = async () => {
       try {
@@ -34,20 +35,22 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
     };
     fetchAboutIntro();
   }, []);
+  
   const handleSearch1 = () => {
     if (!searchText) {
       return alert("search field is empty");
     }
 
     SearchType === "rooms" &&
-      history.push({
-        pathname: "/SearchResult1",
-        state: { location: searchText },
+      router.push({
+        pathname: '/SearchResult1',
+        query: { location: searchText },
       });
+
     SearchType === "apartment" &&
-      history.push({
+      router.push({
         pathname: "/SearchResult2",
-        state: { location: searchText },
+        query: { location: searchText },
       });
   };
   //search by auto complete drop down using longitude and latitude
@@ -68,19 +71,19 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
     const address = places.formatted_address;
 
     SearchType === "rooms" &&
-      history.push({
+      router.push({
         pathname: "/SearchResult1",
-        state: { lng: lng, lat: lat, address: address },
+        query: { lng: lng, lat: lat, address: address },
       });
     SearchType === "apartment" &&
-      history.push({
-        pathname: "/SearchResult2",
+      router.push({
+        query: "/SearchResult2",
         state: { lng: lng, lat: lat, address: address },
       });
   };
 
   useEffect(() => {
-    getData(`${process.env.API_URL}/searchdata`)
+    getData(`${process.env.API_URL}/ListRooms`)
       .then((res) => {
         setValue(
           res.data &&
@@ -94,10 +97,31 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
       .catch((error) => console.log("Error", error));
   }, []);
 
-  let minRent = 200;
-  let maxRent = 10000;
-  let minSqft = 30;
-  let maxSqft = 1000;
+  /*const minRent = 50;
+  const maxRent = 1000000;
+  const minSqft = 30;
+  const maxSqft = 10000;*/
+
+  let minRent =
+    value?.length !== 0 &&
+    value?.reduce(function (res, obj) {
+      return Math.round(obj?.rent) < Math.round(res?.rent) ? obj : res;
+    });
+  let maxRent =
+    value?.length !== 0 &&
+    value?.reduce(function (res, obj) {
+      return Math.round(obj?.rent) > Math.round(res?.rent) ? obj : res;
+    });
+  let minSqft =
+    value?.length !== 0 &&
+    value?.reduce(function (res, obj) {
+      return Math.round(obj?.sqft) < Math.round(res?.sqft) ? obj : res;
+    });
+  let maxSqft =
+    value?.length !== 0 &&
+    value?.reduce(function (res, obj) {
+      return Math.round(obj?.sqft) > Math.round(res?.sqft) ? obj : res;
+    });
 
   return (
     <form
@@ -117,10 +141,9 @@ const InputForm = ({ label, lg, sm, lastSm }) => {
                         placeholder="Enter Address, State/City or Location"
                       />
         <DropdownInputFields filterValues={filterValues} setFilterValues={setFilterValues} label={label} start={0} end={6} lg={lg} sm={sm} lastSm={lastSm} />
-        <InputRange label="Rent" name="rent" filterValues={filterValues} setFilterValues={setFilterValues} maxValue={Math.round(maxRent)} minValue={Math.round(minRent)}  value={Math.round(minRent)}  lg={lg} sm={sm} />
-        <InputRange label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} maxValue={Math.round(maxSqft)} minValue={Math.round(minSqft)} value={Math.round(minSqft)}  lg={lg} sm={sm} />
-        { /*<RangeInputFields label="Rent" name="rent" filterValues={filterValues} setFilterValues={setFilterValues} min={Math.round(minRent)} max={Math.round(maxRent)} lg={lg} sm={sm} />
-        <RangeInputFields label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} min="30" max={Math.round(maxSqft)} lg={lg} sm={sm} /> */ }
+        <RangeInputFields label="Rent" name="rent" filterValues={filterValues} setFilterValues={setFilterValues} min={minRent} onChange={(values) => setValues(values)} max={maxRent} lg={lg} sm={sm} />
+        <RangeInputFields label="Area" name="area" filterValues={filterValues} setFilterValues={setFilterValues} min={minSqft}  max={maxSqft} onChange={(values) => setValues(values)} lg={lg} sm={sm} /> 
+        
         <Col lg={lg || 12}>
         <button className="btn btn-gradient mt-3" type="submit">
                 Search

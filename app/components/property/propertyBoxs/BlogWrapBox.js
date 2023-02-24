@@ -25,10 +25,10 @@ const BlogWrapBox = ({ data, masonry }) => {
           <MapPin /> {data?.place}
         </span>
         <h3>
-          <Link href={"/blog_detail/"+data?._id}>{data?.title}</Link>
+          <Link href={"/blog_detail?blog_id="+data?._id}>{data?.title}</Link>
         </h3>
         <p className="font-roboto">{data?.body}</p>
-        <Link href={"/blog_detail/"+data?._id}>Read more</Link>
+        <Link href={"/blog_detail?blog_id="+data?._id}>Read more</Link>
       </div>
     </div>
   );

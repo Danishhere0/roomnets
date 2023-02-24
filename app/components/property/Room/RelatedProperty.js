@@ -13,22 +13,23 @@ const RelatedProperty = ({roomData}) => {
   const [roomsList, setRoomList] = useState([]);
   const { state } = roomData;
   const { no_rooms, Approved_By_Admin, country,no_toilets, no_baths, media, isPaidAdd, isTopAdd, paid_add, location, expire_date, purchase_date, Building_type,rent, rent_method,no_occupants, email, i_am, building_location,  street_name, rooms_avail_date, ad_start_date, ad_end_date, living_rooms, furnished_rooms, broker_agent_fee, rooms_size,minimum_stay, maximum_stay, amenities_swim, amenities_internet, amenities_play_ground, amenities_parking_space, amenities_entry_disabled, amenities_balcony, amenities_others, amenities_private_toilets, existing_room_mates, new_room_mate, advert_title, advert_description, post_code, currency, plan, payment_response, posted_by, created_at, updated_at } = state || {};
-  const applocation = useGeoLocation();
-  /*{location.loaded
-    ? JSON.stringify(location)
-    : "Location data not available yet."
- }*/
- const lat = applocation.coordinates.lat;
- const lng = applocation.coordinates.lng;
- console.log("my loc here is:"+ lat)
 
  useEffect(() => {
    const fetchAboutIntro = async () => {
      try {
+      const applocation = useGeoLocation();
+      /*{location.loaded
+        ? JSON.stringify(location)
+        : "Location data not available yet."
+      }*/
+      const lat = applocation.coordinates.lat;
+      const lng = applocation.coordinates.lng;
+      console.log("my loc here is:"+ lat)
+    
        const url =`${process.env.API_URL}/ListRoomsByLnglat?lng=${lng}&lat=${lat}`;
        const res11  = await axios.get(url);
        setRoomList(res11.data.userData);
-       console.log('About page:' + url);
+      // console.log('About page:' + url);
      } catch (err) {
        console.error('About page Error is: '+ err);
      }

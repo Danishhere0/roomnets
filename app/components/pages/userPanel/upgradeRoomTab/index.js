@@ -121,9 +121,9 @@ const params={
   payment_response:response,
   plan:selected
 }
-await axios.post("/Api/v1/handleUpgradeRooms",params).then(res=>{
+await axios.post(`${process.env.API_URL}/handleUpgradeRooms`,params).then(res=>{
 if(res.data.status){
-    history.replace("/process-rooms-success");
+  router.push("/userpanel/PostRoomSuccess");
 }
 }).catch(error=>{
   console.log(error)
@@ -137,7 +137,7 @@ const params={
   plan:selected,
   orderID:orderID
 }
-await axios.post("/Api/v1/handleUpgradesRoomPayPal",params).then(res=>{
+await axios.post(`${process.env.API_URL}/handleUpgradesRoomPayPal`,params).then(res=>{
   console.log(res.data)
 if(res.data.status){
   router.push("/userpanel/PostRoomSuccess");

@@ -87,6 +87,7 @@ const { FeaturedApartmentsByLoc } = require("../controllers/FeaturedApartmentsBy
 const { FeaturedRoomsByLoc } = require("../controllers/FeaturedRoomsByLoc");
 const { getCitiesByCountry } = require("../controllers/getCitiesByCountry");
 const { getCountries } = require("../controllers/getCountries");
+const { getCountryById } = require("../controllers/getCountryById");
 const { ListRooms, ListLatestRooms, ListLatestPaidRooms, ListRandomRooms, ListRandomPaidRooms } = require("../controllers/ListRooms");
 
 var storage = multer.diskStorage({
@@ -187,6 +188,7 @@ Router.get("/ListRecentRoomsByLoc", ListRecentRoomsByLoc);
 Router.get("/FeaturedApartmentsByLoc", FeaturedApartmentsByLoc);
 Router.get("/FeaturedRoomsByLoc", FeaturedRoomsByLoc);
 Router.get("/getCitiesByCountry", getCitiesByCountry);
+Router.get("/getCountryById", getCountryById);
 Router.post(
   "/updateMyProfile",
   LoginbyJWT,

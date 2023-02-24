@@ -3,8 +3,8 @@ import { getCookie } from 'cookies-next';
 
 const initialState = {
   propertyStatus: "Property Status",
-  rent: [200, 8500],
- // area: [50, 8500],
+  rent: [100, 15000000],
+  rooms_size: [50, 85000],
 };
 
 export const inputSlice = createSlice({
@@ -32,8 +32,8 @@ export const inputSlice = createSlice({
     rent: (state, action) => {
       action.payload ? (state.rent = [...action.payload]) : state.rent.splice(0, state.rent.length);
     },
-    area: (state, action) => {
-      action.payload ? (state.area = [...action.payload]) : state.area.splice(0, state.area.length);
+    rooms_size: (state, action) => {
+      action.payload ? (state.rooms_size = [...action.payload]) : state.rooms_size.splice(0, state.rooms_size.length);
     },
     sortBy: (state, action) => {
       state.sortBy = action.payload;

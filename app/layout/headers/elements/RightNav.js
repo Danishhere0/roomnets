@@ -14,14 +14,19 @@ import Language from "./rightNavComponents/Language";
 import UserDropdown from "./rightNavComponents/UserDropdown";
 import {NavLink} from 'reactstrap';
 import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
+
 
 const RightNav = () => {
   const history = useHistory();
-  const { currentUser } = useSelector((state) => state.auth.currentUser)
+  const { currentUser } = useSelector((state) => state.auth?.currentUser);
+  //const currentUser = JSON.parse(getCookie("currentUser"));
+  // console.log("currentUser:"+currentUser.userData.userToken);
   const dispatch = useDispatch()
+  const router = useRouter();
 
   const handleLogout = () => {
-    history.push({
+    router.push({
       pathname: "/",
       state: { message: "You have been logout" },
     });

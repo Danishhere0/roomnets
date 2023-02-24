@@ -2,11 +2,26 @@
  * It takes the file from the input field and displays it in the image tag
  * @returns A Col component with a div inside of it.
  */
-import React from "react";
+import React,{ useEffect, useState} from "react";
 import { Camera } from "react-feather";
 import { Col, Nav, NavItem, NavLink } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "cookies-next";
+
 
 const UserPanelSidebar = ({ activeTab, setActiveTab }) => {
+  //const { currentUser } = useSelector((state) => state.auth?.currentUser);
+  const [profileDetail, setProfileDetail] = useState([]);
+  useEffect(() => {
+    const fetch1 = async () => {
+      const currentUser = JSON.parse(getCookie("currentUser"));
+      const userDetail = currentUser.userData.user;
+     // console.log("currentUser:"+currentUser.userData.userToken);
+      setProfileDetail(userDetail);
+    };
+
+    fetch1();
+  }, []);
   return (
     <Col lg='3'>
       <div className='sidebar-user sticky-cls'>
@@ -27,9 +42,9 @@ const UserPanelSidebar = ({ activeTab, setActiveTab }) => {
               </div>
             </div>
             <div className='media-body'>
-              <h5>Zack Lee</h5>
-              <h6 className='font-roboto'>zackle@gmail.com</h6>
-              <h6 className='font-roboto mb-0'>+91 846 - 547 - 210</h6>
+              <h5>{profileDetail.firstName} {profileDetail?.lastName}</h5>
+              <h6 className='font-roboto'>{profileDetail?.email}</h6>
+              <h6 className='font-roboto mb-0'>{profileDetail?.mobileNumber}</h6>
             </div>
           </div>
           <div className='connected-social'>
@@ -93,6 +108,11 @@ const UserPanelSidebar = ({ activeTab, setActiveTab }) => {
             <NavItem>
               <NavLink className={activeTab === "Paymnet" ? "active" : ""} onClick={() => setActiveTab("Paymnet")}>
                 Cards & payment
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className={activeTab === "Upgrade" ? "active" : ""} onClick={() => setActiveTab("Upgrade")}>
+                Upgrade
               </NavLink>
             </NavItem>
             <NavItem>
