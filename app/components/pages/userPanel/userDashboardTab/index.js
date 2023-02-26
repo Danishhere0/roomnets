@@ -7,8 +7,7 @@ import SalesOverview from "./SalesOverview";
 import SmallBarCard from "./SmallBarCard";
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { getCookie } from 'cookies-next';
-import { hasCookie } from 'cookies-next';
+
 
 const UserDashboardTab = () => {
   const router = useRouter();
