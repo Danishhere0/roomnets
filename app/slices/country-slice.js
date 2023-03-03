@@ -23,7 +23,7 @@ export const countrySlice = createSlice({
             state.country_code = res4.data.userData.country_code;
             setCookie('selCountryCode',res4.data.userData.country_code);
             setCookie('selCountry', res4.data.userData.country_name);
-            alert(country_code);
+           // alert(country_code);
             return {
               ...state,
               country_code: [...state.country_code, action.payload],

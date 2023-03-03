@@ -17,7 +17,7 @@ const CitiesSection = ({ value }) => {
   const { country } = useSelector((state) => state.countryReducer?.country);
 
   useEffect(() => {
-    const user_country = JSON.parse(getCookie("currentUser")).userData.user.country;
+    const user_country = getCookie("currentUser") ? JSON.parse(getCookie("currentUser")).userData.user.country : "NG";
     const sel_country = getCookie("selCountryCode") ? getCookie("selCountryCode") : user_country;
     const fetch = async () => {
       try {

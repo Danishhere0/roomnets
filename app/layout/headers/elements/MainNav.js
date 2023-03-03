@@ -27,7 +27,7 @@ const MainNav = ({ center, icon }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   //const { country_code } = useSelector((state) => state.countryReducer.country_code);
-  const country_code = getCookie("selCountryCode");
+  const country_code = getCookie("selCountryCode") ? getCookie("selCountryCode") : "NG";
 
   console.log("Country info is"+country_code);
 
