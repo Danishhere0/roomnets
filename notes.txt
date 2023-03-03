@@ -60,3 +60,12 @@ The City based ads brings content from the popular city.
 
 https://blog.carbonteq.com/next-js-redux-store-jwt-auth/
 https://www.bezkoder.com/react-redux-login-example-toolkit-hooks/
+
+
+
+
+Position::create([
+            'name' => 'Security',
+        'name' => 'Designer',
+        'name' => 'Content manager',
+        'name' => 'Lawyer']);
