@@ -68,8 +68,8 @@ const Faq = () => {
                 </div>
 
                 <div id='accordion' className='accordion'>
-                  {homepageData.faq.length > 0 &&
-                    homepageData.faq.map((data, i) => (
+                  {homepageData?.faq?.length > 0 &&
+                    homepageData?.faq?.map((data, i) => (
                     <div className='card' key={i}>
                       <div className='card-header'>
                         <a className='card-link ' onClick={() => handleClick(i)}>

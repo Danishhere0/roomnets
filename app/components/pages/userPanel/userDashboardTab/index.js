@@ -5,7 +5,6 @@ import PropertyOverview from "./PropertyOverview";
 import SalesByAgent from "./SalesByAgent";
 import SalesOverview from "./SalesOverview";
 import SmallBarCard from "./SmallBarCard";
-import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 
